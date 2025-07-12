@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import Result from '../Result/Result.tsx';
 import classes from './Results.module.css';
+import ErrorButton from '../ErrorButton.tsx';
 interface Character {
   id: number;
   name: string;
@@ -72,17 +73,20 @@ class Results extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className={classes.results}>
-        {this.state.characters.map((character: Character) => (
-          <Result
-            key={character.id}
-            name={character.name}
-            status={character.status}
-            species={character.species}
-            gender={character.gender}
-            imageUrl={character.image}
-          />
-        ))}
+      <div>
+        <div className={classes.results}>
+          {this.state.characters.map((character: Character) => (
+            <Result
+              key={character.id}
+              name={character.name}
+              status={character.status}
+              species={character.species}
+              gender={character.gender}
+              imageUrl={character.image}
+            />
+          ))}
+        </div>
+        <ErrorButton />
       </div>
     );
   }

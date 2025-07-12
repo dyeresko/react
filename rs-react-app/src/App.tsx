@@ -2,6 +2,7 @@ import { Component } from 'react';
 import './App.css';
 import Controls from './components/Controls/Controls.tsx';
 import Results from './components/Results/Results/Results.tsx';
+import MyErrorBoundary from './components/MyErrorBoundary.tsx';
 
 export interface IState {
   searchResult: string;
@@ -28,7 +29,9 @@ class App extends Component<object, IState> {
     return (
       <div className="App">
         <Controls onSearch={this.onSearch} />
-        <Results searchResult={this.state.searchResult} />
+        <MyErrorBoundary>
+          <Results searchResult={this.state.searchResult} />
+        </MyErrorBoundary>
       </div>
     );
   }
