@@ -1,6 +1,6 @@
 import { Component, type ChangeEvent } from 'react';
 import type { IState } from '../../App.tsx';
-
+import classes from './Controls.module.css';
 interface IProps {
   onSearch: (searchResult: string) => void;
 }
@@ -23,7 +23,8 @@ class Controls extends Component<IProps, IState> {
 
   render() {
     return (
-      <div className={'controls'}>
+      <div className={classes.controls}>
+        <h2>Controls</h2>
         <input
           type="text"
           placeholder="Search..."
