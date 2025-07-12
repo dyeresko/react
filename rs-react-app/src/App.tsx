@@ -2,11 +2,24 @@ import { Component } from 'react';
 import './App.css';
 import Controls from './components/Controls/Controls.tsx';
 
-class App extends Component<object, object> {
+export interface IState {
+  searchResult: string;
+}
+
+class App extends Component<object, IState> {
+  constructor(props: object) {
+    super(props);
+    this.state = { searchResult: '' };
+  }
+
+  onSearch = (value: string) => {
+    this.setState({ searchResult: value });
+  };
+
   render() {
     return (
       <div className="App">
-        <Controls />
+        <Controls onSearch={this.onSearch} />
       </div>
     );
   }
