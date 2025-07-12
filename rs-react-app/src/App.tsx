@@ -13,6 +13,12 @@ class App extends Component<object, IState> {
     this.state = { searchResult: '' };
   }
 
+  componentDidMount() {
+    const localSearchResult = localStorage.getItem('searchResult');
+    if (localSearchResult !== null) {
+      this.setState({ searchResult: JSON.parse(localSearchResult) });
+    }
+  }
   onSearch = (value: string) => {
     this.setState({ searchResult: value });
     localStorage.setItem('searchResult', JSON.stringify(value));
@@ -22,7 +28,7 @@ class App extends Component<object, IState> {
     return (
       <div className="App">
         <Controls onSearch={this.onSearch} />
-        <Results />
+        <Results searchResult={this.state.searchResult} />
       </div>
     );
   }

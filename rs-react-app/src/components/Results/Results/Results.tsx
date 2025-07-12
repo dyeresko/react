@@ -21,14 +21,47 @@ interface IResponse {
   results?: Character[];
   error?: string;
 }
+interface IProps {
+  searchResult?: string;
+}
 
-class Results extends Component<object, { characters: Character[] }> {
-  constructor(props: object) {
+interface IState {
+  characters: Character[];
+  apiQuery: string;
+}
+
+class Results extends Component<IProps, IState> {
+  baseApiQuery: string;
+  constructor(props: IProps) {
     super(props);
-    this.state = { characters: [] };
+    this.baseApiQuery = 'https://rickandmortyapi.com/api/character/';
+    this.state = { characters: [], apiQuery: '' };
   }
-  componentDidMount() {
-    fetch('https://rickandmortyapi.com/api/character/')
+  componentDidUpdate(prevProps: IProps) {
+    if (prevProps.searchResult !== this.props.searchResult) {
+      if (this.props.searchResult) {
+        this.setState(
+          {
+            apiQuery: `${this.baseApiQuery}?name=${this.props.searchResult?.trim()}`,
+          },
+          () => {
+            this.fetchResults();
+          }
+        );
+      } else {
+        this.setState(
+          {
+            apiQuery: this.baseApiQuery,
+          },
+          () => {
+            this.fetchResults();
+          }
+        );
+      }
+    }
+  }
+  fetchResults() {
+    fetch(this.state.apiQuery)
       .then((response) => response.json())
       .then((data: IResponse) => {
         if (data.results) {
