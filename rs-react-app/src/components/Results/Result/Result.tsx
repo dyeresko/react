@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import classes from './Result.module.css';
 
 interface IProps {
   name: string;
@@ -11,17 +12,29 @@ interface IProps {
 class Result extends Component<IProps, object> {
   render() {
     return (
-      <div className="result">
+      <div className={classes.result}>
         <img
           alt="Result image"
-          className="resultImg"
+          className={classes.resultImage}
           src={this.props.imageUrl}
         />
-        <div className="resultInfo">
-          <h4 className="resultName">Name: {this.props.name}</h4>
-          <h4 className="resultStatus">Status: {this.props.status}</h4>
-          <h4 className="resultSpecies">Species: {this.props.species}</h4>
-          <h4 className="resultGender">Gender: {this.props.gender}</h4>
+        <div className={classes.resultInfo}>
+          <div className={classes.infoItem}>
+            <span>Name:</span>
+            <span>{this.props.name}</span>
+          </div>
+          <div className={classes.infoItem}>
+            <span>Status:</span>
+            <span>{this.props.status}</span>
+          </div>
+          <div className={classes.infoItem}>
+            <span>Species:</span>
+            <span> {this.props.species}</span>
+          </div>
+          <div className={classes.infoItem}>
+            <span>Gender:</span>
+            <span>{this.props.gender}</span>
+          </div>
         </div>
       </div>
     );
