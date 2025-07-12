@@ -2,6 +2,7 @@ import { Component } from 'react';
 import Result from '../Result/Result.tsx';
 import classes from './Results.module.css';
 import ErrorButton from '../ErrorButton.tsx';
+import logo from '../../../assets/react.svg';
 interface Character {
   id: number;
   name: string;
@@ -29,6 +30,8 @@ interface IProps {
 interface IState {
   characters: Character[];
   apiQuery: string;
+  loading: boolean;
+  error: boolean;
 }
 
 class Results extends Component<IProps, IState> {
@@ -36,7 +39,7 @@ class Results extends Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.baseApiQuery = 'https://rickandmortyapi.com/api/character/';
-    this.state = { characters: [], apiQuery: '' };
+    this.state = { characters: [], apiQuery: '', error: false, loading: false };
   }
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.searchResult !== this.props.searchResult) {
@@ -62,31 +65,49 @@ class Results extends Component<IProps, IState> {
     }
   }
   fetchResults() {
+    this.setState({ error: false });
     fetch(this.state.apiQuery)
-      .then((response) => response.json())
+      .then((response) => {
+        this.setState({ loading: true });
+        if (!response.ok) {
+          throw Error('Failed to fetch results.');
+        }
+        return response.json();
+      })
       .then((data: IResponse) => {
         if (data.results) {
-          this.setState({ characters: data.results });
+          this.setState({ loading: false, characters: data.results ?? [] });
         }
+      })
+      .catch(() => {
+        this.setState({ loading: false, error: true });
       });
   }
 
   render() {
     return (
       <div>
-        <div className={classes.results}>
-          {this.state.characters.map((character: Character) => (
-            <Result
-              key={character.id}
-              name={character.name}
-              status={character.status}
-              species={character.species}
-              gender={character.gender}
-              imageUrl={character.image}
-            />
-          ))}
+        <div>
+          {this.state.loading && (
+            <img className="logo" src={logo} alt="Loading..." />
+          )}
+          {this.state.error && <h2>Request did not succeed</h2>}
+          {!this.state.error && !this.state.loading && (
+            <div className={classes.results}>
+              {this.state.characters.map((character: Character) => (
+                <Result
+                  key={character.id}
+                  name={character.name}
+                  status={character.status}
+                  species={character.species}
+                  gender={character.gender}
+                  imageUrl={character.image}
+                />
+              ))}
+            </div>
+          )}
+          <ErrorButton />
         </div>
-        <ErrorButton />
       </div>
     );
   }
