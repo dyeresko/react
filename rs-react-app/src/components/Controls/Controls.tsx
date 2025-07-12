@@ -21,13 +21,6 @@ class Controls extends Component<IProps, IState> {
     }
   }
 
-  componentDidUpdate() {
-    localStorage.setItem(
-      'searchResult',
-      JSON.stringify(this.state.searchResult)
-    );
-  }
-
   render() {
     return (
       <div className={'controls'}>
