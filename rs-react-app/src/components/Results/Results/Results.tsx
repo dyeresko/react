@@ -43,6 +43,7 @@ class Results extends Component<IProps, IState> {
   }
 
   setBaseApiQuery = () => {
+    this.setState({ loading: true });
     this.setState(
       {
         apiQuery: this.baseApiQuery,
@@ -84,9 +85,11 @@ class Results extends Component<IProps, IState> {
         return response.json();
       })
       .then((data: IResponse) => {
-        if (data.results) {
-          this.setState({ loading: false, characters: data.results ?? [] });
-        }
+        setTimeout(() => {
+          if (data.results) {
+            this.setState({ loading: false, characters: data.results ?? [] });
+          }
+        }, 200);
       })
       .catch(() => {
         this.setState({ loading: false, error: true });
