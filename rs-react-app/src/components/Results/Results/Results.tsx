@@ -41,6 +41,22 @@ class Results extends Component<IProps, IState> {
     this.baseApiQuery = 'https://rickandmortyapi.com/api/character/';
     this.state = { characters: [], apiQuery: '', error: false, loading: false };
   }
+
+  setBaseApiQuery = () => {
+    this.setState(
+      {
+        apiQuery: this.baseApiQuery,
+      },
+      () => {
+        this.fetchResults();
+      }
+    );
+  };
+
+  componentDidMount() {
+    this.setBaseApiQuery();
+  }
+
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.searchResult !== this.props.searchResult) {
       this.setState({ loading: true });
@@ -54,14 +70,7 @@ class Results extends Component<IProps, IState> {
           }
         );
       } else {
-        this.setState(
-          {
-            apiQuery: this.baseApiQuery,
-          },
-          () => {
-            this.fetchResults();
-          }
-        );
+        this.setBaseApiQuery();
       }
     }
   }
