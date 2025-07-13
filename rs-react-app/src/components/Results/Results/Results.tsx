@@ -43,6 +43,7 @@ class Results extends Component<IProps, IState> {
   }
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.searchResult !== this.props.searchResult) {
+      this.setState({ loading: true });
       if (this.props.searchResult) {
         this.setState(
           {
@@ -68,7 +69,6 @@ class Results extends Component<IProps, IState> {
     this.setState({ error: false });
     fetch(this.state.apiQuery)
       .then((response) => {
-        this.setState({ loading: true });
         if (!response.ok) {
           throw Error('Failed to fetch results.');
         }
