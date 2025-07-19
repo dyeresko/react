@@ -64,7 +64,7 @@ class Results extends Component<IProps, IState> {
       if (this.props.searchResult) {
         this.setState(
           {
-            apiQuery: `${this.baseApiQuery}?name=${this.props.searchResult?.trim()}`,
+            apiQuery: `${this.baseApiQuery}?name=${this.props.searchResult}`,
           },
           () => {
             this.fetchResults();

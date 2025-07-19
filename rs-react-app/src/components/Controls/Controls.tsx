@@ -31,7 +31,12 @@ class Controls extends Component<IProps, IState> {
           value={this.state.searchResult}
           onChange={this.handleInputChange}
         />
-        <button onClick={() => this.props.onSearch(this.state.searchResult)}>
+        <button
+          onClick={() => {
+            this.setState({ searchResult: this.state.searchResult.trim() });
+            this.props.onSearch(this.state.searchResult);
+          }}
+        >
           Search
         </button>
       </div>
