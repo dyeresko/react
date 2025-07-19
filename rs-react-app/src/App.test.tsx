@@ -23,6 +23,15 @@ describe('App', () => {
     const updatedInput = screen.getByPlaceholderText(/search/i);
     expect(updatedInput).toHaveValue('some text');
   });
+  it('overwrites existing localStorage value when new search is performed', async () => {
+    render(<App />);
+    const input = screen.getByPlaceholderText(/search/i);
+    await userEvent.clear(input);
+    await userEvent.type(input, 'new text');
+    const button = screen.getByRole('button', { name: 'Search' });
+    await userEvent.click(button);
+    expect(localStorage.getItem('searchResult')).toBe('new text');
+  });
   it('shows empty input if local storage is cleared', async () => {
     localStorage.removeItem('searchResult');
     render(<App />);
