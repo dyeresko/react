@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
@@ -10,14 +10,15 @@ describe('App', () => {
     const input = screen.getByPlaceholderText(/search/i);
     expect(input).toHaveValue('');
   });
-  it('displays previously saved search term from localStorage on mount', async () => {
+  it('saves search term to localStorage when search button is clicked', async () => {
     render(<App />);
     const input = screen.getByPlaceholderText(/search/i);
     await userEvent.type(input, 'some text');
     const button = screen.getByRole('button', { name: 'Search' });
     await userEvent.click(button);
     expect(localStorage.getItem('searchResult')).toBe('some text');
-    cleanup();
+  });
+  it('displays previously saved search term from localStorage on mount', async () => {
     render(<App />);
     const updatedInput = screen.getByPlaceholderText(/search/i);
     expect(updatedInput).toHaveValue('some text');
