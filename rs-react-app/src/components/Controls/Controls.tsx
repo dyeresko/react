@@ -17,7 +17,7 @@ class Controls extends Component<IProps, IState> {
   componentDidMount() {
     const localSearchResult = localStorage.getItem('searchResult');
     if (localSearchResult !== null) {
-      this.setState({ searchResult: JSON.parse(localSearchResult) });
+      this.setState({ searchResult: localSearchResult });
     }
   }
 
