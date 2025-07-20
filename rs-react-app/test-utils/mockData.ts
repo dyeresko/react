@@ -1,4 +1,4 @@
-import { IResponse } from '../src/components/Results/Results/Results';
+import type { IResponse } from '../src/components/Results/Results/Results';
 
 export const data: IResponse = {
   info: {
