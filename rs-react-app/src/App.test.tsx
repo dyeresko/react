@@ -3,13 +3,9 @@ import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import App from './App.tsx';
-import { mockFetchFailure } from '../test-utils/utils.ts';
+import { mockFetchFailure, mockFetchSuccess } from '../test-utils/utils.ts';
 
 describe('App', () => {
-  it('makes initial API call on component mount', async () => {
-    mockFetchFailure();
-  });
-
   it('shows empty input when no saved term exists', async () => {
     render(<App />);
     const input = screen.getByPlaceholderText(/search/i);
@@ -54,6 +50,53 @@ describe('App', () => {
     const error = await screen.findByTestId('error');
     expect(error).toBeVisible();
     localStorage.removeItem('searchResult');
+  });
+  it('makes initial API call on component mount', async () => {
+    mockFetchSuccess();
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+    render(<App />);
+    await waitFor(() => {
+      expect(fetchSpy).toHaveBeenCalledTimes(1);
+    });
+    fetchSpy.mockRestore();
+  });
+
+  it('updates component state based on API responses', async () => {
+    mockFetchSuccess();
+    render(<App />);
+    await waitFor(() => {
+      expect(screen.getByText('myla')).toBeVisible();
+      expect(screen.getByText('elizabeth')).toBeVisible();
+      expect(screen.getByText('beth')).toBeVisible();
+    });
+  });
+
+  it('manages search term state correctly', async () => {
+    mockFetchSuccess();
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+    render(<App />);
+    const input = screen.getByPlaceholderText(/search/i);
+    await userEvent.clear(input);
+    await userEvent.type(input, 'beth');
+    const button = screen.getByRole('button', { name: 'Search' });
+    await userEvent.click(button);
+    await waitFor(() => {
+      expect(fetchSpy).toHaveBeenCalled();
+    });
+    const [url] = fetchSpy.mock.calls[fetchSpy.mock.calls.length - 1];
+    expect(url).toContain(
+      'https://rickandmortyapi.com/api/character/?name=beth'
+    );
+    fetchSpy.mockRestore();
+  });
+  it('calls API with correct parameters', async () => {
+    mockFetchSuccess();
+    const fetchSpy = vi.spyOn(globalThis, 'fetch');
+    render(<App />);
+    const [url] = fetchSpy.mock.calls[0];
+    expect(url).toContain('https://rickandmortyapi.com/api/character/');
+    fetchSpy.mockRestore();
+    localStorage.clear();
   });
 });
 

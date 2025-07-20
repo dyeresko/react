@@ -4,7 +4,7 @@ import { data } from './mockData.ts';
 export function mockFetchFailure() {
   vi.stubGlobal(
     'fetch',
-    vi.fn().mockResolvedValueOnce(
+    vi.fn().mockResolvedValue(
       new Response(JSON.stringify({ message: '404 not found' }), {
         status: 404,
         statusText: 'Not Found',
@@ -16,7 +16,7 @@ export function mockFetchFailure() {
 export function mockFetchSuccess() {
   vi.stubGlobal(
     'fetch',
-    vi.fn().mockResolvedValueOnce(
+    vi.fn().mockResolvedValue(
       new Response(JSON.stringify(data), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },

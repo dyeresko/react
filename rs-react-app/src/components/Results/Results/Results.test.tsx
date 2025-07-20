@@ -6,6 +6,7 @@ import { mockFetchFailure } from '../../../../test-utils/utils.ts';
 
 describe('Results render', () => {
   it('shows loading state while fetching data', () => {
+    mockFetchFailure();
     render(<Results />);
     const loader = screen.getByTestId('loader');
     expect(loader).toBeVisible();
@@ -17,6 +18,7 @@ describe('Results render', () => {
     expect(error).toBeVisible();
   });
   it('hides loading state based on loading prop', async () => {
+    mockFetchFailure();
     render(<Results />);
     const loader = screen.getByTestId('loader');
     expect(loader).toBeVisible();
