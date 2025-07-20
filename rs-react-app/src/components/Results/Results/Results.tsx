@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import Result from '../Result/Result.tsx';
 import classes from './Results.module.css';
 import ErrorButton from '../ErrorButton.tsx';
 import logo from '../../../assets/react.svg';
+import ResultList from '../ResultList/ResultList.tsx';
 interface Character {
   id: number;
   name: string;
@@ -101,22 +101,18 @@ class Results extends Component<IProps, IState> {
       <div>
         <div>
           {this.state.loading && (
-            <img className="logo" src={logo} alt="Loading..." />
+            <img
+              data-testid="loader"
+              className="logo"
+              src={logo}
+              alt="Loading..."
+            />
           )}
-          {this.state.error && <h2>Request did not succeed</h2>}
+          {this.state.error && (
+            <h2 className={classes.header}>Request did not succeed</h2>
+          )}
           {!this.state.error && !this.state.loading && (
-            <div className={classes.results}>
-              {this.state.characters.map((character: Character) => (
-                <Result
-                  key={character.id}
-                  name={character.name}
-                  status={character.status}
-                  species={character.species}
-                  gender={character.gender}
-                  imageUrl={character.image}
-                />
-              ))}
-            </div>
+            <ResultList characters={this.state.characters} />
           )}
           <ErrorButton />
         </div>

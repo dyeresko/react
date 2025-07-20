@@ -12,7 +12,7 @@ interface IProps {
 class Result extends Component<IProps, object> {
   render() {
     return (
-      <div className={classes.result}>
+      <div className={classes.result} data-testid="result">
         <img
           alt="Result image"
           className={classes.resultImage}

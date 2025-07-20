@@ -21,8 +21,8 @@ class App extends Component<object, IState> {
     }
   }
   onSearch = (value: string) => {
-    this.setState({ searchResult: value });
-    localStorage.setItem('searchResult', value);
+    this.setState({ searchResult: value.trim() });
+    localStorage.setItem('searchResult', value.trim());
   };
 
   render() {

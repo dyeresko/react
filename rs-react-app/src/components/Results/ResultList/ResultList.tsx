@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import Result from '../Result/Result.tsx';
-import classes from './Results.module.css';
-interface Character {
+import classes from './ResultList.module.css';
+export interface Character {
   id: number;
   name: string;
   status: string;
