@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import Results from './Results.tsx';
@@ -13,5 +13,13 @@ describe('Results render', () => {
     render(<Results searchResult="invalidResult" />);
     const error = await screen.findByTestId('error');
     expect(error).toBeVisible();
+  });
+  it('hides loading state based on loading prop', async () => {
+    render(<Results />);
+    const loader = screen.getByTestId('loader');
+    expect(loader).toBeVisible();
+    await waitFor(() => {
+      expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
+    });
   });
 });
