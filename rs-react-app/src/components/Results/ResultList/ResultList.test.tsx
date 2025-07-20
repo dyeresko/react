@@ -40,9 +40,23 @@ describe('Result list render', () => {
     const results = screen.getAllByTestId('result');
     expect(results).toHaveLength(3);
   });
-  it('displays "no results" message when data array is empty', () => {
+  it('displays no results if array is empty', () => {
     render(<ResultList characters={[]} />);
     const results = screen.queryAllByTestId('result');
     expect(results).toHaveLength(0);
+  });
+  it('displays "no results" message when data array is not defined', () => {
+    render(<ResultList />);
+    expect(screen.getByText(/no results found/i)).toBeVisible();
+  });
+  it('displays item name and description correctly', () => {
+    render(<ResultList characters={data} />);
+    const results = screen.queryAllByTestId('result');
+    results.forEach((result, index) => {
+      expect(result).toHaveTextContent(data[index].name);
+      expect(result).toHaveTextContent(data[index].status);
+      expect(result).toHaveTextContent(data[index].species);
+      expect(result).toHaveTextContent(data[index].gender);
+    });
   });
 });

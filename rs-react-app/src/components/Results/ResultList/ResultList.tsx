@@ -12,23 +12,25 @@ export interface Character {
 }
 
 interface IProps {
-  characters: Character[];
+  characters?: Character[];
 }
 
 class ResultList extends Component<IProps, object> {
   render() {
     return (
       <div className={classes.results}>
-        {this.props.characters.map((character: Character) => (
-          <Result
-            key={character.id}
-            name={character.name}
-            status={character.status}
-            species={character.species}
-            gender={character.gender}
-            imageUrl={character.image}
-          />
-        ))}
+        {this.props.characters
+          ? this.props.characters.map((character: Character) => (
+              <Result
+                key={character.id}
+                name={character.name}
+                status={character.status}
+                species={character.species}
+                gender={character.gender}
+                imageUrl={character.image}
+              />
+            ))
+          : 'No results found.'}
       </div>
     );
   }
