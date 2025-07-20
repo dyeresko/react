@@ -6,6 +6,10 @@ import App from './App.tsx';
 import { mockFetchFailure } from '../test-utils/utils.ts';
 
 describe('App', () => {
+  it('makes initial API call on component mount', async () => {
+    mockFetchFailure();
+  });
+
   it('shows empty input when no saved term exists', async () => {
     render(<App />);
     const input = screen.getByPlaceholderText(/search/i);
