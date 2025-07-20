@@ -13,7 +13,7 @@ interface Character {
   image: string;
 }
 
-interface IResponse {
+export interface IResponse {
   info: {
     count: number;
     pages: number;

@@ -30,15 +30,15 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">61.9% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">13/21</span>
+            <span class="fraction">23/23</span>
           </div>
 
           <div class="fl pad1y space-right2">
             <span class="strong">100% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">1/1</span>
+            <span class="fraction">4/4</span>
           </div>
 
           <div class="fl pad1y space-right2">
@@ -48,9 +48,9 @@
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">61.9% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">13/21</span>
+            <span class="fraction">23/23</span>
           </div>
         </div>
         <p class="quiet">
@@ -64,7 +64,7 @@
           </div>
         </template>
       </div>
-      <div class="status-line medium"></div>
+      <div class="status-line high"></div>
       <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,7 +103,9 @@
 <a name='L35'></a><a href='#L35'>35</a>
 <a name='L36'></a><a href='#L36'>36</a>
 <a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,28 +124,30 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">18x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">66x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Component } from 'react';
 import Result from '../Result/Result.tsx';
 import classes from './ResultList.module.css';
-interface Character {
+export interface Character {
   id: number;
   name: string;
   status: string;
@@ -154,23 +158,25 @@ interface Character {
 }
 &nbsp;
 interface IProps {
-  characters: Character[];
+  characters?: Character[];
 }
 &nbsp;
 class ResultList extends Component&lt;IProps, object&gt; {
   render() {
     return (
       &lt;div className={classes.results}&gt;
-        {this.props.characters.map((character: Character) =&gt; (
-<span class="cstat-no" title="statement not covered" >          &lt;Result</span>
-<span class="cstat-no" title="statement not covered" >            key={character.id}</span>
-<span class="cstat-no" title="statement not covered" >            name={character.name}</span>
-<span class="cstat-no" title="statement not covered" >            status={character.status}</span>
-<span class="cstat-no" title="statement not covered" >            species={character.species}</span>
-<span class="cstat-no" title="statement not covered" >            gender={character.gender}</span>
-<span class="cstat-no" title="statement not covered" >            imageUrl={character.image}</span>
-<span class="cstat-no" title="statement not covered" >          /&gt;</span>
-        ))}
+        {this.props.characters
+          ? this.props.characters.map((character: Character) =&gt; (
+              &lt;Result
+                key={character.id}
+                name={character.name}
+                status={character.status}
+                species={character.species}
+                gender={character.gender}
+                imageUrl={character.image}
+              /&gt;
+            ))
+          : 'No results found.'}
       &lt;/div&gt;
     );
   }
@@ -191,7 +197,7 @@ export default ResultList;
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-20T06:36:06.378Z
+      at 2025-07-20T09:48:23.840Z
     </div>
     <script src="../../../../prettify.js"></script>
     <script>

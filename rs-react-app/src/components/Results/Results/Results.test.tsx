@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import Results from './Results.tsx';
+import { mockFetchFailure } from '../../../../test-utils/utils.ts';
 
 describe('Results render', () => {
   it('shows loading state while fetching data', () => {
@@ -10,6 +11,7 @@ describe('Results render', () => {
     expect(loader).toBeVisible();
   });
   it('displays error message when API call fails', async () => {
+    mockFetchFailure();
     render(<Results searchResult="invalidResult" />);
     const error = await screen.findByTestId('error');
     expect(error).toBeVisible();

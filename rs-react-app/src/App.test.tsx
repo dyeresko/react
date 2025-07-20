@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import App from './App.tsx';
+import { mockFetchFailure } from '../test-utils/utils.ts';
 
 describe('App', () => {
   it('shows empty input when no saved term exists', async () => {
@@ -39,6 +40,7 @@ describe('App', () => {
     expect(input).toHaveValue('');
   });
   it('shows error if no available results have been found', async () => {
+    mockFetchFailure();
     render(<App />);
     const input = screen.getByPlaceholderText(/search/i);
     await userEvent.clear(input);

@@ -25,27 +25,27 @@
         </h1>
         <div class="clearfix">
           <div class="fl pad1y space-right2">
-            <span class="strong">89.47% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Statements</span>
-            <span class="fraction">17/19</span>
+            <span class="fraction">19/19</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">75% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Branches</span>
-            <span class="fraction">3/4</span>
+            <span class="fraction">5/5</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">75% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Functions</span>
-            <span class="fraction">3/4</span>
+            <span class="fraction">4/4</span>
           </div>
 
           <div class="fl pad1y space-right2">
-            <span class="strong">89.47% </span>
+            <span class="strong">100% </span>
             <span class="quiet">Lines</span>
-            <span class="fraction">17/19</span>
+            <span class="fraction">19/19</span>
           </div>
         </div>
         <p class="quiet">
@@ -86,23 +86,23 @@
 <a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">20x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">5x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">19x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">60x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">23x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">60x</span>
+<span class="cline-any cline-yes">19x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { Component } from 'react';
@@ -112,15 +112,15 @@ class ErrorButton extends Component&lt;object, { hasError: boolean }&gt; {
     super(props);
     this.state = { hasError: false };
   }
-  handleButtonClick = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    this.setState({ hasError: true });</span>
-<span class="cstat-no" title="statement not covered" >  };</span>
+  handleButtonClick = () =&gt; {
+    this.setState({ hasError: true });
+  };
 &nbsp;
   render() {
     return (
       &lt;div&gt;
         &lt;button onClick={this.handleButtonClick}&gt;Throw Error&lt;/button&gt;
-        {this.state.<span class="branch-0 cbranch-no" title="branch not covered" >hasError &amp;&amp; &lt;MyError error={true} /&gt;}</span>
+        {this.state.hasError &amp;&amp; &lt;MyError error={true} /&gt;}
       &lt;/div&gt;
     );
   }
@@ -141,7 +141,7 @@ export default ErrorButton;
         rel="noopener noreferrer"
         >istanbul</a
       >
-      at 2025-07-20T06:36:06.378Z
+      at 2025-07-20T09:48:23.840Z
     </div>
     <script src="../../../prettify.js"></script>
     <script>
