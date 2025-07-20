@@ -54,25 +54,32 @@ class Results extends Component<IProps, IState> {
     );
   };
 
+  setApiQuery = () => {
+    this.setState({ loading: true });
+    this.setState(
+      {
+        apiQuery: `${this.baseApiQuery}?name=${this.props.searchResult}`,
+      },
+      () => {
+        this.fetchResults();
+      }
+    );
+  };
+  setUrl = () => {
+    if (this.props.searchResult) {
+      this.setApiQuery();
+    } else {
+      this.setBaseApiQuery();
+    }
+  };
   componentDidMount() {
-    this.setBaseApiQuery();
+    this.setUrl();
   }
 
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.searchResult !== this.props.searchResult) {
       this.setState({ loading: true });
-      if (this.props.searchResult) {
-        this.setState(
-          {
-            apiQuery: `${this.baseApiQuery}?name=${this.props.searchResult}`,
-          },
-          () => {
-            this.fetchResults();
-          }
-        );
-      } else {
-        this.setBaseApiQuery();
-      }
+      this.setUrl();
     }
   }
   fetchResults() {
@@ -109,7 +116,9 @@ class Results extends Component<IProps, IState> {
             />
           )}
           {this.state.error && (
-            <h2 className={classes.header}>Request did not succeed</h2>
+            <h2 data-testid="error" className={classes.header}>
+              Request did not succeed
+            </h2>
           )}
           {!this.state.error && !this.state.loading && (
             <ResultList characters={this.state.characters} />

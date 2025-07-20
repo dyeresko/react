@@ -38,4 +38,15 @@ describe('App', () => {
     const input = screen.getByPlaceholderText(/search/i);
     expect(input).toHaveValue('');
   });
+  it('shows error if no available results have been found', async () => {
+    render(<App />);
+    const input = screen.getByPlaceholderText(/search/i);
+    await userEvent.clear(input);
+    await userEvent.type(input, 'invalid search result');
+    const button = screen.getByRole('button', { name: 'Search' });
+    await userEvent.click(button);
+    const error = await screen.findByTestId('error');
+    expect(error).toBeVisible();
+    localStorage.removeItem('searchResult');
+  });
 });

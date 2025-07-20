@@ -9,4 +9,9 @@ describe('Results render', () => {
     const loader = screen.getByTestId('loader');
     expect(loader).toBeVisible();
   });
+  it('displays error message when API call fails', async () => {
+    render(<Results searchResult="invalidResult" />);
+    const error = await screen.findByTestId('error');
+    expect(error).toBeVisible();
+  });
 });
