@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import App from './App.tsx';
@@ -48,5 +48,24 @@ describe('App', () => {
     const error = await screen.findByTestId('error');
     expect(error).toBeVisible();
     localStorage.removeItem('searchResult');
+  });
+});
+
+describe('Error button tests', () => {
+  it('throws error if error button is clicked', async () => {
+    const spy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    render(<App />);
+    const button = screen.getByRole('button', { name: 'Throw Error' });
+    await userEvent.click(button);
+    await waitFor(() => {
+      expect(spy).toHaveBeenCalled();
+    });
+    spy.mockRestore();
+  });
+  it('triggers error boundary fallback UI', async () => {
+    render(<App />);
+    const button = screen.getByRole('button', { name: 'Throw Error' });
+    await userEvent.click(button);
+    expect(screen.queryByText('Something went wrong.')).toBeInTheDocument();
   });
 });
