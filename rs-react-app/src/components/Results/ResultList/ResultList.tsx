@@ -1,5 +1,6 @@
 import Result from '../Result/Result.tsx';
 import classes from './ResultList.module.css';
+
 export interface Character {
   id: number;
   name: string;

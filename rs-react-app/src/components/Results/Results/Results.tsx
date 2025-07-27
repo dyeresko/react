@@ -3,6 +3,7 @@ import classes from './Results.module.css';
 import ErrorButton from '../ErrorButton.tsx';
 import logo from '../../../assets/react.svg';
 import ResultList from '../ResultList/ResultList.tsx';
+
 interface Character {
   id: number;
   name: string;

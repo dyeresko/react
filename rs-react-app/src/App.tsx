@@ -4,10 +4,6 @@ import Controls from './components/Controls/Controls.tsx';
 import Results from './components/Results/Results/Results.tsx';
 import MyErrorBoundary from './components/MyErrorBoundary.tsx';
 
-export interface IState {
-  searchResult: string;
-}
-
 function App() {
   const [searchResult, setSearchResult] = useState('');
 

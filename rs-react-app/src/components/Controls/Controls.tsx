@@ -1,5 +1,6 @@
 import { type ChangeEvent, useEffect, useState } from 'react';
 import classes from './Controls.module.css';
+
 interface IProps {
   onSearch: (searchResult: string) => void;
 }
