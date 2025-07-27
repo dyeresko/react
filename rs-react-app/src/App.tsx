@@ -1,24 +1,20 @@
 import './App.css';
-import Controls from './components/Controls/Controls.tsx';
 import Results from './components/Results/Results/Results.tsx';
 import MyErrorBoundary from './components/MyErrorBoundary.tsx';
 import useLocalStorage from '../hooks/useLocalStorage.tsx';
+import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 function App() {
-  const [storageSearchResult, setStorageSearchResult] = useLocalStorage(
-    'searchResult',
-    ''
-  );
+  const [storageSearchResult] = useLocalStorage<string>('searchResult', '');
+  const [newPage] = useState('');
 
-  const onSearch = (value: string) => {
-    setStorageSearchResult(value.trim());
-  };
   return (
     <div className="App">
-      <Controls onSearch={onSearch} />
       <MyErrorBoundary>
-        <Results searchResult={storageSearchResult} />
+        <Results newPage={newPage} searchResult={storageSearchResult} />
       </MyErrorBoundary>
+      <Outlet />
     </div>
   );
 }
