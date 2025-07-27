@@ -45,6 +45,7 @@ function Results(props: IProps) {
         return response.json();
       })
       .then((data: IResponse) => {
+        console.log(data);
         setTimeout(() => {
           if (data.results) {
             setLoading(false);

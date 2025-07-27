@@ -1,35 +1,31 @@
-import { type ChangeEvent, useEffect, useState } from 'react';
+import { type ChangeEvent } from 'react';
 import classes from './Controls.module.css';
+import useLocalStorage from '../../../hooks/useLocalStorage.tsx';
 
 interface IProps {
   onSearch: (searchResult: string) => void;
 }
 function Controls(props: IProps) {
-  const [searchResult, setSearchResult] = useState('');
+  const [storageSearchResult, setStorageSearchResult] = useLocalStorage(
+    'searchResult',
+    ''
+  );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchResult(e.target.value);
+    setStorageSearchResult(e.target.value);
   };
-
-  useEffect(() => {
-    const localSearchResult = localStorage.getItem('searchResult');
-    if (localSearchResult !== null) {
-      setSearchResult(localSearchResult);
-    }
-  }, []);
   return (
     <div className={classes.controls}>
       <h2>Controls</h2>
       <input
         type="text"
         placeholder="Search..."
-        value={searchResult}
+        value={storageSearchResult}
         onChange={handleInputChange}
       />
       <button
         onClick={() => {
-          setSearchResult(searchResult.trim());
-          props.onSearch(searchResult);
+          props.onSearch(storageSearchResult);
         }}
       >
         Search
