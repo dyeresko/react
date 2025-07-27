@@ -129,6 +129,7 @@ describe('Error button tests', () => {
     spy.mockRestore();
   });
   it('triggers error boundary fallback UI', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
     render(<App />);
     const button = screen.getByRole('button', { name: 'Throw Error' });
     await userEvent.click(button);

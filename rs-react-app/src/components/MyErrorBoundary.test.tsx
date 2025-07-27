@@ -5,6 +5,7 @@ import MyErrorBoundary from './MyErrorBoundary';
 import MyError from './Results/MyError.tsx';
 describe('Error boundary render', () => {
   it('catches and handles JavaScript errors in child components', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
     render(
       <MyErrorBoundary>
         <MyError error={true} />
