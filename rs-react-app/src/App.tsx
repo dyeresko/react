@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Controls from './components/Controls/Controls.tsx';
 import Results from './components/Results/Results/Results.tsx';
@@ -8,33 +8,28 @@ export interface IState {
   searchResult: string;
 }
 
-class App extends Component<object, IState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { searchResult: '' };
-  }
+function App() {
+  const [searchResult, setSearchResult] = useState('');
 
-  componentDidMount() {
+  useEffect(() => {
     const localSearchResult = localStorage.getItem('searchResult');
     if (localSearchResult !== null) {
-      this.setState({ searchResult: localSearchResult });
+      setSearchResult(localSearchResult);
     }
-  }
-  onSearch = (value: string) => {
-    this.setState({ searchResult: value.trim() });
+  }, [searchResult]);
+
+  const onSearch = (value: string) => {
+    setSearchResult(value.trim());
     localStorage.setItem('searchResult', value.trim());
   };
-
-  render() {
-    return (
-      <div className="App">
-        <Controls onSearch={this.onSearch} />
-        <MyErrorBoundary>
-          <Results searchResult={this.state.searchResult} />
-        </MyErrorBoundary>
-      </div>
-    );
-  }
+  return (
+    <div className="App">
+      <Controls onSearch={onSearch} />
+      <MyErrorBoundary>
+        <Results searchResult={searchResult} />
+      </MyErrorBoundary>
+    </div>
+  );
 }
 
 export default App;
