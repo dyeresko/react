@@ -1,47 +1,40 @@
-import { Component, type ChangeEvent } from 'react';
-import type { IState } from '../../App.tsx';
+import { type ChangeEvent, useEffect, useState } from 'react';
 import classes from './Controls.module.css';
 interface IProps {
   onSearch: (searchResult: string) => void;
 }
-class Controls extends Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = { searchResult: '' };
-  }
+function Controls(props: IProps) {
+  const [searchResult, setSearchResult] = useState('');
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchResult: e.target.value });
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchResult(e.target.value);
   };
 
-  componentDidMount() {
+  useEffect(() => {
     const localSearchResult = localStorage.getItem('searchResult');
     if (localSearchResult !== null) {
-      this.setState({ searchResult: localSearchResult });
+      setSearchResult(localSearchResult);
     }
-  }
-
-  render() {
-    return (
-      <div className={classes.controls}>
-        <h2>Controls</h2>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={this.state.searchResult}
-          onChange={this.handleInputChange}
-        />
-        <button
-          onClick={() => {
-            this.setState({ searchResult: this.state.searchResult.trim() });
-            this.props.onSearch(this.state.searchResult);
-          }}
-        >
-          Search
-        </button>
-      </div>
-    );
-  }
+  }, []);
+  return (
+    <div className={classes.controls}>
+      <h2>Controls</h2>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchResult}
+        onChange={handleInputChange}
+      />
+      <button
+        onClick={() => {
+          setSearchResult(searchResult.trim());
+          props.onSearch(searchResult);
+        }}
+      >
+        Search
+      </button>
+    </div>
+  );
 }
 
 export default Controls;
