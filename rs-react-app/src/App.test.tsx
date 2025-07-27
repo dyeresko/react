@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
@@ -21,23 +21,40 @@ describe('App', () => {
   });
   it('displays previously saved search term from localStorage on mount', async () => {
     render(<App />);
-    const updatedInput = screen.getByPlaceholderText(/search/i);
-    expect(updatedInput).toHaveValue('some text');
+    const input = screen.getByPlaceholderText(/search/i);
+    await userEvent.type(input, 'some text');
+    const button = screen.getByRole('button', { name: 'Search' });
+    await userEvent.click(button);
+    cleanup();
+    render(<App />);
+    expect(localStorage.getItem('searchResult')).toBe('some text');
+    const newInput = screen.getByPlaceholderText(/search/i);
+    expect(newInput).toHaveValue('some text');
   });
   it('overwrites existing localStorage value when new search is performed', async () => {
     render(<App />);
     const input = screen.getByPlaceholderText(/search/i);
+    await userEvent.type(input, 'some text');
+    const button = screen.getByRole('button', { name: 'Search' });
+    await userEvent.click(button);
+    expect(localStorage.getItem('searchResult')).toBe('some text');
     await userEvent.clear(input);
     await userEvent.type(input, 'new text');
-    const button = screen.getByRole('button', { name: 'Search' });
     await userEvent.click(button);
     expect(localStorage.getItem('searchResult')).toBe('new text');
   });
   it('shows empty input if local storage is cleared', async () => {
-    localStorage.removeItem('searchResult');
     render(<App />);
     const input = screen.getByPlaceholderText(/search/i);
-    expect(input).toHaveValue('');
+    await userEvent.type(input, 'some text');
+    const button = screen.getByRole('button', { name: 'Search' });
+    await userEvent.click(button);
+    expect(localStorage.getItem('searchResult')).toBe('some text');
+    localStorage.clear();
+    cleanup();
+    render(<App />);
+    const newInput = screen.getByPlaceholderText(/search/i);
+    expect(newInput).toHaveValue('');
   });
   it('shows error if no available results have been found', async () => {
     mockFetchFailure();
