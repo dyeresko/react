@@ -1,9 +1,9 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import ResultList from './ResultList.tsx';
 import type { Character } from './ResultList.tsx';
-
+import { customRender } from '../../../../test-utils/utils.tsx';
 const data: Character[] = [
   {
     id: 1,
@@ -36,21 +36,21 @@ const data: Character[] = [
 
 describe('Result list render', () => {
   it('renders correct number of items when data is provided', () => {
-    render(<ResultList characters={data} />);
+    customRender(<ResultList characters={data} />);
     const results = screen.getAllByTestId('result');
     expect(results).toHaveLength(3);
   });
   it('displays no results if array is empty', () => {
-    render(<ResultList characters={[]} />);
+    customRender(<ResultList characters={[]} />);
     const results = screen.queryAllByTestId('result');
     expect(results).toHaveLength(0);
   });
   it('displays "no results" message when data array is not defined', () => {
-    render(<ResultList />);
+    customRender(<ResultList />);
     expect(screen.getByText(/no results found/i)).toBeVisible();
   });
   it('displays item name and description correctly', () => {
-    render(<ResultList characters={data} />);
+    customRender(<ResultList characters={data} />);
     const results = screen.queryAllByTestId('result');
     results.forEach((result, index) => {
       expect(result).toHaveTextContent(data[index].name);
