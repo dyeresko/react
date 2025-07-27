@@ -36,6 +36,16 @@ function Results(props: IProps) {
   const [apiQuery, setApiQuery] = useState('');
 
   useEffect(() => {
+    setLoading(true);
+    if (props.searchResult) {
+      setApiQuery(`${baseApiQuery}?name=${props.searchResult}`);
+    } else {
+      setApiQuery(baseApiQuery);
+    }
+  }, [props.searchResult]);
+
+  useEffect(() => {
+    if (!apiQuery) return;
     setError(false);
     fetch(apiQuery)
       .then((response) => {
@@ -58,15 +68,6 @@ function Results(props: IProps) {
         setLoading(false);
       });
   }, [apiQuery]);
-
-  useEffect(() => {
-    setLoading(true);
-    if (props.searchResult) {
-      setApiQuery(`${baseApiQuery}?name=${props.searchResult}`);
-    } else {
-      setApiQuery(baseApiQuery);
-    }
-  }, [props.searchResult]);
 
   return (
     <div>
