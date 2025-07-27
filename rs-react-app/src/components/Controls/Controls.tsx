@@ -3,6 +3,7 @@ import classes from './Controls.module.css';
 import useLocalStorage from '../../../hooks/useLocalStorage.tsx';
 import { PaginationDataContext } from '../../../hooks/PaginationDataContext.tsx';
 import type { IInfo } from '../Results/Results/Results.tsx';
+import { useNavigate } from 'react-router-dom';
 
 interface IProps {
   onSearch: (searchResult: string) => void;
@@ -27,13 +28,20 @@ function Controls(props: IProps) {
   const [storageSearchResult] = useLocalStorage('searchResult', '');
   const [searchResult, setSearchResult] = useState(storageSearchResult);
   const paginationContext = useContext(PaginationDataContext);
-
+  const navigate = useNavigate();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchResult(e.target.value);
   };
   return (
     <div className={classes.controls}>
       <h2>Controls</h2>
+      <button
+        onClick={() => {
+          navigate('/about');
+        }}
+      >
+        About
+      </button>
       <input
         type="text"
         placeholder="Search..."

@@ -1,0 +1,10 @@
+.author-info {
+    border: black solid 1px;
+    border-radius: 10px;
+    width: 450px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
