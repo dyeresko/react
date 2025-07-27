@@ -6,7 +6,7 @@ function About() {
   return (
     <div>
       <button onClick={() => navigate(-1)}>Back</button>
-      <div className="error-not-found">
+      <div data-testid="error-not-found" className="error-not-found">
         <h2>NOT FOUND 404</h2>
       </div>
     </div>

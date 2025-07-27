@@ -13,7 +13,7 @@ function About() {
     '\n' +
     'One of my main motivations is the opportunity to solve complex problems and create solutions that make web applications more convenient and functional for users. I always enjoy solving logical problems and encounter them at every stage of development. The complexity of the tasks does not scare me, on the contrary, it motivates me to delve deeper into the problem and find the most elegant solution. I strive to develop this quality in the future in order to effectively solve the problems I encounter at work.';
   return (
-    <div className="author-info">
+    <div data-testid="author-info" className="author-info">
       <button onClick={() => navigate(-1)}>Back</button>
       <p>{authorInfo}</p>
       <Link to={'https://rs.school/'}>

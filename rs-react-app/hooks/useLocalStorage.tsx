@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 
-function useLocalStorage<T>(
+function useLocalStorage(
   key: string,
-  initialValue: T
-): [T, (value: T) => void] {
-  const retrieveInitialValue = (): T => {
+  initialValue: string
+): [string, (value: string) => void] {
+  const retrieveInitialValue = (): string => {
     const localSearchResult = localStorage.getItem(key);
     if (localSearchResult !== null) {
-      return JSON.parse(localSearchResult);
+      return localSearchResult;
     } else {
       return initialValue;
     }
   };
-  const init: T = retrieveInitialValue();
-  const [value, setValue] = useState<T>(init);
+  const init: string = retrieveInitialValue();
+  const [value, setValue] = useState(init);
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(value));
+    localStorage.setItem(key, value);
   }, [value, key]);
 
   return [value, setValue];

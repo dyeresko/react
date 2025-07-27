@@ -50,7 +50,8 @@ function Controls(props: IProps) {
       />
       <button
         onClick={() => {
-          props.onSearch(searchResult);
+          setSearchResult(searchResult.trim());
+          props.onSearch(searchResult.trim());
         }}
       >
         Search
