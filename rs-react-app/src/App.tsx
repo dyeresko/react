@@ -17,12 +17,12 @@ class App extends Component<object, IState> {
   componentDidMount() {
     const localSearchResult = localStorage.getItem('searchResult');
     if (localSearchResult !== null) {
-      this.setState({ searchResult: JSON.parse(localSearchResult) });
+      this.setState({ searchResult: localSearchResult });
     }
   }
   onSearch = (value: string) => {
-    this.setState({ searchResult: value });
-    localStorage.setItem('searchResult', JSON.stringify(value));
+    this.setState({ searchResult: value.trim() });
+    localStorage.setItem('searchResult', value.trim());
   };
 
   render() {

@@ -5,7 +5,7 @@ class MyError extends Component<{ error: boolean }, object> {
     if (this.props.error) {
       throw new Error('Something went wrong.');
     }
-    return <div>{this.props.error}</div>;
+    return <div data-testid="error">{this.props.error}</div>;
   }
 }
 
