@@ -1,26 +1,25 @@
 import { StrictMode, useState } from 'react';
 import type { IInfo } from '../Results/Results/Results.tsx';
 import { PaginationDataContext } from '../../../hooks/PaginationDataContext.tsx';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
 import RootLayout from '../../../layout/RootLayout.tsx';
 import App from '../../App.tsx';
+import CharacterDetails from '../CharacterDetails/CharacterDetails.tsx';
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <App />,
-      },
-      // {
-      //   path: 'details/:id',
-      //   element: <Details />
-      // },
-    ],
-  },
-]);
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<RootLayout />}>
+      <Route path="" element={<App />}>
+        <Route path={'details/:id'} element={<CharacterDetails />} />
+      </Route>
+    </Route>
+  )
+);
 
 const MainApp = () => {
   const [paginationData, setPaginationData] = useState<IInfo>({
