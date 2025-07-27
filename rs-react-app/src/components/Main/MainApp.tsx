@@ -11,6 +11,7 @@ import RootLayout from '../../../layout/RootLayout.tsx';
 import App from '../../App.tsx';
 import CharacterDetails from '../CharacterDetails/CharacterDetails.tsx';
 import About from '../About/About.tsx';
+import NotFound from '../NotFound/NotFound.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
         <Route path={'details/:id'} element={<CharacterDetails />} />
       </Route>
       <Route path="/about" element={<About />} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
