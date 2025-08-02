@@ -1,6 +1,7 @@
 import Result from '../Result/Result.tsx';
 import classes from './ResultList.module.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import type { DetailedCharacter } from '../../Panel/Panel.tsx';
 
 export interface Character {
   id: number;
@@ -13,7 +14,7 @@ export interface Character {
 }
 
 interface IProps {
-  characters?: Character[];
+  characters?: DetailedCharacter[];
 }
 
 function ResultList(props: IProps) {
@@ -22,7 +23,7 @@ function ResultList(props: IProps) {
   return (
     <div className={classes.results}>
       {props.characters
-        ? props.characters.map((character: Character) => (
+        ? props.characters.map((character: DetailedCharacter) => (
             <div
               key={character.id}
               onClick={() => {
@@ -41,11 +42,14 @@ function ResultList(props: IProps) {
               }}
             >
               <Result
+                id={character.id}
                 name={character.name}
                 status={character.status}
                 species={character.species}
                 gender={character.gender}
-                imageUrl={character.image}
+                image={character.image}
+                origin={character.origin}
+                location={character.location}
               />
             </div>
           ))

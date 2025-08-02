@@ -18,11 +18,12 @@ describe('Result display', () => {
   it('correctly displays item names and descriptions', () => {
     render(
       <Result
+        id={data.id}
         name={data.name}
         status={data.status}
         species={data.species}
         gender={data.gender}
-        imageUrl={data.image}
+        image={data.image}
       />
     );
     expect(screen.getByTestId('name')).toHaveTextContent('morty');
@@ -38,7 +39,7 @@ describe('Result display', () => {
     expect(image).toHaveAttribute('alt', 'Result image');
   });
   it('handles missing or undefined data gracefully', () => {
-    render(<Result />);
+    render(<Result id={0} />);
     expect(screen.getByTestId('name')).toHaveTextContent('name is missing');
     expect(screen.getByTestId('status')).toHaveTextContent('status is missing');
     expect(screen.getByTestId('species')).toHaveTextContent(

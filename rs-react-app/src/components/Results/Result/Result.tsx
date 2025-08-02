@@ -1,22 +1,45 @@
 import classes from './Result.module.css';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../../../../hooks/reduxHooks.ts';
+import type { ChangeEvent } from 'react';
+import type { DetailedCharacter } from '../../Panel/Panel.tsx';
+import { addCard, removeCard } from '../../../features/cards/cardsSlice.ts';
 
-interface IProps {
-  name?: string;
-  status?: string;
-  species?: string;
-  gender?: string;
-  imageUrl?: string;
-}
+function Result(props: DetailedCharacter) {
+  const cards = useAppSelector((state) => state.cards.items);
+  const dispatch = useAppDispatch();
 
-function Result(props: IProps) {
+  const isChecked = (id: number) => {
+    const foundCard = cards.find((card) => card.id === id);
+    return !!foundCard;
+  };
+
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      dispatch(addCard(props));
+    } else {
+      dispatch(removeCard(props.id));
+    }
+  };
   return (
     <div className={classes.result} data-testid="result">
+      <input
+        onClick={(event) => {
+          event.stopPropagation();
+        }}
+        onChange={handleCheckboxChange}
+        checked={isChecked(props.id)}
+        className={classes.checkbox}
+        type="checkbox"
+      />
       <img
         alt="Result image"
         className={classes.resultImage}
         src={
-          props.imageUrl
-            ? props.imageUrl
+          props.image
+            ? props.image
             : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/640px-No_image_3x4.svg.png'
         }
         data-testid="image"
