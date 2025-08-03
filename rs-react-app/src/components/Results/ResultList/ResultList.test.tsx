@@ -4,6 +4,8 @@ import '@testing-library/jest-dom/vitest';
 import ResultList from './ResultList.tsx';
 import type { Character } from './ResultList.tsx';
 import { customRender } from '../../../../test-utils/utils.tsx';
+import { Provider } from 'react-redux';
+import { store } from '../../../app/store.ts';
 const data: Character[] = [
   {
     id: 1,
@@ -36,21 +38,37 @@ const data: Character[] = [
 
 describe('Result list render', () => {
   it('renders correct number of items when data is provided', () => {
-    customRender(<ResultList characters={data} />);
+    customRender(
+      <Provider store={store}>
+        <ResultList characters={data} />
+      </Provider>
+    );
     const results = screen.getAllByTestId('result');
     expect(results).toHaveLength(3);
   });
   it('displays no results if array is empty', () => {
-    customRender(<ResultList characters={[]} />);
+    customRender(
+      <Provider store={store}>
+        <ResultList characters={[]} />
+      </Provider>
+    );
     const results = screen.queryAllByTestId('result');
     expect(results).toHaveLength(0);
   });
   it('displays "no results" message when data array is not defined', () => {
-    customRender(<ResultList />);
+    customRender(
+      <Provider store={store}>
+        <ResultList />
+      </Provider>
+    );
     expect(screen.getByText(/no results found/i)).toBeVisible();
   });
   it('displays item name and description correctly', () => {
-    customRender(<ResultList characters={data} />);
+    customRender(
+      <Provider store={store}>
+        <ResultList characters={data} />
+      </Provider>
+    );
     const results = screen.queryAllByTestId('result');
     results.forEach((result, index) => {
       expect(result).toHaveTextContent(data[index].name);

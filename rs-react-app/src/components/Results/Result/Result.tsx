@@ -33,6 +33,7 @@ function Result(props: DetailedCharacter) {
         checked={isChecked(props.id)}
         className={classes.checkbox}
         type="checkbox"
+        aria-label={`cb-${props.id}`}
       />
       <img
         alt="Result image"

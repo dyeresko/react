@@ -41,7 +41,7 @@ function DownloadPanel() {
     }
   };
   return (
-    <div className={classes.downloadPanel}>
+    <div data-testid="download-panel" className={classes.downloadPanel}>
       <p>There are {cards.length} selected cards</p>
       <div className={classes.panelButtons}>
         <button onClick={handleDownloadClick}>Download</button>

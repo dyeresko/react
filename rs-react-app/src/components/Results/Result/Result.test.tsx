@@ -3,6 +3,8 @@ import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import Result from './Result.tsx';
 import type { Character } from '../ResultList/ResultList.tsx';
+import { Provider } from 'react-redux';
+import { store } from '../../../app/store.ts';
 
 const data: Character = {
   id: 1,
@@ -17,14 +19,16 @@ const data: Character = {
 describe('Result display', () => {
   it('correctly displays item names and descriptions', () => {
     render(
-      <Result
-        id={data.id}
-        name={data.name}
-        status={data.status}
-        species={data.species}
-        gender={data.gender}
-        image={data.image}
-      />
+      <Provider store={store}>
+        <Result
+          id={data.id}
+          name={data.name}
+          status={data.status}
+          species={data.species}
+          gender={data.gender}
+          image={data.image}
+        />
+      </Provider>
     );
     expect(screen.getByTestId('name')).toHaveTextContent('morty');
     expect(screen.getByTestId('status')).toHaveTextContent('alive');
@@ -39,7 +43,11 @@ describe('Result display', () => {
     expect(image).toHaveAttribute('alt', 'Result image');
   });
   it('handles missing or undefined data gracefully', () => {
-    render(<Result id={0} />);
+    render(
+      <Provider store={store}>
+        <Result id={0} />
+      </Provider>
+    );
     expect(screen.getByTestId('name')).toHaveTextContent('name is missing');
     expect(screen.getByTestId('status')).toHaveTextContent('status is missing');
     expect(screen.getByTestId('species')).toHaveTextContent(

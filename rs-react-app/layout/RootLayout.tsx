@@ -6,10 +6,7 @@ import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 const RootLayout = () => {
-  const [, setStorageSearchResult] = useLocalStorage<string>(
-    'searchResult',
-    ''
-  );
+  const [, setStorageSearchResult] = useLocalStorage('searchResult', '');
   const [, setNewPage] = useState('');
   const [, setSearchParams] = useSearchParams();
 
