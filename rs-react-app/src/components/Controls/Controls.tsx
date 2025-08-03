@@ -1,9 +1,11 @@
-import { type ChangeEvent, useState, useContext } from 'react';
+import { type ChangeEvent, useState, useContext, useEffect } from 'react';
 import classes from './Controls.module.css';
 import useLocalStorage from '../../../hooks/useLocalStorage.tsx';
 import { PaginationDataContext } from '../../../hooks/PaginationDataContext.tsx';
 import type { IInfo } from '../Results/Results/Results.tsx';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks.ts';
+import { toggleTheme } from '../../features/theme/themeSlice.ts';
 
 interface IProps {
   onSearch: (searchResult: string) => void;
@@ -32,9 +34,20 @@ function Controls(props: IProps) {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchResult(e.target.value);
   };
+  const theme = useAppSelector((state) => state.theme.style);
+  const dispatch = useAppDispatch();
+  const handleThemeChange = () => {
+    dispatch(toggleTheme());
+  };
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme-style', theme);
+  }, [theme]);
   return (
     <div className={classes.controls}>
       <h2>Controls</h2>
+      <button className={classes.themeButton} onClick={handleThemeChange}>
+        {theme === 'white' ? '🌙' : '☀️'}
+      </button>
       <button
         onClick={() => {
           navigate('/about');
