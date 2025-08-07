@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { RootState } from '../../app/store.ts';
+import type { RootState } from '@/app/store.ts';
 
 interface ThemeState {
   style: string;

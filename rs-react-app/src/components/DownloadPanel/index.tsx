@@ -1,7 +1,7 @@
-import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks.ts';
-import { clearCards } from '../../features/cards/cardsSlice.ts';
-import type { DetailedCharacter } from '../Panel/Panel.tsx';
-import classes from './DownloadPanel.module.css';
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
+import { clearCards } from '@/features/cards/cardsSlice.ts';
+import type { DetailedCharacter } from '@components/Panel/index';
+import classes from '@components/DownloadPanel/DownloadPanel.module.css';
 import { useRef } from 'react';
 
 function charactersToCSV(characters: DetailedCharacter[]) {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import MyError from './MyError.tsx';
+import MyError from '@components/Results/MyError/index';
 
 function ErrorButton() {
   const [hasError, setHasError] = useState(false);

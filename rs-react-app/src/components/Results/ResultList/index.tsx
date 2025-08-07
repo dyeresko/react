@@ -1,7 +1,7 @@
-import Result from '../Result/Result.tsx';
-import classes from './ResultList.module.css';
+import Result from '@components/Results/Result/index';
+import classes from '@components/Results//ResultList/ResultList.module.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import type { DetailedCharacter } from '../../Panel/Panel.tsx';
+import type { DetailedCharacter } from '@components/Panel/index';
 
 export interface Character {
   id: number;

@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import classes from './Results.module.css';
-import ErrorButton from '../ErrorButton.tsx';
-import logo from '../../../assets/react.svg';
-import ResultList from '../ResultList/ResultList.tsx';
-import { PaginationDataContext } from '../../../../hooks/PaginationDataContext.tsx';
+import classes from '@components/Results/Results/Results.module.css';
+import ErrorButton from '@components/Results/ErrorButton';
+import logo from '@/assets/react.svg';
+import ResultList from '@components/Results/ResultList/index';
+import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
 import { useSearchParams } from 'react-router-dom';
 
 interface Character {

@@ -1,7 +1,7 @@
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Panel, { type DetailedCharacter } from '../Panel/Panel.tsx';
-import logo from '../../assets/react.svg';
+import Panel, { type DetailedCharacter } from '@components/Panel/index';
+import logo from '@/assets/react.svg';
 
 function CharacterDetails() {
   const { id } = useParams();

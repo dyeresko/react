@@ -2,7 +2,7 @@ import { afterEach, beforeEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 
 beforeEach(() => {
-  const storage = {};
+  const storage: Record<string, string> = {};
 
   globalThis.localStorage = {
     removeItem: vi.fn((key) => {

@@ -1,17 +1,17 @@
 import { StrictMode, useState } from 'react';
-import type { IInfo } from '../Results/Results/Results.tsx';
-import { PaginationDataContext } from '../../../hooks/PaginationDataContext.tsx';
+import type { IInfo } from '@components/Results/Results/index';
+import { PaginationDataContext } from '@/hooks/PaginationDataContext';
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import RootLayout from '../../../layout/RootLayout.tsx';
-import App from '../../App.tsx';
-import CharacterDetails from '../CharacterDetails/CharacterDetails.tsx';
-import About from '../About/About.tsx';
-import NotFound from '../NotFound/NotFound.tsx';
+import RootLayout from '@/layout/RootLayout';
+import App from '@/App';
+import CharacterDetails from '@components/CharacterDetails/index';
+import About from '@components/About/index';
+import NotFound from '@components/NotFound/index';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

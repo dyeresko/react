@@ -1,4 +1,4 @@
-import './About.css';
+import '@components/About/About.css';
 import { Link, useNavigate } from 'react-router-dom';
 function About() {
   const navigate = useNavigate();

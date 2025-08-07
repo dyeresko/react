@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { data, characterData } from './mockData.ts';
+import { data, characterData } from '@/test-utils/mockData';
 
 export function mockFetchFailure() {
   vi.stubGlobal(

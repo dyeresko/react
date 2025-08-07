@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import ResultList from './ResultList.tsx';
-import type { Character } from './ResultList.tsx';
-import { customRender } from '../../../../test-utils/utils.tsx';
+import ResultList from '@components/Results/ResultList/index';
+import type { Character } from '@components/Results/ResultList/index';
+import { customRender } from '@/test-utils/utils.tsx';
 import { Provider } from 'react-redux';
-import { store } from '../../../app/store.ts';
+import { store } from '@/app/store.ts';
 const data: Character[] = [
   {
     id: 1,

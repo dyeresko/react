@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import MyErrorBoundary from './MyErrorBoundary';
-import MyError from './Results/MyError.tsx';
+import MyErrorBoundary from '@/components/MyErrorBoundary/index';
+import MyError from '@/components/Results/MyError/index';
 describe('Error boundary render', () => {
   it('catches and handles JavaScript errors in child components', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});

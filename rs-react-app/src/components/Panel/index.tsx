@@ -1,40 +1,24 @@
-import classes from './Result.module.css';
-import {
-  useAppDispatch,
-  useAppSelector,
-} from '../../../../hooks/reduxHooks.ts';
-import type { ChangeEvent } from 'react';
-import type { DetailedCharacter } from '../../Panel/Panel.tsx';
-import { addCard, removeCard } from '../../../features/cards/cardsSlice.ts';
+import classes from '@components/Results/Result/Result.module.css';
 
-function Result(props: DetailedCharacter) {
-  const cards = useAppSelector((state) => state.cards.items);
-  const dispatch = useAppDispatch();
-
-  const isChecked = (id: number) => {
-    const foundCard = cards.find((card) => card.id === id);
-    return !!foundCard;
+export interface DetailedCharacter {
+  id: number;
+  name?: string;
+  status?: string;
+  species?: string;
+  type?: string;
+  gender?: string;
+  image?: string;
+  origin?: {
+    name: string;
   };
-
-  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      dispatch(addCard(props));
-    } else {
-      dispatch(removeCard(props.id));
-    }
+  location?: {
+    name: string;
   };
+}
+
+const Panel = (props: DetailedCharacter) => {
   return (
     <div className={classes.result} data-testid="result">
-      <input
-        onClick={(event) => {
-          event.stopPropagation();
-        }}
-        onChange={handleCheckboxChange}
-        checked={isChecked(props.id)}
-        className={classes.checkbox}
-        type="checkbox"
-        aria-label={`cb-${props.id}`}
-      />
       <img
         alt="Result image"
         className={classes.resultImage}
@@ -70,9 +54,21 @@ function Result(props: DetailedCharacter) {
             {props.gender ? props.gender : 'gender is missing'}
           </span>
         </div>
+        <div className={classes.infoItem}>
+          <span>Origin:</span>
+          <span data-testid="origin">
+            {props.origin?.name ? props.origin.name : 'origin is missing'}
+          </span>
+        </div>
+        <div className={classes.infoItem}>
+          <span>Location:</span>
+          <span data-testid="location">
+            {props.location?.name ? props.location.name : 'location is missing'}
+          </span>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default Result;
+export default Panel;

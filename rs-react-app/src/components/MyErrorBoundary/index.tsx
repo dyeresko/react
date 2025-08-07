@@ -1,5 +1,5 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import ErrorButton from './Results/ErrorButton.tsx';
+import ErrorButton from '@components/Results/ErrorButton.tsx';
 
 interface IState {
   hasError: boolean;

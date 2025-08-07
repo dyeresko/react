@@ -1,11 +1,11 @@
 import { type ChangeEvent, useState, useContext, useEffect } from 'react';
-import classes from './Controls.module.css';
-import useLocalStorage from '../../../hooks/useLocalStorage.tsx';
-import { PaginationDataContext } from '../../../hooks/PaginationDataContext.tsx';
-import type { IInfo } from '../Results/Results/Results.tsx';
+import classes from '@components/Controls/Controls.module.css';
+import useLocalStorage from '@/hooks/useLocalStorage.tsx';
+import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
+import type { IInfo } from '@components/Results/Results/index';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks.ts';
-import { toggleTheme } from '../../features/theme/themeSlice.ts';
+import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
+import { toggleTheme } from '@/features/theme/themeSlice.ts';
 
 interface IProps {
   onSearch: (searchResult: string) => void;

@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import Controls from '../src/components/Controls/Controls';
-import './App.css';
-import useLocalStorage from '../hooks/useLocalStorage.tsx';
+import Controls from '@components/Controls/index';
+import '@/App.css';
+import useLocalStorage from '@/hooks/useLocalStorage.tsx';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 

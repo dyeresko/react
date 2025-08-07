@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { RootState } from '../../app/store.ts';
-import type { DetailedCharacter } from '../../components/Panel/Panel.tsx';
+import type { RootState } from '@/app/store.ts';
+import type { DetailedCharacter } from '@components/Panel/index';
 
 interface CardsState {
   items: DetailedCharacter[];

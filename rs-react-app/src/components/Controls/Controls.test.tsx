@@ -2,10 +2,10 @@ import { screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
-import Controls from './Controls.tsx';
-import { customRender } from '../../../test-utils/utils.tsx';
+import Controls from '@components/Controls/index';
+import { customRender } from '@/test-utils/utils.tsx';
 import { Provider } from 'react-redux';
-import { store } from '../../app/store.ts';
+import { store } from '@/app/store.ts';
 
 describe('Controls render', () => {
   it('renders input field', () => {

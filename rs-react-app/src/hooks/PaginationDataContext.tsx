@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import type { IInfo } from '../src/components/Results/Results/Results';
+import type { IInfo } from '@components/Results/Results';
 
 interface IPaginationContext {
   paginationData: IInfo;

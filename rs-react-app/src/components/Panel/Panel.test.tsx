@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import { characterData } from '../../../test-utils/mockData.ts';
-import Panel from './Panel.tsx';
+import { characterData } from '@/test-utils/mockData.ts';
+import Panel from '@components/Panel/index';
 
 describe('Result display', () => {
   it('correctly displays item names and descriptions', () => {
