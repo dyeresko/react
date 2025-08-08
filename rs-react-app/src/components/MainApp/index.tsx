@@ -12,6 +12,7 @@ import CharacterDetails from '@components/CharacterDetails/index';
 import About from '@components/About/index';
 import NotFound from '@components/NotFound/index';
 import type { Info } from '@/types/interfaces';
+import { defaultPaginationData } from '@/data/data';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,12 +27,9 @@ const router = createBrowserRouter(
 );
 
 const MainApp: FC = () => {
-  const [paginationData, setPaginationData] = useState<Info>({
-    count: 0,
-    pages: 0,
-    next: null,
-    prev: null,
-  });
+  const [paginationData, setPaginationData] = useState<Info>(
+    defaultPaginationData
+  );
 
   return (
     <StrictMode>
