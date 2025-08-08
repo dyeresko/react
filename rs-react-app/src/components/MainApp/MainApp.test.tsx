@@ -213,6 +213,7 @@ describe('Error button tests', () => {
 
 describe('State Management tests', () => {
   it('selects item if checkbox is pressed', async () => {
+    mockFetchSuccess();
     render(
       <Provider store={store}>
         <MainApp />
@@ -225,6 +226,7 @@ describe('State Management tests', () => {
     await userEvent.click(checkbox);
   });
   it('panel appears if item is selected', async () => {
+    mockFetchSuccess();
     render(
       <Provider store={store}>
         <MainApp />
@@ -238,6 +240,7 @@ describe('State Management tests', () => {
     await userEvent.click(checkbox);
   });
   it('panel buttons appear', async () => {
+    mockFetchSuccess();
     render(
       <Provider store={store}>
         <MainApp />
@@ -256,6 +259,7 @@ describe('State Management tests', () => {
     await userEvent.click(checkbox);
   });
   it('updates text on selecting item', async () => {
+    mockFetchSuccess();
     render(
       <Provider store={store}>
         <MainApp />
@@ -273,6 +277,7 @@ describe('State Management tests', () => {
     await userEvent.click(checkbox2);
   });
   it('closes the window if no items are selected', async () => {
+    mockFetchSuccess();
     render(
       <Provider store={store}>
         <MainApp />
@@ -287,6 +292,7 @@ describe('State Management tests', () => {
     expect(panel).not.toBeInTheDocument();
   });
   it('closes the panel if unselect button is pressed', async () => {
+    mockFetchSuccess();
     render(
       <Provider store={store}>
         <MainApp />
@@ -304,6 +310,7 @@ describe('State Management tests', () => {
     expect(panel).not.toBeInTheDocument();
   });
   it('unselects item if unselect button is pressed', async () => {
+    mockFetchSuccess();
     render(
       <Provider store={store}>
         <MainApp />
