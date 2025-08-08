@@ -1,15 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState, type FC } from 'react';
 import classes from '@components/Results/Results/Results.module.css';
 import ErrorButton from '@components/Results/ErrorButton';
 import logo from '@/assets/react.svg';
 import ResultList from '@components/Results/ResultList/index';
 import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
 import { useSearchParams } from 'react-router-dom';
-import type { Character, ResultsProps, Response } from '@/types/interfaces';
+import type { Character, Response } from '@/types/interfaces';
 import { baseApiQuery } from '@/data/data';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
+import type { ResultsProps } from '@/types/types';
 
-function Results(props: ResultsProps) {
+const Results: FC<ResultsProps> = ({ searchResult, newPage }) => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const paginationContext = useContext(PaginationDataContext);
   const [loading, setLoading] = useState(false);
@@ -22,20 +23,20 @@ function Results(props: ResultsProps) {
 
   useEffect(() => {
     setLoading(true);
-    if (props.searchResult) {
-      const searchName = props.searchResult;
+    if (searchResult) {
+      const searchName = searchResult;
       setApiQuery(`${baseApiQuery}?name=${searchName}&page=1`);
     }
-  }, [props.searchResult]);
+  }, [searchResult]);
   useEffect(() => {
     setLoading(true);
-    if (props.newPage) {
-      setApiQuery(props.newPage);
+    if (newPage) {
+      setApiQuery(newPage);
       return;
     }
     setApiQuery(`${baseApiQuery}?page=${page}&name=${name}`);
     updateSearchParams({ page: String(page), name: name });
-  }, [props.newPage, page, name]);
+  }, [newPage, page, name]);
 
   useEffect(() => {
     if (!apiQuery) return;
@@ -83,6 +84,6 @@ function Results(props: ResultsProps) {
       </div>
     </div>
   );
-}
+};
 
 export default Results;

@@ -1,9 +1,7 @@
 import { Component, type ErrorInfo } from 'react';
 import ErrorButton from '@components/Results/ErrorButton.tsx';
-import type {
-  ErrorBoundaryProps,
-  ErrorBoundaryState,
-} from '@/types/interfaces';
+import type { ErrorBoundaryState } from '@/types/interfaces';
+import type { ErrorBoundaryProps } from '@/types/types';
 
 class MyErrorBoundary extends Component<
   ErrorBoundaryProps,

@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import Controls from '@components/Controls/index';
-import { customRender } from '@/test-utils/utils.tsx';
+import { customRender } from '@/test-utils/testUtils';
 import { Provider } from 'react-redux';
 import { store } from '@/app/store.ts';
 

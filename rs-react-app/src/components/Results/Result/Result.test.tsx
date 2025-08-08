@@ -10,14 +10,7 @@ describe('Result display', () => {
   it('correctly displays item names and descriptions', () => {
     render(
       <Provider store={store}>
-        <Result
-          id={characterData.id}
-          name={characterData.name}
-          status={characterData.status}
-          species={characterData.species}
-          gender={characterData.gender}
-          image={characterData.image}
-        />
+        <Result character={characterData} />
       </Provider>
     );
     expect(screen.getByTestId('name')).toHaveTextContent('morty');
@@ -35,7 +28,7 @@ describe('Result display', () => {
   it('handles missing or undefined data gracefully', () => {
     render(
       <Provider store={store}>
-        <Result id={0} />
+        <Result character={{ id: 0 }} />
       </Provider>
     );
     expect(screen.getByTestId('name')).toHaveTextContent('name is missing');

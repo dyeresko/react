@@ -1,14 +1,20 @@
-import { type ChangeEvent, useState, useContext, useEffect } from 'react';
+import {
+  type ChangeEvent,
+  useState,
+  useContext,
+  useEffect,
+  type FC,
+} from 'react';
 import classes from '@components/Controls/Controls.module.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
 import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import { toggleTheme } from '@/features/theme/themeSlice.ts';
-import type { ControlsProps } from '@/types/interfaces';
+import type { ControlsProps } from '@/types/types';
 import { getPage } from '@/utils/utils';
 
-function Controls(props: ControlsProps) {
+const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
   const [storageSearchResult] = useLocalStorage('searchResult', '');
   const [searchResult, setSearchResult] = useState(storageSearchResult);
   const paginationContext = useContext(PaginationDataContext);
@@ -46,7 +52,7 @@ function Controls(props: ControlsProps) {
       <button
         onClick={() => {
           setSearchResult(searchResult.trim());
-          props.onSearch(searchResult.trim());
+          onSearch(searchResult.trim());
         }}
       >
         Search
@@ -63,7 +69,7 @@ function Controls(props: ControlsProps) {
         <button
           onClick={() => {
             if (paginationContext?.paginationData.prev) {
-              props.onNewPage(paginationContext.paginationData.prev);
+              onNewPage(paginationContext.paginationData.prev);
             }
           }}
         >
@@ -84,7 +90,7 @@ function Controls(props: ControlsProps) {
         <button
           onClick={() => {
             if (paginationContext?.paginationData.next) {
-              props.onNewPage(paginationContext.paginationData.next);
+              onNewPage(paginationContext.paginationData.next);
             }
           }}
         >
@@ -93,6 +99,6 @@ function Controls(props: ControlsProps) {
       </div>
     </div>
   );
-}
+};
 
 export default Controls;

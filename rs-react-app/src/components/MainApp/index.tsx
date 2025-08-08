@@ -1,4 +1,4 @@
-import { StrictMode, useState } from 'react';
+import { StrictMode, useState, type FC } from 'react';
 import { PaginationDataContext } from '@/hooks/PaginationDataContext';
 import {
   createBrowserRouter,
@@ -25,7 +25,7 @@ const router = createBrowserRouter(
   )
 );
 
-const MainApp = () => {
+const MainApp: FC = () => {
   const [paginationData, setPaginationData] = useState<Info>({
     count: 0,
     pages: 0,

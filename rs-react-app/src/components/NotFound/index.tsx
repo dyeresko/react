@@ -1,6 +1,7 @@
 import '@components/NotFound/NotFound.css';
+import type { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-function About() {
+const NotFound: FC = () => {
   const navigate = useNavigate();
 
   return (
@@ -11,6 +12,6 @@ function About() {
       </div>
     </div>
   );
-}
+};
 
-export default About;
+export default NotFound;

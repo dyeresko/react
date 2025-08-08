@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import { clearCards } from '@/features/cards/cardsSlice.ts';
 import classes from '@components/DownloadPanel/DownloadPanel.module.css';
-import { useRef } from 'react';
+import { useRef, type FC } from 'react';
 import { charactersToCSV } from '@/utils/utils';
 
-function DownloadPanel() {
+const DownloadPanel: FC = () => {
   const cards = useAppSelector((state) => state.cards.items);
   const dispatch = useAppDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
@@ -34,6 +34,6 @@ function DownloadPanel() {
       </div>
     </div>
   );
-}
+};
 
 export default DownloadPanel;

@@ -1,7 +1,8 @@
 import '@components/About/About.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { authorInfo } from '@/data/data';
-function About() {
+import type { FC } from 'react';
+const About: FC = () => {
   const navigate = useNavigate();
   return (
     <div data-testid="author-info" className="author-info">
@@ -12,6 +13,6 @@ function About() {
       </Link>
     </div>
   );
-}
+};
 
 export default About;

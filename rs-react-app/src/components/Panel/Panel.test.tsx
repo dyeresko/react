@@ -6,19 +6,7 @@ import Panel from '@components/Panel/index';
 
 describe('Result display', () => {
   it('correctly displays item names and descriptions', () => {
-    render(
-      <Panel
-        id={characterData.id}
-        name={characterData.name}
-        status={characterData.status}
-        species={characterData.species}
-        type={characterData.type}
-        gender={characterData.gender}
-        image={characterData.image}
-        origin={characterData.origin}
-        location={characterData.location}
-      />
-    );
+    render(<Panel character={characterData} />);
     expect(screen.getByText('Rick Sanchez')).toBeVisible();
     expect(screen.getByText('Citadel of Ricks')).toBeVisible();
     expect(screen.getByText('Earth (C-137)')).toBeVisible();
@@ -28,7 +16,7 @@ describe('Result display', () => {
     expect(image).toHaveAttribute('alt', 'Result image');
   });
   it('handles missing or undefined data gracefully', () => {
-    render(<Panel id={1} />);
+    render(<Panel character={{ id: 1 }} />);
     expect(screen.getByTestId('name')).toHaveTextContent('name is missing');
     expect(screen.getByTestId('status')).toHaveTextContent('status is missing');
     expect(screen.getByTestId('species')).toHaveTextContent(

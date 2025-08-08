@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import ResultList from '@components/Results/ResultList/index';
-import { customRender } from '@/test-utils/utils.tsx';
+import { customRender } from '@/test-utils/testUtils';
 import { Provider } from 'react-redux';
 import { store } from '@/app/store.ts';
 import { charactersData } from '@/data/data';

@@ -1,5 +1,3 @@
-import type { ReactNode } from 'react';
-
 export interface DetailedCharacter {
   id: number;
   name?: string;
@@ -30,11 +28,6 @@ export interface CardsState {
   items: DetailedCharacter[];
 }
 
-export interface ControlsProps {
-  onSearch: (searchResult: string) => void;
-  onNewPage: (newPage: string) => void;
-}
-
 export interface Info {
   count: number;
   pages: number;
@@ -47,10 +40,6 @@ export interface Response {
   results?: Character[];
   error?: string;
 }
-export interface ResultsProps {
-  searchResult?: string;
-  newPage?: string;
-}
 
 export interface PaginationContext {
   paginationData: Info;
@@ -59,10 +48,6 @@ export interface PaginationContext {
 
 export interface ErrorBoundaryState {
   hasError: boolean;
-}
-
-export interface ErrorBoundaryProps {
-  children: ReactNode;
 }
 
 export interface ThemeState {

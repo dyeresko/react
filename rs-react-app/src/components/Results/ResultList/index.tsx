@@ -3,15 +3,18 @@ import classes from '@components/Results//ResultList/ResultList.module.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import type { DetailedCharacter } from '@/types/interfaces';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
+import type { FC } from 'react';
 
-function ResultList(props: { characters?: DetailedCharacter[] }) {
+const ResultList: FC<{ characters?: DetailedCharacter[] }> = ({
+  characters,
+}) => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const updateSearchParams = useUpdateSearchParams();
   return (
     <div className={classes.results}>
-      {props.characters
-        ? props.characters.map((character: DetailedCharacter) => (
+      {characters
+        ? characters.map((character: DetailedCharacter) => (
             <div
               key={character.id}
               onClick={() => {
@@ -21,21 +24,12 @@ function ResultList(props: { characters?: DetailedCharacter[] }) {
                 updateSearchParams({ page, name });
               }}
             >
-              <Result
-                id={character.id}
-                name={character.name}
-                status={character.status}
-                species={character.species}
-                gender={character.gender}
-                image={character.image}
-                origin={character.origin}
-                location={character.location}
-              />
+              <Result character={character} />
             </div>
           ))
         : 'No results found.'}
     </div>
   );
-}
+};
 
 export default ResultList;

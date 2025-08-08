@@ -3,8 +3,9 @@ import Controls from '@components/Controls/index';
 import '@/App.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
+import type { FC } from 'react';
 
-const RootLayout = () => {
+const RootLayout: FC = () => {
   const [, setStorageSearchResult] = useLocalStorage('searchResult', '');
   const updateSearchParams = useUpdateSearchParams();
 
