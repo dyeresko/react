@@ -1,32 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import Result from './index';
-import type { Character } from '@components/Results/ResultList/index';
+import Result from '@components/Results/Result/index';
 import { Provider } from 'react-redux';
 import { store } from '@/app/store.ts';
-
-const data: Character = {
-  id: 1,
-  name: 'morty',
-  status: 'alive',
-  species: 'human',
-  gender: 'male',
-  type: '',
-  image: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
-};
+import { characterData } from '@/data/data';
 
 describe('Result display', () => {
   it('correctly displays item names and descriptions', () => {
     render(
       <Provider store={store}>
         <Result
-          id={data.id}
-          name={data.name}
-          status={data.status}
-          species={data.species}
-          gender={data.gender}
-          image={data.image}
+          id={characterData.id}
+          name={characterData.name}
+          status={characterData.status}
+          species={characterData.species}
+          gender={characterData.gender}
+          image={characterData.image}
         />
       </Provider>
     );

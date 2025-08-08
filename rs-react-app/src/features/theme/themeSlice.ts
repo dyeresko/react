@@ -1,9 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store.ts';
-
-interface ThemeState {
-  style: string;
-}
+import type { ThemeState } from '@/types/interfaces';
 
 const initialState: ThemeState = {
   style: 'white',

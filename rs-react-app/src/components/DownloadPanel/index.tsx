@@ -1,24 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import { clearCards } from '@/features/cards/cardsSlice.ts';
-import type { DetailedCharacter } from '@components/Panel/index';
 import classes from '@components/DownloadPanel/DownloadPanel.module.css';
 import { useRef } from 'react';
-
-function charactersToCSV(characters: DetailedCharacter[]) {
-  const headers = [Object.keys(characters[0])].toString() + '\n';
-  const rows = characters
-    .map((character) => {
-      const values = Object.values(character);
-      return values.map((value) => {
-        if (typeof value === 'object') {
-          return Object.values(value)[0];
-        }
-        return value;
-      });
-    })
-    .join('\n');
-  return headers + rows;
-}
+import { charactersToCSV } from '@/utils/utils';
 
 function DownloadPanel() {
   const cards = useAppSelector((state) => state.cards.items);

@@ -1,5 +1,4 @@
 import { StrictMode, useState } from 'react';
-import type { IInfo } from '@components/Results/Results/index';
 import { PaginationDataContext } from '@/hooks/PaginationDataContext';
 import {
   createBrowserRouter,
@@ -12,6 +11,7 @@ import App from '@/App';
 import CharacterDetails from '@components/CharacterDetails/index';
 import About from '@components/About/index';
 import NotFound from '@components/NotFound/index';
+import type { Info } from '@/types/interfaces';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,7 +26,7 @@ const router = createBrowserRouter(
 );
 
 const MainApp = () => {
-  const [paginationData, setPaginationData] = useState<IInfo>({
+  const [paginationData, setPaginationData] = useState<Info>({
     count: 0,
     pages: 0,
     next: null,

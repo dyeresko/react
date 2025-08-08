@@ -1,21 +1,20 @@
-import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { Component, type ErrorInfo } from 'react';
 import ErrorButton from '@components/Results/ErrorButton.tsx';
+import type {
+  ErrorBoundaryProps,
+  ErrorBoundaryState,
+} from '@/types/interfaces';
 
-interface IState {
-  hasError: boolean;
-}
-
-interface IProps {
-  children: ReactNode;
-}
-
-class MyErrorBoundary extends Component<IProps, IState> {
-  constructor(props: IProps) {
+class MyErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(): IState {
+  static getDerivedStateFromError(): ErrorBoundaryState {
     return { hasError: true };
   }
 

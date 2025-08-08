@@ -1,11 +1,6 @@
+import type { PaginationContext } from '@/types/interfaces';
 import { createContext } from 'react';
-import type { IInfo } from '@components/Results/Results';
 
-interface IPaginationContext {
-  paginationData: IInfo;
-  setPaginationData: (paginationData: IInfo) => void;
-}
-
-export const PaginationDataContext = createContext<IPaginationContext | null>(
+export const PaginationDataContext = createContext<PaginationContext | null>(
   null
 );

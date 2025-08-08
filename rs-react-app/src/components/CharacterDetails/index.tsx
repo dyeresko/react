@@ -1,7 +1,9 @@
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Panel, { type DetailedCharacter } from '@components/Panel/index';
+import Panel from '@components/Panel/index';
+import type { DetailedCharacter } from '@/types/interfaces';
 import logo from '@/assets/react.svg';
+import { baseApiQuery } from '@/data/data';
 
 function CharacterDetails() {
   const { id } = useParams();
@@ -14,7 +16,7 @@ function CharacterDetails() {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://rickandmortyapi.com/api/character/${id}`)
+    fetch(`${baseApiQuery}/${id}`)
       .then((response) => {
         if (!response.ok) {
           throw Error('Failed to fetch results.');
@@ -23,9 +25,9 @@ function CharacterDetails() {
       })
       .then((data) => {
         setTimeout(() => {
+          setLoading(false);
           setCharacter(data);
         }, 200);
-        setLoading(false);
       });
   }, [id]);
   return (

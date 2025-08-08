@@ -1,8 +1,9 @@
-import classes from './Result.module.css';
+import classes from '@components/Results/Result/Result.module.css';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import type { ChangeEvent } from 'react';
-import type { DetailedCharacter } from '../../Panel/index';
-import { addCard, removeCard } from '../../../features/cards/cardsSlice.ts';
+import type { DetailedCharacter } from '@/types/interfaces';
+import { addCard, removeCard } from '@/features/cards/cardsSlice.ts';
+import { imageNotFoundURL } from '@/data/data';
 
 function Result(props: DetailedCharacter) {
   const cards = useAppSelector((state) => state.cards.items);
@@ -35,11 +36,7 @@ function Result(props: DetailedCharacter) {
       <img
         alt="Result image"
         className={classes.resultImage}
-        src={
-          props.image
-            ? props.image
-            : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/640px-No_image_3x4.svg.png'
-        }
+        src={props.image ? props.image : imageNotFoundURL}
         data-testid="image"
       />
       <div className={classes.resultInfo}>

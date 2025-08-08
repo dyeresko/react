@@ -5,36 +5,10 @@ import logo from '@/assets/react.svg';
 import ResultList from '@components/Results/ResultList/index';
 import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
 import { useSearchParams } from 'react-router-dom';
+import type { Character, ResultsProps, Response } from '@/types/interfaces';
+import { baseApiQuery } from '@/data/data';
 
-interface Character {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  image: string;
-}
-
-export interface IInfo {
-  count: number;
-  pages: number;
-  next: string | null;
-  prev: string | null;
-}
-
-export interface IResponse {
-  info: IInfo;
-  results?: Character[];
-  error?: string;
-}
-interface IProps {
-  searchResult?: string;
-  newPage?: string;
-}
-const baseApiQuery = 'https://rickandmortyapi.com/api/character/';
-
-function Results(props: IProps) {
+function Results(props: ResultsProps) {
   const [characters, setCharacters] = useState<Character[]>([]);
   const paginationContext = useContext(PaginationDataContext);
   const [loading, setLoading] = useState(false);
@@ -79,7 +53,7 @@ function Results(props: IProps) {
         }
         return response.json();
       })
-      .then((data: IResponse) => {
+      .then((data: Response) => {
         setTimeout(() => {
           if (data.results) {
             setLoading(false);

@@ -1,23 +1,9 @@
 import Result from '@components/Results/Result/index';
 import classes from '@components/Results//ResultList/ResultList.module.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import type { DetailedCharacter } from '@components/Panel/index';
+import type { DetailedCharacter } from '@/types/interfaces';
 
-export interface Character {
-  id: number;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  image: string;
-}
-
-interface IProps {
-  characters?: DetailedCharacter[];
-}
-
-function ResultList(props: IProps) {
+function ResultList(props: { characters?: DetailedCharacter[] }) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   return (

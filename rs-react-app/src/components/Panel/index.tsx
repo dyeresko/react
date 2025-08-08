@@ -1,20 +1,6 @@
 import classes from '@components/Results/Result/Result.module.css';
-
-export interface DetailedCharacter {
-  id: number;
-  name?: string;
-  status?: string;
-  species?: string;
-  type?: string;
-  gender?: string;
-  image?: string;
-  origin?: {
-    name: string;
-  };
-  location?: {
-    name: string;
-  };
-}
+import type { DetailedCharacter } from '@/types/interfaces';
+import { imageNotFoundURL } from '@/data/data';
 
 const Panel = (props: DetailedCharacter) => {
   return (
@@ -22,11 +8,7 @@ const Panel = (props: DetailedCharacter) => {
       <img
         alt="Result image"
         className={classes.resultImage}
-        src={
-          props.image
-            ? props.image
-            : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/640px-No_image_3x4.svg.png'
-        }
+        src={props.image ? props.image : imageNotFoundURL}
         data-testid="image"
       />
       <div className={classes.resultInfo}>

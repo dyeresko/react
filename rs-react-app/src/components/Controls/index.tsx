@@ -2,31 +2,13 @@ import { type ChangeEvent, useState, useContext, useEffect } from 'react';
 import classes from '@components/Controls/Controls.module.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
 import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
-import type { IInfo } from '@components/Results/Results/index';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import { toggleTheme } from '@/features/theme/themeSlice.ts';
+import type { ControlsProps } from '@/types/interfaces';
+import { getPage } from '@/utils/utils';
 
-interface IProps {
-  onSearch: (searchResult: string) => void;
-  onNewPage: (newPage: string) => void;
-}
-
-const getPage = (pageInfo: IInfo) => {
-  if (pageInfo.prev) {
-    const url = new URL(pageInfo.prev);
-    const prevPage = parseInt(url.searchParams.get('page') || '0');
-    return prevPage + 1;
-  }
-  if (pageInfo.next) {
-    const url = new URL(pageInfo.next);
-    const nextPage = parseInt(url.searchParams.get('page') || '2');
-    return nextPage - 1;
-  }
-  return 1;
-};
-
-function Controls(props: IProps) {
+function Controls(props: ControlsProps) {
   const [storageSearchResult] = useLocalStorage('searchResult', '');
   const [searchResult, setSearchResult] = useState(storageSearchResult);
   const paginationContext = useContext(PaginationDataContext);

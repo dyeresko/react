@@ -1,6 +1,5 @@
-import type { IResponse } from '@components/Results/Results';
-
-export const data: IResponse = {
+import type { Response } from '@/types/interfaces';
+export const data: Response = {
   info: {
     count: 0,
     pages: 0,
