@@ -54,3 +54,10 @@ export const characterData: Character = {
   type: '',
   image: 'https://rickandmortyapi.com/api/character/avatar/2.jpeg',
 };
+
+export const defaultPaginationData = {
+  count: 0,
+  pages: 0,
+  prev: null,
+  next: null,
+};

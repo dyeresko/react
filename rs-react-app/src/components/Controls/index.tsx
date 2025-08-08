@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   type FC,
+  useMemo,
 } from 'react';
 import classes from '@components/Controls/Controls.module.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
@@ -13,12 +14,23 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import { toggleTheme } from '@/features/theme/themeSlice.ts';
 import type { ControlsProps } from '@/types/types';
 import { getPage } from '@/utils/utils';
+import { defaultPaginationData } from '@/data/data';
 
 const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
   const [storageSearchResult] = useLocalStorage('searchResult', '');
   const [searchResult, setSearchResult] = useState(storageSearchResult);
   const paginationContext = useContext(PaginationDataContext);
   const navigate = useNavigate();
+
+  const page = useMemo(
+    () => getPage(paginationContext?.paginationData ?? defaultPaginationData),
+    [paginationContext?.paginationData]
+  );
+
+  const pages = useMemo(
+    () => paginationContext?.paginationData.pages ?? '∞',
+    [paginationContext?.paginationData.pages]
+  );
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchResult(e.target.value);
@@ -75,18 +87,7 @@ const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
       <button onClick={handleClearInputClick}>Clear Input</button>
       <div className={classes.pagination}>
         <button onClick={handlePrevClick}>Prev</button>
-        {getPage(
-          paginationContext?.paginationData ?? {
-            count: 0,
-            pages: 0,
-            prev: null,
-            next: null,
-          }
-        )}
-        /
-        {paginationContext?.paginationData.pages === 0
-          ? '∞'
-          : paginationContext?.paginationData.pages}
+        {page}/{pages}
         <button onClick={handleNextClick}>Next</button>
       </div>
     </div>
