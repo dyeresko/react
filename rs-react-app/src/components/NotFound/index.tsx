@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 const NotFound: FC = () => {
   const navigate = useNavigate();
 
+  const handleBackClick = () => navigate(-1);
+
   return (
     <div>
-      <button onClick={() => navigate(-1)}>Back</button>
+      <button onClick={handleBackClick}>Back</button>
       <div data-testid="error-not-found" className="error-not-found">
         <h2>NOT FOUND 404</h2>
       </div>

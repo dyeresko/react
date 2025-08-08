@@ -14,6 +14,10 @@ const Result: FC<{ character: DetailedCharacter }> = ({ character }) => {
     return !!foundCard;
   };
 
+  const handleResultClick = (
+    event: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => event.stopPropagation();
+
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       dispatch(addCard(character));
@@ -24,9 +28,7 @@ const Result: FC<{ character: DetailedCharacter }> = ({ character }) => {
   return (
     <div className={classes.result} data-testid="result">
       <input
-        onClick={(event) => {
-          event.stopPropagation();
-        }}
+        onClick={handleResultClick}
         onChange={handleCheckboxChange}
         checked={isChecked(id)}
         className={classes.checkbox}

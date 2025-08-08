@@ -4,9 +4,12 @@ import { authorInfo } from '@/data/data';
 import type { FC } from 'react';
 const About: FC = () => {
   const navigate = useNavigate();
+
+  const handleBackClick = () => navigate(-1);
+
   return (
     <div data-testid="author-info" className="author-info">
-      <button onClick={() => navigate(-1)}>Back</button>
+      <button onClick={handleBackClick}>Back</button>
       <p>{authorInfo}</p>
       <Link to={'https://rs.school/'}>
         <h2>RS-School link</h2>

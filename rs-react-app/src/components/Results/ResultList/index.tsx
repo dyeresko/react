@@ -11,6 +11,13 @@ const ResultList: FC<{ characters?: DetailedCharacter[] }> = ({
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const updateSearchParams = useUpdateSearchParams();
+
+  const handleResultClick = (id: number) => {
+    const page = searchParams.get('page') ?? undefined;
+    const name = searchParams.get('name') ?? undefined;
+    navigate(`details/${id}`, { replace: false });
+    updateSearchParams({ page, name });
+  };
   return (
     <div className={classes.results}>
       {characters
@@ -18,10 +25,7 @@ const ResultList: FC<{ characters?: DetailedCharacter[] }> = ({
             <div
               key={character.id}
               onClick={() => {
-                const page = searchParams.get('page') ?? undefined;
-                const name = searchParams.get('name') ?? undefined;
-                navigate(`details/${character.id}`, { replace: false });
-                updateSearchParams({ page, name });
+                handleResultClick(character.id);
               }}
             >
               <Result character={character} />

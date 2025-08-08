@@ -19,9 +19,37 @@ const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
   const [searchResult, setSearchResult] = useState(storageSearchResult);
   const paginationContext = useContext(PaginationDataContext);
   const navigate = useNavigate();
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchResult(e.target.value);
   };
+
+  const handleAboutClick = () => {
+    navigate('/about');
+  };
+
+  const handleSearchClick = () => {
+    setSearchResult(searchResult.trim());
+    onSearch(searchResult.trim());
+  };
+
+  const handleClearInputClick = () => {
+    localStorage.clear();
+    setSearchResult('');
+  };
+
+  const handlePrevClick = () => {
+    if (paginationContext?.paginationData.prev) {
+      onNewPage(paginationContext.paginationData.prev);
+    }
+  };
+
+  const handleNextClick = () => {
+    if (paginationContext?.paginationData.next) {
+      onNewPage(paginationContext.paginationData.next);
+    }
+  };
+
   const theme = useAppSelector((state) => state.theme.style);
   const dispatch = useAppDispatch();
   const handleThemeChange = () => {
@@ -36,45 +64,17 @@ const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
       <button className={classes.themeButton} onClick={handleThemeChange}>
         {theme === 'white' ? '🌙' : '☀️'}
       </button>
-      <button
-        onClick={() => {
-          navigate('/about');
-        }}
-      >
-        About
-      </button>
+      <button onClick={handleAboutClick}>About</button>
       <input
         type="text"
         placeholder="Search..."
         value={searchResult}
         onChange={handleInputChange}
       />
-      <button
-        onClick={() => {
-          setSearchResult(searchResult.trim());
-          onSearch(searchResult.trim());
-        }}
-      >
-        Search
-      </button>
-      <button
-        onClick={() => {
-          localStorage.clear();
-          setSearchResult('');
-        }}
-      >
-        Clear Input
-      </button>
+      <button onClick={handleSearchClick}>Search</button>
+      <button onClick={handleClearInputClick}>Clear Input</button>
       <div className={classes.pagination}>
-        <button
-          onClick={() => {
-            if (paginationContext?.paginationData.prev) {
-              onNewPage(paginationContext.paginationData.prev);
-            }
-          }}
-        >
-          Prev
-        </button>
+        <button onClick={handlePrevClick}>Prev</button>
         {getPage(
           paginationContext?.paginationData ?? {
             count: 0,
@@ -87,15 +87,7 @@ const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
         {paginationContext?.paginationData.pages === 0
           ? '∞'
           : paginationContext?.paginationData.pages}
-        <button
-          onClick={() => {
-            if (paginationContext?.paginationData.next) {
-              onNewPage(paginationContext.paginationData.next);
-            }
-          }}
-        >
-          Next
-        </button>
+        <button onClick={handleNextClick}>Next</button>
       </div>
     </div>
   );
