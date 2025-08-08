@@ -66,7 +66,7 @@ function Results(props: ResultsProps) {
         setError(true);
         setLoading(false);
       });
-  }, [apiQuery, paginationContext]);
+  }, [apiQuery]);
 
   return (
     <div>

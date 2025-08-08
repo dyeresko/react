@@ -12,8 +12,7 @@ function useLocalStorage(
       return initialValue;
     }
   };
-  const init: string = retrieveInitialValue();
-  const [value, setValue] = useState(init);
+  const [value, setValue] = useState(() => retrieveInitialValue());
 
   useEffect(() => {
     localStorage.setItem(key, value);
