@@ -10,42 +10,36 @@ const Panel: FC<{ character: DetailedCharacter }> = ({ character }) => {
       <img
         alt="Result image"
         className={classes.resultImage}
-        src={image ? image : imageNotFoundURL}
+        src={image ?? imageNotFoundURL}
         data-testid="image"
       />
       <div className={classes.resultInfo}>
         <div className={classes.infoItem}>
           <span>Name:</span>
-          <span data-testid="name">{name ? name : 'name is missing'}</span>
+          <span data-testid="name">{name ?? 'name is missing'}</span>
         </div>
         <div className={classes.infoItem}>
           <span>Status:</span>
-          <span data-testid="status">
-            {status ? status : 'status is missing'}
-          </span>
+          <span data-testid="status">{status ?? 'status is missing'}</span>
         </div>
         <div className={classes.infoItem}>
           <span>Species:</span>
-          <span data-testid="species">
-            {species ? species : 'species is missing'}
-          </span>
+          <span data-testid="species">{species ?? 'species is missing'}</span>
         </div>
         <div className={classes.infoItem}>
           <span>Gender:</span>
-          <span data-testid="gender">
-            {gender ? gender : 'gender is missing'}
-          </span>
+          <span data-testid="gender">{gender ?? 'gender is missing'}</span>
         </div>
         <div className={classes.infoItem}>
           <span>Origin:</span>
           <span data-testid="origin">
-            {origin?.name ? origin.name : 'origin is missing'}
+            {origin?.name ?? 'origin is missing'}
           </span>
         </div>
         <div className={classes.infoItem}>
           <span>Location:</span>
           <span data-testid="location">
-            {location?.name ? location.name : 'location is missing'}
+            {location?.name ?? 'location is missing'}
           </span>
         </div>
       </div>
