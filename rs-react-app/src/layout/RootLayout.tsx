@@ -2,33 +2,21 @@ import { Outlet } from 'react-router-dom';
 import Controls from '@components/Controls/index';
 import '@/App.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
-import { useSearchParams } from 'react-router-dom';
+import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
 
 const RootLayout = () => {
   const [, setStorageSearchResult] = useLocalStorage('searchResult', '');
-  const [, setSearchParams] = useSearchParams();
+  const updateSearchParams = useUpdateSearchParams();
 
   const onSearch = (value: string) => {
     setStorageSearchResult(value.trim());
-    setSearchParams((prev) => {
-      prev.set('page', '1');
-      prev.set('name', value);
-      return prev;
-    });
+    updateSearchParams({ name: value, page: '1' });
   };
   const onNewPage = (value: string) => {
     const url = new URL(value);
-    const page = url.searchParams.get('page');
-    const name = url.searchParams.get('name');
-    setSearchParams((prev) => {
-      if (page) {
-        prev.set('page', String(page));
-      }
-      if (name) {
-        prev.set('name', name);
-      }
-      return prev;
-    });
+    const page = url.searchParams.get('page') ?? undefined;
+    const name = url.searchParams.get('name') ?? undefined;
+    updateSearchParams({ name, page });
   };
   return (
     <>

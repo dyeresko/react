@@ -7,6 +7,7 @@ import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
 import { useSearchParams } from 'react-router-dom';
 import type { Character, ResultsProps, Response } from '@/types/interfaces';
 import { baseApiQuery } from '@/data/data';
+import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
 
 function Results(props: ResultsProps) {
   const [characters, setCharacters] = useState<Character[]>([]);
@@ -14,7 +15,8 @@ function Results(props: ResultsProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [apiQuery, setApiQuery] = useState('');
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const updateSearchParams = useUpdateSearchParams();
   const page = Number(searchParams.get('page') || '1');
   const name = searchParams.get('name') || '';
 
@@ -32,16 +34,8 @@ function Results(props: ResultsProps) {
       return;
     }
     setApiQuery(`${baseApiQuery}?page=${page}&name=${name}`);
-    setSearchParams((prev) => {
-      if (page) {
-        prev.set('page', String(page));
-      }
-      if (name) {
-        prev.set('name', name);
-      }
-      return prev;
-    });
-  }, [props.newPage, page, name, setSearchParams]);
+    updateSearchParams({ page: String(page), name: name });
+  }, [props.newPage, page, name]);
 
   useEffect(() => {
     if (!apiQuery) return;

@@ -4,6 +4,7 @@ import Panel from '@components/Panel/index';
 import type { DetailedCharacter } from '@/types/interfaces';
 import logo from '@/assets/react.svg';
 import { baseApiQuery } from '@/data/data';
+import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
 
 function CharacterDetails() {
   const { id } = useParams();
@@ -12,7 +13,8 @@ function CharacterDetails() {
     id: id ? Number(id) : 0,
   });
   const [loading, setLoading] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const updateSearchParams = useUpdateSearchParams();
 
   useEffect(() => {
     setLoading(true);
@@ -44,18 +46,10 @@ function CharacterDetails() {
         <>
           <button
             onClick={() => {
-              const page = searchParams.get('page');
-              const name = searchParams.get('name');
+              const page = searchParams.get('page') ?? undefined;
+              const name = searchParams.get('name') ?? undefined;
               navigate('/', { replace: false });
-              setSearchParams((prev) => {
-                if (page) {
-                  prev.set('page', page);
-                }
-                if (name) {
-                  prev.set('name', name);
-                }
-                return prev;
-              });
+              updateSearchParams({ page, name });
             }}
           >
             Close

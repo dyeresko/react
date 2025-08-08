@@ -68,3 +68,8 @@ export interface ErrorBoundaryProps {
 export interface ThemeState {
   style: string;
 }
+
+export interface SearchParams {
+  page?: string;
+  name?: string;
+}

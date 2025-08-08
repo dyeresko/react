@@ -2,10 +2,12 @@ import Result from '@components/Results/Result/index';
 import classes from '@components/Results//ResultList/ResultList.module.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import type { DetailedCharacter } from '@/types/interfaces';
+import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
 
 function ResultList(props: { characters?: DetailedCharacter[] }) {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const updateSearchParams = useUpdateSearchParams();
   return (
     <div className={classes.results}>
       {props.characters
@@ -13,18 +15,10 @@ function ResultList(props: { characters?: DetailedCharacter[] }) {
             <div
               key={character.id}
               onClick={() => {
-                const page = searchParams.get('page');
-                const name = searchParams.get('name');
+                const page = searchParams.get('page') ?? undefined;
+                const name = searchParams.get('name') ?? undefined;
                 navigate(`details/${character.id}`, { replace: false });
-                setSearchParams((prev) => {
-                  if (page) {
-                    prev.set('page', page);
-                  }
-                  if (name) {
-                    prev.set('name', name);
-                  }
-                  return prev;
-                });
+                updateSearchParams({ page, name });
               }}
             >
               <Result
