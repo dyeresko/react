@@ -11,6 +11,8 @@ function useUpdateSearchParams() {
       }
       if (configObject.name) {
         searchParams.set('name', configObject.name);
+      } else {
+        searchParams.set('name', '');
       }
       return searchParams;
     });

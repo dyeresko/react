@@ -5,68 +5,40 @@ import logo from '@/assets/react.svg';
 import ResultList from '@components/Results/ResultList/index';
 import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
 import { useSearchParams } from 'react-router-dom';
-import type { Character, Response } from '@/types/interfaces';
-import { baseApiQuery } from '@/data/data';
+import type { Character } from '@/types/interfaces';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
-import type { ResultsProps } from '@/types/types';
+import { useGetResultsQuery } from '@/app/services/api';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
-const Results: FC<ResultsProps> = ({ searchResult, newPage }) => {
+const Results: FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const paginationContext = useContext(PaginationDataContext);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-  const [apiQuery, setApiQuery] = useState('');
   const [searchParams] = useSearchParams();
   const updateSearchParams = useUpdateSearchParams();
   const page = Number(searchParams.get('page') || '1');
   const name = searchParams.get('name') || '';
+  const [, setStorageSearchResult] = useLocalStorage('searchResult', '');
+
+  const { data, error, isFetching } = useGetResultsQuery({ page, name });
 
   useEffect(() => {
-    setLoading(true);
-    if (searchResult) {
-      const searchName = searchResult;
-      setApiQuery(`${baseApiQuery}?name=${searchName}&page=1`);
-    }
-  }, [searchResult]);
-  useEffect(() => {
-    setLoading(true);
-    if (newPage) {
-      setApiQuery(newPage);
-      return;
-    }
-    setApiQuery(`${baseApiQuery}?page=${page}&name=${name}`);
     updateSearchParams({ page: String(page), name: name });
-  }, [newPage, page, name]);
+    setStorageSearchResult(name);
+  }, [page, name]);
 
   useEffect(() => {
-    if (!apiQuery) return;
-    setError(false);
-    fetch(apiQuery)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error('Failed to fetch results.');
-        }
-        return response.json();
-      })
-      .then((data: Response) => {
-        setTimeout(() => {
-          if (data.results) {
-            setLoading(false);
-            setCharacters(data.results ?? []);
-            paginationContext?.setPaginationData(data.info);
-          }
-        }, 200);
-      })
-      .catch(() => {
-        setError(true);
-        setLoading(false);
-      });
-  }, [apiQuery]);
+    if (data?.results) {
+      setCharacters(data.results);
+    }
+    if (data?.info) {
+      paginationContext?.setPaginationData(data.info);
+    }
+  }, [data]);
 
   return (
     <div>
       <div>
-        {loading && (
+        {isFetching && (
           <img
             data-testid="loader"
             className="logo"
@@ -79,7 +51,7 @@ const Results: FC<ResultsProps> = ({ searchResult, newPage }) => {
             Request did not succeed
           </h2>
         )}
-        {!error && !loading && <ResultList characters={characters} />}
+        {!error && !isFetching && <ResultList characters={characters} />}
         <ErrorButton />
       </div>
     </div>

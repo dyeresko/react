@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 
 export type ResultsProps = {
   searchResult?: string;
-  newPage?: string;
 };
 
 export type ErrorBoundaryProps = {

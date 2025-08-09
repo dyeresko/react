@@ -29,3 +29,7 @@ export const charactersToCSV = (characters: DetailedCharacter[]) => {
     .join('\n');
   return headers + rows;
 };
+
+export const simulateLoading = () => {
+  return new Promise((resolve) => setTimeout(resolve, 200));
+};
