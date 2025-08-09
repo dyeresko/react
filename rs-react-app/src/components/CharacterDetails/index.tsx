@@ -3,8 +3,8 @@ import { useEffect, useState, type FC } from 'react';
 import Panel from '@components/Panel/index';
 import type { DetailedCharacter } from '@/types/interfaces';
 import logo from '@/assets/react.svg';
-import { baseApiQuery } from '@/data/data';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
+import { useGetResultQuery } from '@/app/services/api';
 
 const CharacterDetails: FC = () => {
   const { id } = useParams();
@@ -12,9 +12,9 @@ const CharacterDetails: FC = () => {
   const [character, setCharacter] = useState<DetailedCharacter>({
     id: Number(id) || 0,
   });
-  const [loading, setLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const updateSearchParams = useUpdateSearchParams();
+  const { data, error, isFetching } = useGetResultQuery({ id: id ?? '0' });
 
   const handleClick = () => {
     const page = searchParams.get('page') ?? undefined;
@@ -24,23 +24,12 @@ const CharacterDetails: FC = () => {
   };
 
   useEffect(() => {
-    setLoading(true);
-    fetch(`${baseApiQuery}/${id}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw Error('Failed to fetch results.');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setTimeout(() => {
-          setLoading(false);
-          setCharacter(data);
-        }, 200);
-      });
-  }, [id]);
+    if (data) {
+      setCharacter(data);
+    }
+  }, [data]);
 
-  if (loading) {
+  if (isFetching) {
     return (
       <div>
         <img
@@ -52,6 +41,11 @@ const CharacterDetails: FC = () => {
       </div>
     );
   }
+
+  if (error) {
+    return <h2 data-testid="error">Request did not succeed</h2>;
+  }
+
   return (
     <div>
       <button onClick={handleClick}>Close</button>

@@ -1,4 +1,4 @@
-import type { Response } from '@/types/interfaces';
+import { type DetailedCharacter, type Response } from '@/types/interfaces';
 import {
   createApi,
   fetchBaseQuery,
@@ -27,7 +27,12 @@ export const rickAndMortyApi = createApi({
         return `character/?page=${page}${name ? `&name=${name}` : ''}`;
       },
     }),
+    getResult: build.query<DetailedCharacter, { id: string }>({
+      query: ({ id }) => {
+        return `character/${id}`;
+      },
+    }),
   }),
 });
 
-export const { useGetResultsQuery } = rickAndMortyApi;
+export const { useGetResultsQuery, useGetResultQuery } = rickAndMortyApi;
