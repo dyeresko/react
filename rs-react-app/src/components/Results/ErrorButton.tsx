@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import MyError from './MyError.tsx';
+import { useState, type FC } from 'react';
+import MyError from '@components/Results/MyError/index';
 
-function ErrorButton() {
+const ErrorButton: FC = () => {
   const [hasError, setHasError] = useState(false);
 
   const handleButtonClick = () => {
@@ -13,6 +13,6 @@ function ErrorButton() {
       {hasError && <MyError error={true} />}
     </div>
   );
-}
+};
 
 export default ErrorButton;

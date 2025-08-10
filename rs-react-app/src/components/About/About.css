@@ -1,5 +1,5 @@
 .author-info {
-  border: black solid 1px;
+  border: var(--border-color) solid 1px;
   border-radius: 10px;
   width: 450px;
   margin: 0 auto;

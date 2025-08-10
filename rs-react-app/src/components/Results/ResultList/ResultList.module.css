@@ -1,5 +1,5 @@
 .results {
-  border: black solid 1px;
+  border: var(--border-color) solid 1px;
   padding: 10px;
   display: grid;
   gap: 20px;

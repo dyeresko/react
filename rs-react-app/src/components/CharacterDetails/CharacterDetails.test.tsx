@@ -2,9 +2,9 @@ import { screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 
-import { customRender } from '../../../test-utils/utils.tsx';
-import { mockFetchCharacterSuccess } from '../../../test-utils/utils.ts';
-import CharacterDetails from './CharacterDetails.tsx';
+import { customRender } from '@/test-utils/testUtils';
+import { mockFetchCharacterSuccess } from '@/test-utils/utils.ts';
+import CharacterDetails from '@components/CharacterDetails/index';
 
 describe('Character details', () => {
   it('makes initial API call on component mount', async () => {

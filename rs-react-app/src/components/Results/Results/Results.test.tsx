@@ -1,9 +1,9 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-import Results from './Results.tsx';
-import { mockFetchFailure } from '../../../../test-utils/utils.ts';
-import { customRender } from '../../../../test-utils/utils.tsx';
+import Results from '@components/Results/Results/index';
+import { mockFetchFailure } from '@/test-utils/utils.ts';
+import { customRender } from '@/test-utils/testUtils';
 
 describe('Results render', () => {
   it('shows loading state while fetching data', () => {
