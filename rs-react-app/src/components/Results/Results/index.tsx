@@ -19,7 +19,10 @@ const Results: FC = () => {
   const name = searchParams.get('name') || '';
   const [, setStorageSearchResult] = useLocalStorage('searchResult', '');
 
-  const { data, error, isFetching } = useGetResultsQuery({ page, name });
+  const { data, error, isFetching, refetch } = useGetResultsQuery({
+    page,
+    name,
+  });
 
   useEffect(() => {
     updateSearchParams({ page: String(page), name: name });
@@ -35,23 +38,35 @@ const Results: FC = () => {
     }
   }, [data]);
 
+  const handleRefreshClick = () => {
+    refetch();
+  };
+  if (isFetching) {
+    return (
+      <div>
+        <img
+          data-testid="loader"
+          className="logo"
+          src={logo}
+          alt="Loading..."
+        />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <h2 className={classes.header} data-testid="error">
+        Request did not succeed
+      </h2>
+    );
+  }
+
   return (
     <div>
+      <button onClick={handleRefreshClick}>Refresh</button>
       <div>
-        {isFetching && (
-          <img
-            data-testid="loader"
-            className="logo"
-            src={logo}
-            alt="Loading..."
-          />
-        )}
-        {error && (
-          <h2 data-testid="error" className={classes.header}>
-            Request did not succeed
-          </h2>
-        )}
-        {!error && !isFetching && <ResultList characters={characters} />}
+        <ResultList characters={characters} />
         <ErrorButton />
       </div>
     </div>

@@ -14,13 +14,18 @@ const CharacterDetails: FC = () => {
   });
   const [searchParams] = useSearchParams();
   const updateSearchParams = useUpdateSearchParams();
-  const { data, error, isFetching } = useGetResultQuery({ id: id ?? '0' });
+  const { data, error, isFetching, refetch } = useGetResultQuery({
+    id: id ?? '0',
+  });
 
-  const handleClick = () => {
+  const handleCloseClick = () => {
     const page = searchParams.get('page') ?? undefined;
     const name = searchParams.get('name') ?? undefined;
     navigate('/', { replace: false });
     updateSearchParams({ page, name });
+  };
+  const handleRefreshClick = () => {
+    refetch();
   };
 
   useEffect(() => {
@@ -48,7 +53,10 @@ const CharacterDetails: FC = () => {
 
   return (
     <div>
-      <button onClick={handleClick}>Close</button>
+      <button onClick={handleRefreshClick} disabled={isFetching}>
+        {isFetching ? 'Refreshing...' : 'Refresh'}
+      </button>
+      <button onClick={handleCloseClick}>Close</button>
       <Panel character={character} />
     </div>
   );
