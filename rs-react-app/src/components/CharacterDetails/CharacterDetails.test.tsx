@@ -7,6 +7,7 @@ import { mockFetchCharacterSuccess } from '@/test-utils/utils.ts';
 import CharacterDetails from '@components/CharacterDetails/index';
 import { Provider } from 'react-redux';
 import { store } from '@/app/store';
+import userEvent from '@testing-library/user-event';
 
 describe('Character details', () => {
   it('makes initial API call on component mount', async () => {
@@ -35,5 +36,18 @@ describe('Character details', () => {
       expect(screen.getByText('Citadel of Ricks')).toBeVisible();
       expect(screen.getByText('Earth (C-137)')).toBeVisible();
     });
+  });
+  it('shows loading state when clicking refresh button', async () => {
+    mockFetchCharacterSuccess();
+    customRender(
+      <Provider store={store}>
+        <CharacterDetails />
+      </Provider>
+    );
+    await screen.findByText('Rick Sanchez');
+    const button = screen.getByRole('button', { name: 'Refresh' });
+    await userEvent.click(button);
+    const loader = await screen.findByTestId('loader');
+    expect(loader).toBeVisible();
   });
 });

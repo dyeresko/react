@@ -2,10 +2,11 @@ import { screen, waitFor } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import Results from '@components/Results/Results/index';
-import { mockFetchFailure } from '@/test-utils/utils.ts';
+import { mockFetchFailure, mockFetchSuccess } from '@/test-utils/utils.ts';
 import { customRender } from '@/test-utils/testUtils';
 import { store } from '@/app/store';
 import { Provider } from 'react-redux';
+import userEvent from '@testing-library/user-event';
 
 describe('Results render', () => {
   it('shows loading state while fetching data', () => {
@@ -40,5 +41,18 @@ describe('Results render', () => {
     await waitFor(() => {
       expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
     });
+  });
+  it('shows loading state when clicking refresh button', async () => {
+    mockFetchSuccess();
+    customRender(
+      <Provider store={store}>
+        <Results />
+      </Provider>
+    );
+    await screen.findAllByTestId('result');
+    const button = screen.getByRole('button', { name: 'Refresh' });
+    await userEvent.click(button);
+    const loader = await screen.findByTestId('loader');
+    expect(loader).toBeVisible();
   });
 });
