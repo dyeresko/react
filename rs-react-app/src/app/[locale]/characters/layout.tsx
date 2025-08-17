@@ -14,7 +14,9 @@ const App: FC<{ children: ReactNode }> = ({ children }) => {
   const cards = useAppSelector((state) => state.cards.items);
   const pathname = usePathname();
   const locales = routing.locales;
-  const isPanelOpen = locales.some((locale) => pathname.startsWith(`/${locale}/characters/details/`));
+  const isPanelOpen = locales.some((locale) =>
+    pathname.startsWith(`/${locale}/characters/details/`)
+  );
   const t = useTranslations('Error Boundary');
   return (
     <>

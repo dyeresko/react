@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import { toggleTheme } from '@/app/[locale]/lib/features/theme/themeSlice';
 import { getPage } from '@/utils/utils';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
-import {useTranslations} from 'next-intl';
-import {Link} from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 import LocaleSwitcher from '../LocaleSwitcher';
 
 const Controls: FC = () => {

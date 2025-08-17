@@ -1,7 +1,7 @@
 import '@components/About/About.css';
 import type { FC } from 'react';
-import {useTranslations} from 'next-intl';
-import {Link} from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 const About: FC = () => {
   const t = useTranslations('About');
   return (

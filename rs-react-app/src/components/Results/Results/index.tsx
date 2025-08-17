@@ -12,7 +12,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import { useAppDispatch } from '@/hooks/reduxHooks';
 import { setPagination } from '@/app/[locale]/lib/features/pagination/paginationSlice';
 import Image from 'next/image';
-import {useTranslations} from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 const Results: FC = () => {
   const t = useTranslations('Result');

@@ -49,9 +49,7 @@ const CharacterDetails: FC<{ id: string }> = ({ id }) => {
 
   return (
     <div>
-      <button onClick={handleRefreshClick}>
-        {t('refresh')}
-      </button>
+      <button onClick={handleRefreshClick}>{t('refresh')}</button>
       <Link
         href={`/characters?page=${searchParams.get('page')}&name=${searchParams.get('name')}`}
       >

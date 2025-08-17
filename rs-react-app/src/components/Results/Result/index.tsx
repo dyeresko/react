@@ -2,10 +2,13 @@ import classes from '@components/Results/Result/Result.module.css';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import type { ChangeEvent, FC } from 'react';
 import type { DetailedCharacter } from '@/types/interfaces';
-import { addCard, removeCard } from '@/app/[locale]/lib/features/cards/cardsSlice';
+import {
+  addCard,
+  removeCard,
+} from '@/app/[locale]/lib/features/cards/cardsSlice';
 import { imageNotFoundURL } from '@/data/data';
 import Image from 'next/image';
-import {useTranslations} from 'next-intl';
+import { useTranslations } from 'next-intl';
 const Result: FC<{ character: DetailedCharacter }> = ({ character }) => {
   const t = useTranslations('Result');
   const cards = useAppSelector((state) => state.cards.items);

@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
-import {useTranslations} from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 const BackButton: FC = () => {
   const t = useTranslations('About');
