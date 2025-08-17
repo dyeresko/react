@@ -1,27 +1,45 @@
+'use client';
 import { type ChangeEvent, useState, useEffect, type FC, useMemo } from 'react';
 import classes from '@components/Controls/Controls.module.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
-import { toggleTheme } from '@/features/theme/themeSlice.ts';
-import type { ControlsProps } from '@/types/types';
+import { toggleTheme } from '@/app/lib/features/theme/themeSlice';
 import { getPage } from '@/utils/utils';
+import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
+import Link from 'next/link';
 
-const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
-  const [storageSearchResult] = useLocalStorage('searchResult', '');
+const Controls: FC = () => {
+  const [storageSearchResult, setStorageSearchResult] = useLocalStorage(
+    'searchResult',
+    ''
+  );
+  const updateSearchParams = useUpdateSearchParams();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (storageSearchResult && !searchParams.get('name')) {
+      updateSearchParams({ name: storageSearchResult });
+    }
+  });
   const [searchResult, setSearchResult] = useState(storageSearchResult);
-  const navigate = useNavigate();
   const pagination = useAppSelector((state) => state.pagination.value);
   const page = useMemo(() => getPage(pagination), [pagination]);
 
   const pages = useMemo(() => pagination.pages ?? '∞', [pagination.pages]);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchResult(e.target.value);
+  const onSearch = (value: string) => {
+    setStorageSearchResult(value.trim());
+    updateSearchParams({ name: value, page: '1' });
+  };
+  const onNewPage = (value: string) => {
+    const url = new URL(value);
+    const page = url.searchParams.get('page') ?? undefined;
+    const name = url.searchParams.get('name') ?? undefined;
+    updateSearchParams({ name, page });
   };
 
-  const handleAboutClick = () => {
-    navigate('/about');
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchResult(e.target.value);
   };
 
   const handleSearchClick = () => {
@@ -55,11 +73,13 @@ const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
   }, [theme]);
   return (
     <div className={classes.controls}>
-      <h2>Controls</h2>
+      <h2 className={classes.header}>Controls</h2>
       <button className={classes.themeButton} onClick={handleThemeChange}>
         {theme === 'white' ? '🌙' : '☀️'}
       </button>
-      <button onClick={handleAboutClick}>About</button>
+      <Link href={'/about'}>
+        <button>About</button>
+      </Link>
       <input
         type="text"
         placeholder="Search..."

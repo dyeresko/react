@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/vitest';
 import ResultList from '@components/Results/ResultList/index';
 import { customRender } from '@/test-utils/testUtils';
 import { Provider } from 'react-redux';
-import { store } from '@/app/store.ts';
+import { store } from '@/app/lib/store';
 import { charactersData } from '@/data/data';
 
 describe('Result list render', () => {

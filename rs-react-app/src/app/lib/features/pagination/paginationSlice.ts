@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { RootState } from '@/app/store.ts';
+import type { RootState } from '@/app/lib/store';
 import type { Info } from '@/types/interfaces';
 import { defaultPaginationData } from '@/data/data';
 

@@ -2,9 +2,9 @@ import classes from '@components/Results/Result/Result.module.css';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
 import type { ChangeEvent, FC } from 'react';
 import type { DetailedCharacter } from '@/types/interfaces';
-import { addCard, removeCard } from '@/features/cards/cardsSlice.ts';
+import { addCard, removeCard } from '@/app/lib/features/cards/cardsSlice';
 import { imageNotFoundURL } from '@/data/data';
-
+import Image from 'next/image';
 const Result: FC<{ character: DetailedCharacter }> = ({ character }) => {
   const cards = useAppSelector((state) => state.cards.items);
   const dispatch = useAppDispatch();
@@ -35,7 +35,9 @@ const Result: FC<{ character: DetailedCharacter }> = ({ character }) => {
         type="checkbox"
         aria-label={`cb-${id}`}
       />
-      <img
+      <Image
+        width={300}
+        height={300}
         alt="Result image"
         className={classes.resultImage}
         src={image ?? imageNotFoundURL}

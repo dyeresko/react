@@ -1,5 +1,5 @@
+'use client';
 import { useState, useEffect } from 'react';
-
 function useLocalStorage(
   key: string,
   initialValue: string

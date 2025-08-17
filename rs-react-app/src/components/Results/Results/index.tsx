@@ -1,20 +1,22 @@
+'use client';
 import { useEffect, useState, type FC } from 'react';
 import classes from '@components/Results/Results/Results.module.css';
 import ErrorButton from '@components/Results/ErrorButton';
 import logo from '@/assets/react.svg';
 import ResultList from '@components/Results/ResultList/index';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
 import type { Character } from '@/types/interfaces';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
-import { useGetResultsQuery } from '@/app/services/api';
+import { useGetResultsQuery } from '@/app/lib/services/api';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useAppDispatch } from '@/hooks/reduxHooks';
-import { setPagination } from '@/features/pagination/paginationSlice';
+import { setPagination } from '@/app/lib/features/pagination/paginationSlice';
+import Image from 'next/image';
 
 const Results: FC = () => {
   const [characters, setCharacters] = useState<Character[]>([]);
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const updateSearchParams = useUpdateSearchParams();
   const page = Number(searchParams.get('page') || '1');
   const name = searchParams.get('name') || '';
@@ -45,7 +47,9 @@ const Results: FC = () => {
   if (isFetching) {
     return (
       <div>
-        <img
+        <Image
+          width={300}
+          height={300}
           data-testid="loader"
           className="logo"
           src={logo}

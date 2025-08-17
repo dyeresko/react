@@ -2,12 +2,14 @@ import classes from '@components/Results/Result/Result.module.css';
 import type { DetailedCharacter } from '@/types/interfaces';
 import { imageNotFoundURL } from '@/data/data';
 import type { FC } from 'react';
-
+import Image from 'next/image';
 const Panel: FC<{ character: DetailedCharacter }> = ({ character }) => {
   const { image, name, status, species, gender, origin, location } = character;
   return (
     <div className={classes.result} data-testid="result">
-      <img
+      <Image
+        width={300}
+        height={300}
         alt="Result image"
         className={classes.resultImage}
         src={image ?? imageNotFoundURL}

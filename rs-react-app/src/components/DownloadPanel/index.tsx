@@ -1,5 +1,6 @@
+'use client';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
-import { clearCards } from '@/features/cards/cardsSlice.ts';
+import { clearCards } from '@/app/lib/features/cards/cardsSlice';
 import classes from '@components/DownloadPanel/DownloadPanel.module.css';
 import { useRef, type FC } from 'react';
 import { charactersToCSV } from '@/utils/utils';

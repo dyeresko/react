@@ -1,0 +1,31 @@
+#root {
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+[data-theme-style='dark'] {
+  --bg-color: #121212;
+  --text-color: #e4e4e4;
+  --border-color: #e4e4e4;
+  --input-bg-color: #141414;
+  --input-text-color: white;
+}
+[data-theme-style='white'] {
+  --bg-color: white;
+  --text-color: black;
+  --border-color: black;
+  --input-bg-color: white;
+  --input-text-color: black;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+button,
+input {
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
+}

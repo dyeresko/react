@@ -3,7 +3,7 @@ import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 import Result from '@components/Results/Result/index';
 import { Provider } from 'react-redux';
-import { store } from '@/app/store.ts';
+import { store } from '@/app/lib/store';
 import { characterData } from '@/data/data';
 
 describe('Result display', () => {

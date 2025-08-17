@@ -1,12 +1,11 @@
 import { screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
-
 import { customRender } from '@/test-utils/testUtils';
 import { mockFetchCharacterSuccess } from '@/test-utils/utils.ts';
 import CharacterDetails from '@components/CharacterDetails/index';
 import { Provider } from 'react-redux';
-import { store } from '@/app/store';
+import { store } from '@/app/lib/store';
 import userEvent from '@testing-library/user-event';
 
 describe('Character details', () => {
@@ -15,7 +14,7 @@ describe('Character details', () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch');
     customRender(
       <Provider store={store}>
-        <CharacterDetails />
+        <CharacterDetails id={'1'} />
       </Provider>
     );
     await waitFor(() => {
@@ -28,7 +27,7 @@ describe('Character details', () => {
     mockFetchCharacterSuccess();
     customRender(
       <Provider store={store}>
-        <CharacterDetails />
+        <CharacterDetails id={'1'} />
       </Provider>
     );
     await waitFor(() => {
@@ -41,7 +40,7 @@ describe('Character details', () => {
     mockFetchCharacterSuccess();
     customRender(
       <Provider store={store}>
-        <CharacterDetails />
+        <CharacterDetails id={'1'} />
       </Provider>
     );
     await screen.findByText('Rick Sanchez');
