@@ -29,5 +29,9 @@
   "Error Boundary": {
     "error": "Something went wrong",
     "throw": "Throw Error"
+  },
+  "Not Found": {
+    "message": "NOT FOUND 404",
+    "back": "Back"
   }
 }

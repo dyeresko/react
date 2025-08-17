@@ -1,7 +1,7 @@
 'use client';
 import '@components/About/About.css';
 import type { FC } from 'react';
-import BackButton from '@/components/BackButton';
+import BackButton from '@/components/LocaleBackButton';
 import About from '@/components/About';
 const AboutPage: FC = () => {
   return (

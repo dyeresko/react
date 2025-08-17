@@ -9,7 +9,7 @@ import RootLayout from '@/layout/RootLayout';
 import App from '@/App';
 import CharacterDetails from '@components/CharacterDetails/index';
 import About from '@components/About/index';
-import NotFound from '@components/NotFound/index';
+import NotFound from '@/components/LocaleNotFound/index';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

@@ -22,15 +22,11 @@ const RootLayout: FC<{
     notFound();
   }
   return (
-    <html lang={locale}>
-      <body>
-        <NextIntlClientProvider>
-          <Providers>
-            <div id="root">{children}</div>
-          </Providers>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider>
+      <Providers>
+        <div id="root">{children}</div>
+      </Providers>
+    </NextIntlClientProvider>
   );
 };
 
