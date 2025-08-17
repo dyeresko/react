@@ -7,13 +7,15 @@ import ResultList from '@components/Results/ResultList/index';
 import { useSearchParams } from 'next/navigation';
 import type { Character } from '@/types/interfaces';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
-import { useGetResultsQuery } from '@/app/lib/services/api';
+import { useGetResultsQuery } from '@/app/[locale]/lib/services/api';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { useAppDispatch } from '@/hooks/reduxHooks';
-import { setPagination } from '@/app/lib/features/pagination/paginationSlice';
+import { setPagination } from '@/app/[locale]/lib/features/pagination/paginationSlice';
 import Image from 'next/image';
+import {useTranslations} from 'next-intl';
 
 const Results: FC = () => {
+  const t = useTranslations('Result');
   const [characters, setCharacters] = useState<Character[]>([]);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
@@ -53,7 +55,7 @@ const Results: FC = () => {
           data-testid="loader"
           className="logo"
           src={logo}
-          alt="Loading..."
+          alt={`${t('alt-loading')}...`}
         />
       </div>
     );
@@ -62,14 +64,14 @@ const Results: FC = () => {
   if (error) {
     return (
       <h2 className={classes.header} data-testid="error">
-        Request did not succeed
+        {t('error')}
       </h2>
     );
   }
 
   return (
     <div>
-      <button onClick={handleRefreshClick}>Refresh</button>
+      <button onClick={handleRefreshClick}>{t('refresh')}</button>
       <div>
         <ResultList characters={characters} />
         <ErrorButton />

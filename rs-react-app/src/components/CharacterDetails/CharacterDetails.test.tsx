@@ -5,7 +5,7 @@ import { customRender } from '@/test-utils/testUtils';
 import { mockFetchCharacterSuccess } from '@/test-utils/utils.ts';
 import CharacterDetails from '@components/CharacterDetails/index';
 import { Provider } from 'react-redux';
-import { store } from '@/app/lib/store';
+import { store } from '@/app/[locale]/lib/store';
 import userEvent from '@testing-library/user-event';
 
 describe('Character details', () => {

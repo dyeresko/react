@@ -4,10 +4,12 @@ import classes from '@components/Controls/Controls.module.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
 import { useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
-import { toggleTheme } from '@/app/lib/features/theme/themeSlice';
+import { toggleTheme } from '@/app/[locale]/lib/features/theme/themeSlice';
 import { getPage } from '@/utils/utils';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
-import Link from 'next/link';
+import {useTranslations} from 'next-intl';
+import {Link} from '@/i18n/navigation';
+import LocaleSwitcher from '../LocaleSwitcher';
 
 const Controls: FC = () => {
   const [storageSearchResult, setStorageSearchResult] = useLocalStorage(
@@ -24,7 +26,7 @@ const Controls: FC = () => {
   const [searchResult, setSearchResult] = useState(storageSearchResult);
   const pagination = useAppSelector((state) => state.pagination.value);
   const page = useMemo(() => getPage(pagination), [pagination]);
-
+  const t = useTranslations('Controls');
   const pages = useMemo(() => pagination.pages ?? '∞', [pagination.pages]);
 
   const onSearch = (value: string) => {
@@ -77,21 +79,22 @@ const Controls: FC = () => {
       <button className={classes.themeButton} onClick={handleThemeChange}>
         {theme === 'white' ? '🌙' : '☀️'}
       </button>
+      <LocaleSwitcher />
       <Link href={'/about'}>
-        <button>About</button>
+        <button>{t('about')}</button>
       </Link>
       <input
         type="text"
-        placeholder="Search..."
+        placeholder={t('placeholder')}
         value={searchResult}
         onChange={handleInputChange}
       />
-      <button onClick={handleSearchClick}>Search</button>
-      <button onClick={handleClearInputClick}>Clear Input</button>
+      <button onClick={handleSearchClick}>{t('search')}</button>
+      <button onClick={handleClearInputClick}>{t('clear')}</button>
       <div className={classes.pagination}>
-        <button onClick={handlePrevClick}>Prev</button>
+        <button onClick={handlePrevClick}>{t('prev')}</button>
         {page}/{pages}
-        <button onClick={handleNextClick}>Next</button>
+        <button onClick={handleNextClick}>{t('next')}</button>
       </div>
     </div>
   );

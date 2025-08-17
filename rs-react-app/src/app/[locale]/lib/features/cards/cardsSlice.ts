@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import type { RootState } from '@/app/lib/store';
+import type { RootState } from '@/app/[locale]/lib/store';
 import type { CardsState, DetailedCharacter } from '@/types/interfaces';
 
 const initialState: CardsState = {

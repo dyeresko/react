@@ -4,7 +4,7 @@ import '@testing-library/jest-dom/vitest';
 import Results from '@components/Results/Results/index';
 import { mockFetchFailure, mockFetchSuccess } from '@/test-utils/utils.ts';
 import { customRender } from '@/test-utils/testUtils';
-import { store } from '@/app/lib/store';
+import { store } from '@/app/[locale]/lib/store';
 import { Provider } from 'react-redux';
 import userEvent from '@testing-library/user-event';
 

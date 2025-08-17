@@ -5,7 +5,7 @@ import '@testing-library/jest-dom/vitest';
 import Controls from '@components/Controls/index';
 import { customRender } from '@/test-utils/testUtils';
 import { Provider } from 'react-redux';
-import { store } from '@/app/lib/store';
+import { store } from '@/app/[locale]/lib/store';
 
 describe('Controls render', () => {
   it('renders input field', () => {

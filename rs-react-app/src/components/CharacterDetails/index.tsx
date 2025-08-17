@@ -3,12 +3,14 @@ import { useEffect, useState, type FC } from 'react';
 import Panel from '@components/Panel/index';
 import type { DetailedCharacter } from '@/types/interfaces';
 import logo from '@/assets/react.svg';
-import { useGetResultQuery } from '@/app/lib/services/api';
+import { useGetResultQuery } from '@/app/[locale]/lib/services/api';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const CharacterDetails: FC<{ id: string }> = ({ id }) => {
+  const t = useTranslations('Result');
   const [character, setCharacter] = useState<DetailedCharacter>({
     id: Number(id) || 0,
   });
@@ -35,25 +37,25 @@ const CharacterDetails: FC<{ id: string }> = ({ id }) => {
           data-testid="loader"
           className="logo"
           src={logo}
-          alt="Loading..."
+          alt={`${t('alt-loading')}...`}
         />
       </div>
     );
   }
 
   if (error) {
-    return <h2 data-testid="error">Request did not succeed</h2>;
+    return <h2 data-testid="error">{t('error')}</h2>;
   }
 
   return (
     <div>
       <button onClick={handleRefreshClick}>
-        {isFetching ? 'Refreshing...' : 'Refresh'}
+        {t('refresh')}
       </button>
       <Link
         href={`/characters?page=${searchParams.get('page')}&name=${searchParams.get('name')}`}
       >
-        <button>Close</button>
+        <button>{t('close')}</button>
       </Link>
 
       <Panel character={character} />

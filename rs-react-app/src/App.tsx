@@ -5,6 +5,7 @@ import { type FC } from 'react';
 import { Outlet, useMatch } from 'react-router-dom';
 import { useAppSelector } from '@/hooks/reduxHooks.ts';
 import DownloadPanel from '@components/DownloadPanel/index';
+import { useTranslations } from 'next-intl';
 
 const App: FC = () => {
   const cards = useAppSelector((state) => state.cards.items);
@@ -12,7 +13,7 @@ const App: FC = () => {
 
   return (
     <div className={isPanelOpen ? 'App' : ''}>
-      <MyErrorBoundary>
+      <MyErrorBoundary t={useTranslations('Error Boundary')}>
         <Results />
         {cards.length > 0 && <DownloadPanel />}
       </MyErrorBoundary>

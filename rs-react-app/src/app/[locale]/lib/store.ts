@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cardsReducer from '@/app/lib/features/cards/cardsSlice';
-import themeReducer from '@/app/lib/features/theme/themeSlice';
-import { rickAndMortyApi } from '@/app/lib/services/api';
+import cardsReducer from '@/app/[locale]/lib/features/cards/cardsSlice';
+import themeReducer from '@/app/[locale]/lib/features/theme/themeSlice';
+import { rickAndMortyApi } from '@/app/[locale]/lib/services/api';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import paginationReducer from '@/app/lib/features/pagination/paginationSlice';
+import paginationReducer from '@/app/[locale]/lib/features/pagination/paginationSlice';
 
 export const store = configureStore({
   reducer: {

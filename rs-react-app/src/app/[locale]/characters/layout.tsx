@@ -7,20 +7,24 @@ import MyErrorBoundary from '@components/MyErrorBoundary/index';
 import { useAppSelector } from '@/hooks/reduxHooks.ts';
 import DownloadPanel from '@components/DownloadPanel/index';
 import { usePathname } from 'next/navigation';
+import { routing } from '@/i18n/routing';
+import { useTranslations } from 'next-intl';
 
 const App: FC<{ children: ReactNode }> = ({ children }) => {
   const cards = useAppSelector((state) => state.cards.items);
   const pathname = usePathname();
-  const isPanelOpen = pathname.startsWith('/characters/details/');
+  const locales = routing.locales;
+  const isPanelOpen = locales.some((locale) => pathname.startsWith(`/${locale}/characters/details/`));
+  const t = useTranslations('Error Boundary');
   return (
     <>
       <Controls />
       <div className={isPanelOpen ? 'App' : ''}>
-        <MyErrorBoundary>
+        <MyErrorBoundary t={t}>
           <Results />
           {cards.length > 0 && <DownloadPanel />}
-          {children}
         </MyErrorBoundary>
+        {children}
       </div>
     </>
   );

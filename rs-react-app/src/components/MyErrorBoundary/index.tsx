@@ -22,10 +22,11 @@ class MyErrorBoundary extends Component<
   }
 
   render() {
+    const { t } = this.props;
     if (this.state.hasError) {
       return (
         <div>
-          <h1>Something went wrong.</h1>
+          <h1>{t('error')}</h1>
           <ErrorButton />
         </div>
       );

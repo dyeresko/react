@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom/vitest';
 import MainApp from '@components/MainApp/index';
-import { store } from '@/app/lib/store';
+import { store } from '@/app/[locale]/lib/store';
 import { mockFetchFailure, mockFetchSuccess } from '@/test-utils/utils.ts';
 import { Provider } from 'react-redux';
 
