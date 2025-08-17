@@ -1,5 +1,4 @@
-import { StrictMode, useState, type FC } from 'react';
-import { PaginationDataContext } from '@/hooks/PaginationDataContext';
+import { StrictMode, type FC } from 'react';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -11,8 +10,6 @@ import App from '@/App';
 import CharacterDetails from '@components/CharacterDetails/index';
 import About from '@components/About/index';
 import NotFound from '@components/NotFound/index';
-import type { Info } from '@/types/interfaces';
-import { defaultPaginationData } from '@/data/data';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,17 +24,9 @@ const router = createBrowserRouter(
 );
 
 const MainApp: FC = () => {
-  const [paginationData, setPaginationData] = useState<Info>(
-    defaultPaginationData
-  );
-
   return (
     <StrictMode>
-      <PaginationDataContext.Provider
-        value={{ paginationData, setPaginationData }}
-      >
-        <RouterProvider router={router} />
-      </PaginationDataContext.Provider>
+      <RouterProvider router={router} />
     </StrictMode>
   );
 };

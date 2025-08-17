@@ -1,1 +1,1 @@
-cd ./rs-react-app && npm run lint
+cd ./rs-react-app && npm run format:fix && npm run lint
