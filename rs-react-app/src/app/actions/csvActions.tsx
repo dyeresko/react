@@ -1,5 +1,5 @@
 'use server';
-import type { DetailedCharacter } from "@/types/interfaces";
+import type { DetailedCharacter } from '@/types/interfaces';
 
 export const charactersToCSV = async (characters: DetailedCharacter[]) => {
   const headers = [Object.keys(characters[0])].toString() + '\n';

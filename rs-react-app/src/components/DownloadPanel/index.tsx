@@ -9,13 +9,13 @@ const DownloadPanel: FC = () => {
   const cards = useAppSelector((state) => state.cards.items);
   const dispatch = useAppDispatch();
   const linkRef = useRef<HTMLAnchorElement>(null);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUnselectAllClick = () => {
     dispatch(clearCards());
   };
   const handleDownloadClick = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     const chars = await charactersToCSV(cards);
     const blob = new Blob([chars], {
       type: 'text/csv;charset=utf-8; ',
@@ -33,9 +33,13 @@ const DownloadPanel: FC = () => {
     <div data-testid="download-panel" className={classes.downloadPanel}>
       <p>There are {cards.length} selected cards</p>
       <div className={classes.panelButtons}>
-        <button onClick={handleDownloadClick} disabled={isLoading}>Download</button>
+        <button onClick={handleDownloadClick} disabled={isLoading}>
+          Download
+        </button>
         <a href="#" ref={linkRef} hidden></a>
-        <button onClick={handleUnselectAllClick} disabled={isLoading}>Unselect all</button>
+        <button onClick={handleUnselectAllClick} disabled={isLoading}>
+          Unselect all
+        </button>
       </div>
     </div>
   );
