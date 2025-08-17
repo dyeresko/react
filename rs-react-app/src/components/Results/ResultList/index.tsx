@@ -3,7 +3,7 @@ import classes from '@components/Results//ResultList/ResultList.module.css';
 import type { DetailedCharacter } from '@/types/interfaces';
 import type { FC } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';
 
 const ResultList: FC<{ characters?: DetailedCharacter[] }> = ({
   characters,

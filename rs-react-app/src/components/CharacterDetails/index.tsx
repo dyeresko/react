@@ -6,8 +6,8 @@ import logo from '@/assets/react.svg';
 import { useGetResultQuery } from '@/app/[locale]/lib/services/api';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 const CharacterDetails: FC<{ id: string }> = ({ id }) => {
   const t = useTranslations('Result');
