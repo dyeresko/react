@@ -1,11 +1,11 @@
 'use client';
-import { useEffect, useState, type FC } from 'react';
+import { useEffect, type FC } from 'react';
 import classes from '@components/Results/Results/Results.module.css';
 import ErrorButton from '@components/Results/ErrorButton';
 import logo from '@/assets/react.svg';
 import ResultList from '@components/Results/ResultList/index';
 import { useSearchParams } from 'next/navigation';
-import type { Character } from '@/types/interfaces';
+import type { Response } from '@/types/interfaces';
 import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
 import { useGetResultsQuery } from '@/app/[locale]/lib/services/api';
 import useLocalStorage from '@/hooks/useLocalStorage';
@@ -14,34 +14,38 @@ import { setPagination } from '@/app/[locale]/lib/features/pagination/pagination
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
-const Results: FC = () => {
+const Results: FC<{ initPage: number; response: Response | null }> = ({
+  initPage,
+  response,
+}) => {
   const t = useTranslations('Result');
-  const [characters, setCharacters] = useState<Character[]>([]);
   const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const updateSearchParams = useUpdateSearchParams();
   const page = Number(searchParams.get('page') || '1');
   const name = searchParams.get('name') || '';
   const [, setStorageSearchResult] = useLocalStorage('searchResult', '');
-
-  const { data, error, isFetching, refetch } = useGetResultsQuery({
-    page,
-    name,
-  });
+  const { data, error, isFetching, refetch } = useGetResultsQuery(
+    {
+      page,
+      name,
+    },
+    { skip: page === initPage }
+  );
+  const res = page === initPage ? response : data || null;
 
   useEffect(() => {
     updateSearchParams({ page: String(page), name: name });
     setStorageSearchResult(name);
-  }, [page, name]);
-
-  useEffect(() => {
-    if (data?.results) {
-      setCharacters(data.results);
-    }
     if (data?.info) {
       dispatch(setPagination(data.info));
     }
-  }, [data]);
+    if (page === 1) {
+      if (res?.info) {
+        dispatch(setPagination(res?.info));
+      }
+    }
+  }, [page, name, initPage, res, data]);
 
   const handleRefreshClick = () => {
     refetch();
@@ -73,7 +77,7 @@ const Results: FC = () => {
     <div>
       <button onClick={handleRefreshClick}>{t('refresh')}</button>
       <div>
-        <ResultList characters={characters} />
+        <ResultList characters={res?.results} />
         <ErrorButton />
       </div>
     </div>
