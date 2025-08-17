@@ -1,6 +1,5 @@
-import type { FC, ReactNode } from "react";
+import type { FC, ReactNode } from 'react';
 import '@/index.css';
-
 
 const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -8,5 +7,5 @@ const RootLayout: FC<{ children: ReactNode }> = ({ children }) => {
       <body>{children}</body>
     </html>
   );
-}
+};
 export default RootLayout;
