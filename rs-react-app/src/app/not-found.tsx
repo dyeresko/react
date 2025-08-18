@@ -4,7 +4,6 @@ import NotFound from '@/components/NotFound';
 import type { FC } from 'react';
 
 const NotFoundPage: FC = () => {
-  console.log('HAHHA');
   return (
     <div>
       <BackButton />
