@@ -1,43 +1,47 @@
-import {
-  type ChangeEvent,
-  useState,
-  useContext,
-  useEffect,
-  type FC,
-  useMemo,
-} from 'react';
+'use client';
+import { type ChangeEvent, useState, useEffect, type FC, useMemo } from 'react';
 import classes from '@components/Controls/Controls.module.css';
 import useLocalStorage from '@/hooks/useLocalStorage.tsx';
-import { PaginationDataContext } from '@/hooks/PaginationDataContext.tsx';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/hooks/reduxHooks.ts';
-import { toggleTheme } from '@/features/theme/themeSlice.ts';
-import type { ControlsProps } from '@/types/types';
+import { toggleTheme } from '@/app/[locale]/lib/features/theme/themeSlice';
 import { getPage } from '@/utils/utils';
-import { defaultPaginationData } from '@/data/data';
+import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
+import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
+import LocaleSwitcher from '../LocaleSwitcher';
 
-const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
-  const [storageSearchResult] = useLocalStorage('searchResult', '');
+const Controls: FC = () => {
+  const [storageSearchResult, setStorageSearchResult] = useLocalStorage(
+    'searchResult',
+    ''
+  );
+  const updateSearchParams = useUpdateSearchParams();
+  const searchParams = useSearchParams();
+  useEffect(() => {
+    if (storageSearchResult && !searchParams.get('name')) {
+      updateSearchParams({ name: storageSearchResult });
+    }
+  });
   const [searchResult, setSearchResult] = useState(storageSearchResult);
-  const paginationContext = useContext(PaginationDataContext);
-  const navigate = useNavigate();
+  const pagination = useAppSelector((state) => state.pagination.value);
+  const page = useMemo(() => getPage(pagination), [pagination]);
+  const t = useTranslations('Controls');
+  const pages = useMemo(() => pagination.pages ?? '∞', [pagination.pages]);
 
-  const page = useMemo(
-    () => getPage(paginationContext?.paginationData ?? defaultPaginationData),
-    [paginationContext?.paginationData]
-  );
-
-  const pages = useMemo(
-    () => paginationContext?.paginationData.pages ?? '∞',
-    [paginationContext?.paginationData.pages]
-  );
+  const onSearch = (value: string) => {
+    setStorageSearchResult(value.trim());
+    updateSearchParams({ name: value, page: '1' });
+  };
+  const onNewPage = (value: string) => {
+    const url = new URL(value);
+    const page = url.searchParams.get('page') ?? undefined;
+    const name = url.searchParams.get('name') ?? undefined;
+    updateSearchParams({ name, page });
+  };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchResult(e.target.value);
-  };
-
-  const handleAboutClick = () => {
-    navigate('/about');
   };
 
   const handleSearchClick = () => {
@@ -51,17 +55,16 @@ const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
   };
 
   const handlePrevClick = () => {
-    if (paginationContext?.paginationData.prev) {
-      onNewPage(paginationContext.paginationData.prev);
+    if (pagination.prev) {
+      onNewPage(pagination.prev);
     }
   };
 
   const handleNextClick = () => {
-    if (paginationContext?.paginationData.next) {
-      onNewPage(paginationContext.paginationData.next);
+    if (pagination.next) {
+      onNewPage(pagination.next);
     }
   };
-
   const theme = useAppSelector((state) => state.theme.style);
   const dispatch = useAppDispatch();
   const handleThemeChange = () => {
@@ -72,23 +75,26 @@ const Controls: FC<ControlsProps> = ({ onNewPage, onSearch }) => {
   }, [theme]);
   return (
     <div className={classes.controls}>
-      <h2>Controls</h2>
+      <h2 className={classes.header}>Controls</h2>
       <button className={classes.themeButton} onClick={handleThemeChange}>
         {theme === 'white' ? '🌙' : '☀️'}
       </button>
-      <button onClick={handleAboutClick}>About</button>
+      <LocaleSwitcher />
+      <Link href={'/about'}>
+        <button>{t('about')}</button>
+      </Link>
       <input
         type="text"
-        placeholder="Search..."
+        placeholder={t('placeholder')}
         value={searchResult}
         onChange={handleInputChange}
       />
-      <button onClick={handleSearchClick}>Search</button>
-      <button onClick={handleClearInputClick}>Clear Input</button>
+      <button onClick={handleSearchClick}>{t('search')}</button>
+      <button onClick={handleClearInputClick}>{t('clear')}</button>
       <div className={classes.pagination}>
-        <button onClick={handlePrevClick}>Prev</button>
+        <button onClick={handlePrevClick}>{t('prev')}</button>
         {page}/{pages}
-        <button onClick={handleNextClick}>Next</button>
+        <button onClick={handleNextClick}>{t('next')}</button>
       </div>
     </div>
   );

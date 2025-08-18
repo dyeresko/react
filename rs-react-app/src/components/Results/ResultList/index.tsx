@@ -1,34 +1,25 @@
 import Result from '@components/Results/Result/index';
 import classes from '@components/Results//ResultList/ResultList.module.css';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import type { DetailedCharacter } from '@/types/interfaces';
-import useUpdateSearchParams from '@/hooks/useUpdateSearchParams';
 import type { FC } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { Link } from '@/i18n/navigation';
 
 const ResultList: FC<{ characters?: DetailedCharacter[] }> = ({
   characters,
 }) => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const updateSearchParams = useUpdateSearchParams();
-
-  const handleResultClick = (id: number) => {
-    const page = searchParams.get('page') ?? undefined;
-    const name = searchParams.get('name') ?? undefined;
-    navigate(`details/${id}`, { replace: false });
-    updateSearchParams({ page, name });
-  };
+  const searchParams = useSearchParams();
   return (
     <div className={classes.results}>
       {characters
         ? characters.map((character: DetailedCharacter) => (
-            <div
-              key={character.id}
-              onClick={() => {
-                handleResultClick(character.id);
-              }}
-            >
-              <Result character={character} />
+            <div key={character.id}>
+              <Link
+                className={classes.link}
+                href={`/characters/details/${character.id}?page=${searchParams.get('page')}&name=${searchParams.get('name')}`}
+              >
+                <Result character={character} />
+              </Link>
             </div>
           ))
         : 'No results found.'}

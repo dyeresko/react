@@ -1,4 +1,4 @@
-import type { DetailedCharacter, Info } from '@/types/interfaces';
+import type { Info } from '@/types/interfaces';
 
 export const getPage = (pageInfo: Info) => {
   if (pageInfo.prev) {
@@ -12,22 +12,6 @@ export const getPage = (pageInfo: Info) => {
     return nextPage - 1;
   }
   return 1;
-};
-
-export const charactersToCSV = (characters: DetailedCharacter[]) => {
-  const headers = [Object.keys(characters[0])].toString() + '\n';
-  const rows = characters
-    .map((character) => {
-      const values = Object.values(character);
-      return values.map((value) => {
-        if (typeof value === 'object') {
-          return Object.values(value)[0];
-        }
-        return value;
-      });
-    })
-    .join('\n');
-  return headers + rows;
 };
 
 export const simulateLoading = () => {

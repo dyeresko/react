@@ -8,3 +8,9 @@
   margin-top: 10px;
   border-radius: 10px;
 }
+
+.link {
+  outline: none;
+  text-decoration: none;
+  color: inherit;
+}

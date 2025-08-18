@@ -6,6 +6,7 @@ export type ResultsProps = {
 
 export type ErrorBoundaryProps = {
   children: ReactNode;
+  t: (key: string) => string;
 };
 
 export type ControlsProps = {

@@ -1,0 +1,37 @@
+{
+  "Controls": {
+    "title": "Controls",
+    "about": "About",
+    "placeholder": "Search...",
+    "clear": "Clear Input",
+    "prev": "Prev",
+    "next": "Next",
+    "search": "Search"
+  },
+  "About": {
+    "back": "Back",
+    "info": "My name is Denis Yeresko and I am a beginner developer focused on the frontend. My goal is to become a highly qualified web development specialist and continue to develop my knowledge and skills in programming. I entered the university, where I studied for two years, but at some point I realized that I needed more practice and real projects. I decided to take an academic leave and focus on self-development. Over time, I realized that I was attracted to frontend development, and I decided to focus on this direction. I enrolled in the JavaScript course from RS School. I wanted to expand my horizons and learn how to work with modern frontend technologies. The learning process at RS School was a real discovery for me. I began to better understand how the interaction between the user and the web application is built. One of my main motivations is the opportunity to solve complex problems and create solutions that make web applications more convenient and functional for users. I always enjoy solving logical problems and encounter them at every stage of development. The complexity of the tasks does not scare me, on the contrary, it motivates me to delve deeper into the problem and find the most elegant solution. I strive to develop this quality in the future in order to effectively solve the problems I encounter at work.",
+    "link": "RS-School link"
+  },
+  "Result": {
+    "refresh": "Refresh",
+    "close": "Close",
+    "name": "Name",
+    "status": "Status",
+    "species": "Species",
+    "gender": "Gender",
+    "origin": "Origin",
+    "location": "Location",
+    "error": "Request did not succeed",
+    "alt-loading": "Loading",
+    "alt-result": "Result Image"
+  },
+  "Error Boundary": {
+    "error": "Something went wrong",
+    "throw": "Throw Error"
+  },
+  "Not Found": {
+    "message": "NOT FOUND 404",
+    "back": "Back"
+  }
+}

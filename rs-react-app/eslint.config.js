@@ -6,9 +6,17 @@ import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import reactCompiler from 'eslint-plugin-react-compiler';
+import { FlatCompat } from '@eslint/eslintrc';
+
+const compat = new FlatCompat({
+  baseDirectory: import.meta.dirname,
+});
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  ...compat.config({
+    extends: ['next/core-web-vitals'],
+  }),
+  { ignores: ['dist', '.next'] },
   {
     extends: [
       js.configs.recommended,

@@ -1,3 +1,4 @@
+'use client';
 import { Component, type ErrorInfo } from 'react';
 import ErrorButton from '@components/Results/ErrorButton.tsx';
 import type { ErrorBoundaryState } from '@/types/interfaces';
@@ -21,10 +22,11 @@ class MyErrorBoundary extends Component<
   }
 
   render() {
+    const { t } = this.props;
     if (this.state.hasError) {
       return (
         <div>
-          <h1>Something went wrong.</h1>
+          <h1>{t('error')}</h1>
           <ErrorButton />
         </div>
       );
