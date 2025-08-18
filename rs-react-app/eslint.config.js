@@ -6,10 +6,17 @@ import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
 import reactCompiler from 'eslint-plugin-react-compiler';
-import eslintPluginNext from '@next/eslint-plugin-next';
+import { FlatCompat } from '@eslint/eslintrc';
+
+const compat = new FlatCompat({
+  baseDirectory: import.meta.dirname,
+});
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  ...compat.config({
+    extends: ['next/core-web-vitals'],
+  }),
+  { ignores: ['dist', '.next'] },
   {
     extends: [
       js.configs.recommended,
@@ -26,7 +33,6 @@ export default tseslint.config(
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
       'react-compiler': reactCompiler,
-      '@next/next': eslintPluginNext,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -37,8 +43,6 @@ export default tseslint.config(
       'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
-      ...eslintPluginNext.configs.recommended.rules,
-      ...eslintPluginNext.configs['core-web-vitals'].rules,
     },
     settings: {
       react: {
