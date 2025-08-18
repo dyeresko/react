@@ -37,6 +37,8 @@ export default tseslint.config(
       'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      ...eslintPluginNext.configs.recommended.rules,
+      ...eslintPluginNext.configs['core-web-vitals'].rules,
     },
     settings: {
       react: {
