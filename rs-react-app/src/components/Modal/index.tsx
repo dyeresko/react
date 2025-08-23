@@ -25,9 +25,15 @@ const Modal: FC<{
   };
 
   return createPortal(
-    <dialog onClick={(e) => closeOnOutsideClick(e)} ref={modalDialogRef}>
-      <button onClick={handleCloseModal}>Close</button>
-      {children}
+    <dialog
+      className="dialog"
+      onClick={(e) => closeOnOutsideClick(e)}
+      ref={modalDialogRef}
+    >
+      <div className="p-5 border">
+        <button onClick={handleCloseModal}>Close</button>
+        {children}
+      </div>
     </dialog>,
     document.body
   );

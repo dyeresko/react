@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import './App.css';
 import Modal from '@components/Modal';
+import UncontrolledForm from '@components/UncontrolledForm';
 
 function App() {
   const uncontrolledModal = useRef<HTMLDialogElement>(null);
@@ -17,7 +18,7 @@ function App() {
       <button onClick={showUncontrolledForm}>Uncontrolled form</button>
       <button onClick={showControlledForm}>Controlled form</button>
       <Modal modalDialogRef={uncontrolledModal}>
-        <p>Uncontrolled modal</p>
+        <UncontrolledForm />
       </Modal>
 
       <Modal modalDialogRef={controlledModal}>
