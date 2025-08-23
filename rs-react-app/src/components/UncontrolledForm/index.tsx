@@ -41,7 +41,11 @@ const UncontrolledForm: FC = () => {
   };
   return (
     <div className="p-10">
-      <form ref={formRef} onSubmit={(e) => handleSubmit(e)}>
+      <form
+        className="flex flex-col gap-2"
+        ref={formRef}
+        onSubmit={(e) => handleSubmit(e)}
+      >
         <div className="flex justify-between">
           <label htmlFor="name">Name</label>
           <input className="input" id="name" name="name" />
@@ -87,7 +91,7 @@ const UncontrolledForm: FC = () => {
           <label htmlFor="confirmPassword">Confirm Password</label>
           <input
             className="input"
-            id="confirm-password"
+            id="confirmPassword"
             name="confirmPassword"
             type="password"
           />
@@ -115,7 +119,7 @@ const UncontrolledForm: FC = () => {
         )}
         <div>
           <label>
-            <input type="checkbox" name="accept" />
+            <input id="accept" type="checkbox" name="accept" />
             <label htmlFor="accept">Accept T&C</label>
           </label>
         </div>

@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import './App.css';
 import Modal from '@components/Modal';
 import UncontrolledForm from '@components/UncontrolledForm';
+import ControlledForm from '@components/ControlledForm';
 
 function App() {
   const uncontrolledModal = useRef<HTMLDialogElement>(null);
@@ -22,7 +23,7 @@ function App() {
       </Modal>
 
       <Modal modalDialogRef={controlledModal}>
-        <p>Controlled modal</p>
+        <ControlledForm />
       </Modal>
     </>
   );
