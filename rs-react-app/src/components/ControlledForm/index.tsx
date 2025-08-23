@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { toBase64 } from '@/utils/utils';
 import { setControlledFormData } from '@/app/features/formSlice';
-import { useAppDispatch } from '@/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import type { Props } from '@/types/types';
 import { colors, strengthLabels } from '@/data/data';
 
@@ -21,6 +21,7 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
   });
   const password = watch('password', '');
   const dispatch = useAppDispatch();
+  const countries = useAppSelector((state) => state.forms.countries);
   const onSubmit = async (data: FormInput) => {
     const picture64 = await toBase64(
       data.picture instanceof FileList ? data.picture[0] : new File([''], '')
@@ -208,11 +209,17 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
         <div className="flex justify-between">
           <label htmlFor="c-country">Country</label>
           <input
+            list="countries"
             {...register('country')}
             className="input"
             id="c-country"
             name="country"
           />
+          <datalist id="countries">
+            {countries.map((country) => (
+              <option key={country} value={country} />
+            ))}
+          </datalist>
         </div>
         {errors.country && (
           <div className="flex flex-row-reverse text-red-600/100">

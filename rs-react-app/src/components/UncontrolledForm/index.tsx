@@ -1,7 +1,7 @@
 import { useRef, useState, type FC } from 'react';
 import { schema } from '@/schema/schema';
 import { ValidationError } from 'yup';
-import { useAppDispatch } from '@/hooks/hooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { setUncontrolledFormData } from '@/app/features/formSlice';
 import { toBase64 } from '@/utils/utils';
 import type { Props } from '@/types/types';
@@ -10,6 +10,7 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const dispatch = useAppDispatch();
+  const countries = useAppSelector((state) => state.forms.countries);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current) {
@@ -166,7 +167,17 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
         )}
         <div className="flex justify-between">
           <label htmlFor="country">Country</label>
-          <input className="input" id="country" name="country" />
+          <input
+            className="input"
+            id="country"
+            name="country"
+            list="countries"
+          />
+          <datalist id="countries">
+            {countries.map((country) => (
+              <option key={country} value={country} />
+            ))}
+          </datalist>
         </div>
         {errors.country && (
           <div className="flex flex-row-reverse text-red-600/100">

@@ -4,14 +4,16 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import type { RootState } from '@/app/store.ts';
 import type { DataFromForm } from '@/types/interfaces';
-import { defaultFormData } from '@/data/data';
+import { countries, defaultFormData } from '@/data/data';
 
 const initialState: {
   uncontrolledFormData: DataFromForm;
   controlledFormData: DataFromForm;
+  countries: string[];
 } = {
   uncontrolledFormData: defaultFormData,
   controlledFormData: defaultFormData,
+  countries: countries,
 };
 
 export const cardsSlice = createSlice({
