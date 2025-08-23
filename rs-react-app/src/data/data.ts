@@ -11,3 +11,11 @@ export const defaultFormData: DataFromForm = {
   picture: '',
   country: '',
 };
+
+export const strengthLabels = ['Weak', 'Fair', 'Good', 'Strong'];
+export const colors = [
+  'text-red-600/100',
+  'text-orange-600/100',
+  'text-yellow-600/100',
+  'text-green-600/100',
+];

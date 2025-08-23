@@ -6,10 +6,12 @@ import { toBase64 } from '@/utils/utils';
 import { setControlledFormData } from '@/app/features/formSlice';
 import { useAppDispatch } from '@/hooks/hooks';
 import type { Props } from '@/types/types';
+import { colors, strengthLabels } from '@/data/data';
 
 const ControlledForm: FC<Props> = ({ onSuccess }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const {
+    watch,
     register,
     handleSubmit,
     formState: { errors, isValid },
@@ -17,6 +19,7 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
+  const password = watch('password', '');
   const dispatch = useAppDispatch();
   const onSubmit = async (data: FormInput) => {
     const picture64 = await toBase64(
@@ -37,6 +40,26 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
     );
     onSuccess();
   };
+  const getPasswordStrength = (password: string) => {
+    let strengthIndicator = 0;
+
+    if (/[A-Z]/.test(password)) {
+      strengthIndicator++;
+    }
+    if (/[0-9]/.test(password)) {
+      strengthIndicator++;
+    }
+    if (/[^A-Za-z0-9]/.test(password)) {
+      strengthIndicator++;
+    }
+    if (password.length >= 7) {
+      strengthIndicator++;
+    }
+    return strengthIndicator;
+  };
+
+  const strength = getPasswordStrength(password);
+
   return (
     <div className="p-10">
       <form
@@ -97,6 +120,11 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
             type="password"
           />
         </div>
+        {password.length > 0 && (
+          <div className={`flex flex-row-reverse ${colors[strength - 1]}`}>
+            {strengthLabels[strength - 1]}
+          </div>
+        )}
         {errors.password && (
           <div className="flex flex-row-reverse text-red-600/100">
             {errors.password.message}
