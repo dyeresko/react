@@ -1,30 +1,37 @@
-import { afterEach, beforeEach, vi } from 'vitest';
-import { cleanup } from '@testing-library/react';
+/// <reference types="vitest" />
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
-beforeEach(() => {
-  const storage: Record<string, string> = {};
-
-  globalThis.localStorage = {
-    removeItem: vi.fn((key) => {
-      Reflect.deleteProperty(storage, key);
-    }),
-    clear: vi.fn(() => {
-      for (const key of Object.keys(storage)) {
-        Reflect.deleteProperty(storage, key);
-      }
-    }),
-    key: vi.fn(),
-    length: 0,
-    getItem: vi.fn((key) => storage[key] || null),
-    setItem: vi.fn((key, value) => {
-      storage[key] = value;
-    }),
-  };
-});
-
-afterEach(() => {
-  cleanup();
-  vi.restoreAllMocks();
-  vi.unstubAllGlobals();
-  localStorage.clear();
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+      '@components': path.resolve(__dirname, 'src', 'components'),
+    },
+  },
+  test: {
+    setupFiles: './src/test-utils/setup.ts',
+    environment: 'jsdom',
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.{js,jsx,ts,tsx}'],
+      exclude: [
+        'src/**/*.test.{js,jsx,ts,tsx}',
+        'src/**/*.spec.{js,jsx,ts,tsx}',
+        'src/index.{js,jsx,ts,tsx}',
+        'src/setupTests.{js,ts}',
+        'src/**/*.d.ts',
+        'src/main.{js,jsx,ts,tsx}',
+      ],
+      thresholds: {
+        statements: 80,
+        branches: 50,
+        functions: 50,
+        lines: 50,
+      },
+    },
+  },
 });

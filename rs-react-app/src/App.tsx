@@ -1,23 +1,28 @@
-import { useState } from 'react';
+import { useRef } from 'react';
 import './App.css';
+import Modal from '@components/Modal';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const uncontrolledModal = useRef<HTMLDialogElement>(null);
+  const controlledModal = useRef<HTMLDialogElement>(null);
 
+  const showUncontrolledForm = () => {
+    uncontrolledModal.current?.showModal();
+  };
+  const showControlledForm = () => {
+    controlledModal.current?.showModal();
+  };
   return (
     <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <button onClick={showUncontrolledForm}>Uncontrolled form</button>
+      <button onClick={showControlledForm}>Controlled form</button>
+      <Modal modalDialogRef={uncontrolledModal}>
+        <p>Uncontrolled modal</p>
+      </Modal>
+
+      <Modal modalDialogRef={controlledModal}>
+        <p>Controlled modal</p>
+      </Modal>
     </>
   );
 }
