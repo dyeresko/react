@@ -1,10 +1,15 @@
 import { useRef, useState, type FC } from 'react';
 import { schema } from '@/schema/schema';
 import { ValidationError } from 'yup';
+import { useAppDispatch } from '@/hooks/hooks';
+import { setUncontrolledFormData } from '@/app/features/formSlice';
+import { toBase64 } from '@/utils/utils';
+import type { Props } from '@/types/types';
 
-const UncontrolledForm: FC = () => {
+const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const dispatch = useAppDispatch();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current) {
@@ -25,10 +30,26 @@ const UncontrolledForm: FC = () => {
         await schema.validate(dataObj, {
           abortEarly: false,
         });
+        const picture64 = await toBase64(
+          dataObj.picture instanceof File ? dataObj.picture : new File([''], '')
+        );
+        dispatch(
+          setUncontrolledFormData({
+            name: dataObj.name?.toString() ?? '',
+            age: dataObj.age,
+            email: dataObj.email?.toString() ?? '',
+            password: dataObj.password?.toString() ?? '',
+            confirmPassword: dataObj.password?.toString() ?? '',
+            gender: dataObj.gender?.toString() ?? '',
+            accept: dataObj.accept,
+            picture: typeof picture64 === 'string' ? picture64 : '',
+            country: dataObj.country?.toString() ?? '',
+          })
+        );
+        onSuccess();
       } catch (errors) {
         const validationErrors: Record<string, string> = {};
         if (errors instanceof ValidationError) {
-          console.log(errors.inner);
           for (const error of errors.inner) {
             if (error.path !== undefined) {
               validationErrors[error.path] = error.errors[0];
@@ -153,7 +174,7 @@ const UncontrolledForm: FC = () => {
           </div>
         )}
         <div className="flex justify-end pt-10">
-          <button className="" type="submit">
+          <button className="cursor-pointer" type="submit">
             Submit
           </button>
         </div>

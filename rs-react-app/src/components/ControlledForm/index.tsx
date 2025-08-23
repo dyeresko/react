@@ -2,19 +2,40 @@ import { useRef, type FC } from 'react';
 import { schema, type FormInput } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { toBase64 } from '@/utils/utils';
+import { setControlledFormData } from '@/app/features/formSlice';
+import { useAppDispatch } from '@/hooks/hooks';
+import type { Props } from '@/types/types';
 
-const ControlledForm: FC = () => {
+const ControlledForm: FC<Props> = ({ onSuccess }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<FormInput>({
     resolver: yupResolver(schema),
     mode: 'onChange',
   });
+  const dispatch = useAppDispatch();
   const onSubmit = async (data: FormInput) => {
-    console.log(data);
+    const picture64 = await toBase64(
+      data.picture instanceof FileList ? data.picture[0] : new File([''], '')
+    );
+    dispatch(
+      setControlledFormData({
+        name: data.name,
+        age: data.age,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        gender: data.gender,
+        accept: data.accept,
+        picture: typeof picture64 === 'string' ? picture64 : '',
+        country: data.country,
+      })
+    );
+    onSuccess();
   };
   return (
     <div className="p-10">
@@ -171,7 +192,11 @@ const ControlledForm: FC = () => {
           </div>
         )}
         <div className="flex justify-end pt-10">
-          <button className="" type="submit">
+          <button
+            className="cursor-pointer disabled:bg-gray-400 disabled:text-gray-200 disabled:cursor-not-allowed"
+            disabled={!isValid}
+            type="submit"
+          >
             Submit
           </button>
         </div>

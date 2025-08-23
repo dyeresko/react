@@ -31,7 +31,9 @@ const Modal: FC<{
       ref={modalDialogRef}
     >
       <div className="p-5 border">
-        <button onClick={handleCloseModal}>Close</button>
+        <button className="cursor-pointer" onClick={handleCloseModal}>
+          Close
+        </button>
         {children}
       </div>
     </dialog>,
