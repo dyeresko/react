@@ -3,14 +3,16 @@ import { schema } from '@/schema/schema';
 import { ValidationError } from 'yup';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import { setUncontrolledFormData } from '@/app/features/formSlice';
-import { toBase64 } from '@/utils/utils';
+import { getPasswordStrength, toBase64 } from '@/utils/utils';
 import type { Props } from '@/types/types';
+import { colors, strengthLabels } from '@/data/data';
 
 const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const dispatch = useAppDispatch();
   const countries = useAppSelector((state) => state.forms.countries);
+  const [strength, setStrength] = useState(0);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formRef.current) {
@@ -49,6 +51,7 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
         );
         onSuccess();
       } catch (errors) {
+        setStrength(getPasswordStrength(dataObj.password?.toString() ?? ''));
         const validationErrors: Record<string, string> = {};
         if (errors instanceof ValidationError) {
           for (const error of errors.inner) {
@@ -103,6 +106,9 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
             name="password"
             type="password"
           />
+        </div>
+        <div className={`flex flex-row-reverse ${colors[strength - 1]}`}>
+          {strengthLabels[strength - 1]}
         </div>
         {errors.password && (
           <div className="flex flex-row-reverse text-red-600/100">

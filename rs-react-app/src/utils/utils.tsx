@@ -5,3 +5,21 @@ export const toBase64 = (file: File) =>
     fileReader.onload = () => resolve(fileReader.result);
     fileReader.onerror = reject;
   });
+
+export const getPasswordStrength = (password: string) => {
+  let strengthIndicator = 0;
+
+  if (/[A-Z]/.test(password)) {
+    strengthIndicator++;
+  }
+  if (/[0-9]/.test(password)) {
+    strengthIndicator++;
+  }
+  if (/[^A-Za-z0-9]/.test(password)) {
+    strengthIndicator++;
+  }
+  if (password.length >= 7) {
+    strengthIndicator++;
+  }
+  return strengthIndicator;
+};

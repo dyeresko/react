@@ -2,7 +2,7 @@ import { useRef, type FC } from 'react';
 import { schema, type FormInput } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { toBase64 } from '@/utils/utils';
+import { getPasswordStrength, toBase64 } from '@/utils/utils';
 import { setControlledFormData } from '@/app/features/formSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import type { Props } from '@/types/types';
@@ -40,23 +40,6 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
       })
     );
     onSuccess();
-  };
-  const getPasswordStrength = (password: string) => {
-    let strengthIndicator = 0;
-
-    if (/[A-Z]/.test(password)) {
-      strengthIndicator++;
-    }
-    if (/[0-9]/.test(password)) {
-      strengthIndicator++;
-    }
-    if (/[^A-Za-z0-9]/.test(password)) {
-      strengthIndicator++;
-    }
-    if (password.length >= 7) {
-      strengthIndicator++;
-    }
-    return strengthIndicator;
   };
 
   const strength = getPasswordStrength(password);
