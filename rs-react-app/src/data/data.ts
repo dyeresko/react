@@ -20,6 +20,8 @@ export const colors = [
   'text-green-600/100',
 ];
 
+export const progressBarColors = ['red', 'orange', 'yellow', 'green'];
+
 export const countries = [
   'Afghanistan',
   'Åland Islands',

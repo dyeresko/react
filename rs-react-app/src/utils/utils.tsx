@@ -12,13 +12,13 @@ export const getPasswordStrength = (password: string) => {
   if (/[A-Z]/.test(password)) {
     strengthIndicator++;
   }
+  if (/[a-z]/.test(password)) {
+    strengthIndicator++;
+  }
   if (/[0-9]/.test(password)) {
     strengthIndicator++;
   }
   if (/[^A-Za-z0-9]/.test(password)) {
-    strengthIndicator++;
-  }
-  if (password.length >= 7) {
     strengthIndicator++;
   }
   return strengthIndicator;

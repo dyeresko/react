@@ -1,4 +1,4 @@
-import { useRef, type FC } from 'react';
+import { useEffect, useRef, type FC } from 'react';
 import { schema, type FormInput } from '@/schema/schema';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -6,7 +6,7 @@ import { getPasswordStrength, toBase64 } from '@/utils/utils';
 import { setControlledFormData } from '@/app/features/formSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/hooks';
 import type { Props } from '@/types/types';
-import { colors, strengthLabels } from '@/data/data';
+import { colors, progressBarColors, strengthLabels } from '@/data/data';
 
 const ControlledForm: FC<Props> = ({ onSuccess }) => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -22,6 +22,7 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
   const password = watch('password', '');
   const dispatch = useAppDispatch();
   const countries = useAppSelector((state) => state.forms.countries);
+  const progressBarRef = useRef<HTMLDivElement>(null);
   const onSubmit = async (data: FormInput) => {
     const picture64 = await toBase64(
       data.picture instanceof FileList ? data.picture[0] : new File([''], '')
@@ -43,6 +44,14 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
   };
 
   const strength = getPasswordStrength(password);
+
+  useEffect(() => {
+    if (progressBarRef.current) {
+      progressBarRef.current.style.width = `${(strength / strengthLabels.length) * 100}%`;
+      progressBarRef.current.style.backgroundColor =
+        progressBarColors[strength - 1];
+    }
+  }, [password]);
 
   return (
     <div className="p-10">
@@ -105,8 +114,15 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
           />
         </div>
         {password.length > 0 && (
-          <div className={`flex flex-row-reverse ${colors[strength - 1]}`}>
-            {strengthLabels[strength - 1]}
+          <div>
+            <div className={`flex flex-row-reverse ${colors[strength - 1]}`}>
+              {strengthLabels[strength - 1]}
+            </div>
+            <div
+              ref={progressBarRef}
+              className="bg-red-600 transition-all duration-500 rounded"
+              style={{ width: '1%', height: '10px' }}
+            ></div>
           </div>
         )}
         {errors.password && (
