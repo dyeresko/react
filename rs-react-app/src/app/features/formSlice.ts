@@ -5,7 +5,6 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store.ts';
 import type { DataFromForm } from '@/types/interfaces';
 import { countries, defaultFormData } from '@/data/data';
-import '@testing-library/jest-dom/vitest';
 
 const initialState: {
   uncontrolledFormData: DataFromForm;
