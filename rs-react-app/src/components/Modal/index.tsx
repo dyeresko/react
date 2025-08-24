@@ -26,6 +26,7 @@ const Modal: FC<{
 
   return createPortal(
     <dialog
+      data-testid="dialog"
       className="dialog"
       onClick={(e) => closeOnOutsideClick(e)}
       ref={modalDialogRef}

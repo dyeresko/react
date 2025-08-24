@@ -5,15 +5,16 @@ export const schema = yup.object().shape({
     .string()
     .required('Name is a required field')
     .matches(/^[A-Z].*/, 'First letter of name must be uppercased'),
+
   age: yup
     .number()
     .transform((value, originalValue) =>
       originalValue === '' ? undefined : value
     )
     .typeError('Age must be number')
-    .required('Age is a required field')
     .positive('Age must be positive')
-    .integer('Age must be integer'),
+    .integer('Age must be integer')
+    .required('Age is a required field'),
   email: yup
     .string()
     .email('Invalid email')
@@ -27,16 +28,15 @@ export const schema = yup.object().shape({
     .matches(/[^a-zA-Z0-9]/, 'Password must contain one special character'),
   confirmPassword: yup
     .string()
-    .required('Confirm password')
-    .oneOf([yup.ref('password')], "Passwords don't match"),
+    .oneOf([yup.ref('password')], "Passwords don't match")
+    .required('Confirm password'),
   gender: yup.string().required('Select gender'),
   accept: yup
     .boolean()
-    .required('This field is required')
-    .oneOf([true], 'Accept terms'),
+    .oneOf([true], 'Accept terms')
+    .required('This field is required'),
   picture: yup
     .mixed()
-    .required('File is required')
     .test('fileType', 'Choose file', (value) => {
       if (value instanceof File) {
         return ['image/png', 'image/jpeg', 'image/jpg'].includes(value.type);
@@ -57,7 +57,8 @@ export const schema = yup.object().shape({
       } else if (value instanceof FileList && value.length > 0) {
         return value[0].size <= 5000000;
       }
-    }),
+    })
+    .required('File is required'),
   country: yup.string().required('Choose country'),
 });
 

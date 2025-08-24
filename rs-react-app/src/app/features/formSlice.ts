@@ -5,6 +5,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/app/store.ts';
 import type { DataFromForm } from '@/types/interfaces';
 import { countries, defaultFormData } from '@/data/data';
+import '@testing-library/jest-dom/vitest';
 
 const initialState: {
   uncontrolledFormData: DataFromForm;
@@ -16,7 +17,7 @@ const initialState: {
   countries: countries,
 };
 
-export const cardsSlice = createSlice({
+export const formsSlice = createSlice({
   name: 'formData',
   initialState,
   reducers: {
@@ -30,8 +31,8 @@ export const cardsSlice = createSlice({
 });
 
 export const { setControlledFormData, setUncontrolledFormData } =
-  cardsSlice.actions;
+  formsSlice.actions;
 
 export const selectForms = (state: RootState) => state.forms;
 
-export default cardsSlice.reducer;
+export default formsSlice.reducer;

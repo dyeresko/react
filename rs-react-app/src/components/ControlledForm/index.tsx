@@ -58,6 +58,7 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
   return (
     <div className="p-10">
       <form
+        data-testid="controlled-form"
         className="flex flex-col gap-2"
         ref={formRef}
         onSubmit={handleSubmit(onSubmit)}
@@ -121,6 +122,7 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
               {strengthLabels[strength - 1]}
             </div>
             <div
+              data-testid="progress-bar"
               ref={progressBarRef}
               className="bg-red-600 transition-all duration-500 rounded"
               style={{ width: '1%', height: '10px' }}

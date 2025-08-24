@@ -19,7 +19,7 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
       const formData = new FormData(formRef.current);
       const dataObj = {
         name: formData.get('name'),
-        age: Number(formData.get('age')),
+        age: formData.get('age') ? Number(formData.get('age')) : null,
         email: formData.get('email'),
         password: formData.get('password'),
         confirmPassword: formData.get('confirmPassword'),
@@ -58,7 +58,10 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
         if (errors instanceof ValidationError) {
           for (const error of errors.inner) {
             if (error.path !== undefined) {
-              validationErrors[error.path] = error.errors[0];
+              if (!validationErrors[error.path]) {
+                validationErrors[error.path] =
+                  error.errors[error.errors.length - 1];
+              }
             }
           }
         }
@@ -69,6 +72,7 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
   return (
     <div className="p-10">
       <form
+        data-testid="uncontrolled-form"
         className="flex flex-col gap-2"
         ref={formRef}
         onSubmit={(e) => handleSubmit(e)}
