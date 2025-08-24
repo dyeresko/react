@@ -3,8 +3,7 @@ import formsReducer, {
   setUncontrolledFormData,
 } from '@/app/features/formSlice';
 import { countries, defaultFormData, testDataRedux } from '@/data/data';
-import { describe, it } from 'node:test';
-import { expect } from 'vitest';
+import { expect, describe, it } from 'vitest';
 
 describe('Forms slice', () => {
   it('adds uncontrolled forms data to redux store', async () => {

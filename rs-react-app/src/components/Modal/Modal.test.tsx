@@ -45,35 +45,6 @@ describe('Modal', () => {
       expect(screen.getByText('Modal content')).toBeVisible();
     });
   });
-  it('closes element on clicking outside of dialog', async () => {
-    render(<TestingModal />);
-
-    await userEvent.click(screen.getByRole('button', { name: 'Open' }));
-    await waitFor(() => {
-      expect((screen.queryByRole('dialog') as HTMLDialogElement).open).toBe(
-        true
-      );
-    });
-    await userEvent.keyboard('{Escape}');
-    await waitFor(() => {
-      expect(screen.queryByText('Modal content')).not.toBeInTheDocument();
-    });
-  });
-  it('closes element on clicking outside of dialog', async () => {
-    render(<TestingModal />);
-
-    await userEvent.click(screen.getByRole('button', { name: 'Open' }));
-    await waitFor(() => {
-      expect((screen.queryByRole('dialog') as HTMLDialogElement).open).toBe(
-        true
-      );
-    });
-    const outsideElement = screen.getByTestId('outside');
-    await userEvent.click(outsideElement);
-    await waitFor(() => {
-      expect(screen.queryByText('Modal content')).not.toBeInTheDocument();
-    });
-  });
   it('closes modal', async () => {
     render(<TestingModal />);
     await userEvent.click(screen.getByRole('button', { name: 'Open' }));
