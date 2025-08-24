@@ -49,6 +49,8 @@ const UncontrolledForm: FC<Props> = ({ onSuccess }) => {
             country: dataObj.country?.toString() ?? '',
           })
         );
+        formRef.current.reset();
+        setStrength(0);
         onSuccess();
       } catch (errors) {
         setStrength(getPasswordStrength(dataObj.password?.toString() ?? ''));

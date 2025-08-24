@@ -11,6 +11,7 @@ import { colors, progressBarColors, strengthLabels } from '@/data/data';
 const ControlledForm: FC<Props> = ({ onSuccess }) => {
   const formRef = useRef<HTMLFormElement>(null);
   const {
+    reset,
     watch,
     register,
     handleSubmit,
@@ -41,6 +42,7 @@ const ControlledForm: FC<Props> = ({ onSuccess }) => {
       })
     );
     onSuccess();
+    reset();
   };
 
   const strength = getPasswordStrength(password);
