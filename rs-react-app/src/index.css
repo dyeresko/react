@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+
+.input {
+  @apply border border-gray-300 rounded-md;
+}
+
+@layer components {
+  .dialog {
+    margin: revert;
+  }
+}
