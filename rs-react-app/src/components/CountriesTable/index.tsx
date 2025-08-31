@@ -7,6 +7,7 @@ import Modal from '@/components/Modal';
 import SelectColumns from '@/components/SelectColumns';
 import SelectYears from '@/components/SelectYears';
 import TableCell from '@/components/TableCell';
+import SearchBar from '../SearchBar';
 
 const CountriesTable: FC = () => {
   const { data } = useSuspenseQuery<CO2Dataset>({
@@ -15,6 +16,7 @@ const CountriesTable: FC = () => {
   });
 
   const modal = useRef<HTMLDialogElement>(null);
+  const countryToSearch = useStore((state) => state.countryToSearch);
 
   const showMethaneColumn = useStore((state) => state.showMethaneColumn);
   const showOilCo2Column = useStore((state) => state.showOilCo2Column);
@@ -28,9 +30,13 @@ const CountriesTable: FC = () => {
   };
 
   const years = Object.entries(data)[0][1].data.map((d) => d.year);
+  const filteredCountries = Object.entries(data).filter(([key]) =>
+    key.includes(countryToSearch)
+  );
 
   return (
     <>
+      <SearchBar />
       <SelectYears years={years} />
       <button onClick={handleSelectColumnsClick}>Select columns</button>
       <table>
@@ -50,7 +56,7 @@ const CountriesTable: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {Object.entries(data).map(([key, value]) => (
+          {filteredCountries.map(([key, value]) => (
             <tr key={key}>
               <th scope="row">{key}</th>
               <TableCell
