@@ -20,7 +20,7 @@ export const useStore = create<State>()((set) => ({
   newYear: 2023,
   showMethaneColumn: false,
   showOilCo2Column: false,
-  sortCountries: 'asc',
+  sortCountries: 'desc',
   showTemperatureChangeFromCo2Column: false,
   setSortCountries: (sortMethod: string) =>
     set(() => ({ sortCountries: sortMethod })),

@@ -1,5 +1,6 @@
 import { useStore } from '@/store/store';
 import type { FC } from 'react';
+import React from 'react';
 
 const SearchBar: FC = () => {
   const searchValue = useStore((state) => state.countryToSearch);
@@ -18,4 +19,4 @@ const SearchBar: FC = () => {
   );
 };
 
-export default SearchBar;
+export default React.memo(SearchBar);

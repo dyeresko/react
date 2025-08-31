@@ -1,5 +1,6 @@
 import { useStore } from '@/store/store';
 import type { FC } from 'react';
+import React from 'react';
 
 const SelectYears: FC<{ years: number[] }> = ({ years }) => {
   const year = useStore((store) => store.newYear);
@@ -21,4 +22,4 @@ const SelectYears: FC<{ years: number[] }> = ({ years }) => {
   );
 };
 
-export default SelectYears;
+export default React.memo(SelectYears);

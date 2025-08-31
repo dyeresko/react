@@ -2,13 +2,14 @@ import { fetchData } from '@/api/api';
 import { useStore } from '@/store/store';
 import type { CO2Dataset } from '@/types/interfaces';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { useRef, type FC } from 'react';
+import { useCallback, useMemo, useRef, type FC } from 'react';
 import Modal from '@/components/Modal';
 import SelectColumns from '@/components/SelectColumns';
 import SelectYears from '@/components/SelectYears';
 import TableCell from '@/components/TableCell';
 import SearchBar from '../SearchBar';
 import SortCountries from '../SortCountries';
+import React from 'react';
 
 const CountriesTable: FC = () => {
   const { data } = useSuspenseQuery<CO2Dataset>({
@@ -18,7 +19,6 @@ const CountriesTable: FC = () => {
 
   const modal = useRef<HTMLDialogElement>(null);
   const countryToSearch = useStore((state) => state.countryToSearch);
-
   const showMethaneColumn = useStore((state) => state.showMethaneColumn);
   const showOilCo2Column = useStore((state) => state.showOilCo2Column);
   const showTemperatureChangeFromCo2Column = useStore(
@@ -27,17 +27,27 @@ const CountriesTable: FC = () => {
   const year = useStore((store) => store.newYear);
   const sortMethod = useStore((store) => store.sortCountries);
 
-  const handleSelectColumnsClick = () => {
+  const handleSelectColumnsClick = useCallback(() => {
     modal.current?.showModal();
-  };
+  }, [modal]);
 
-  const years = Object.entries(data)[0][1].data.map((d) => d.year);
-  const filteredCountries = Object.entries(data)
-    .filter(([key]) => key.includes(countryToSearch))
-    .sort((a, b) =>
-      sortMethod === 'asc' ? a[0].localeCompare(b[0]) : b[0].localeCompare(a[0])
-    );
-
+  const years = useMemo(
+    () => Object.entries(data)[0][1].data.map((d) => d.year),
+    [data]
+  );
+  const filteredCountries = useMemo(
+    () => Object.entries(data).filter(([key]) => key.includes(countryToSearch)),
+    [countryToSearch, data]
+  );
+  const sortedRows = useMemo(
+    () =>
+      filteredCountries.sort((a, b) =>
+        sortMethod === 'desc'
+          ? a[0].localeCompare(b[0])
+          : b[0].localeCompare(a[0])
+      ),
+    [sortMethod, filteredCountries]
+  );
   return (
     <>
       <SortCountries />
@@ -61,7 +71,7 @@ const CountriesTable: FC = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredCountries.map(([key, value]) => (
+          {sortedRows.map(([key, value]) => (
             <tr key={key}>
               <th scope="row">{key}</th>
               <TableCell

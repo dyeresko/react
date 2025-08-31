@@ -1,5 +1,6 @@
 import { useStore } from '@/store/store';
 import type { FC } from 'react';
+import React from 'react';
 
 const SortCountries: FC = () => {
   const sortMethod = useStore((store) => store.sortCountries);
@@ -22,4 +23,4 @@ const SortCountries: FC = () => {
   );
 };
 
-export default SortCountries;
+export default React.memo(SortCountries);

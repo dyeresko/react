@@ -1,69 +1,149 @@
-# React + TypeScript + Vite
+# Perfomance
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Before optimization
 
-Currently, two official plugins are available:
+### - Search bar:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Interactions:** Click on search bar and enter letters to search specific country
 
-## Expanding the ESLint configuration
+### - Screenshots:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+#### Info
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+![Profiler Ranked Chart](perfomance/without-optimisation/search/other-info.png)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+#### Flame Graph
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+![Profiler Flame Graph](perfomance/without-optimisation/search/flame.png)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### Ranked Chart
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+![Profiler Ranked Chart](perfomance/without-optimisation/search/rank.png)
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+### - Select column:
+
+- **Interactions:** Open modal and select column
+
+### - Screenshots:
+
+#### Info
+
+![Profiler Ranked Chart](perfomance/without-optimisation/select-column/other-info.png)
+
+#### Flame Graph
+
+![Profiler Flame Graph](perfomance/without-optimisation/select-column/flame.png)
+
+#### Ranked Chart
+
+![Profiler Ranked Chart](perfomance/without-optimisation/select-column/rank.png)
+
+### - Select year:
+
+- **Interactions:** open selector and choose year
+
+### - Screenshots:
+
+#### Info
+
+![Profiler Ranked Chart](perfomance/without-optimisation/select-year/other-info.png)
+
+#### Flame Graph
+
+![Profiler Flame Graph](perfomance/without-optimisation/select-year/flame.png)
+
+#### Ranked Chart
+
+![Profiler Ranked Chart](perfomance/without-optimisation/select-year/rank.png)
+
+### - Sort by name:
+
+- **Interactions:** open selector and choose asc option
+
+### - Screenshots:
+
+#### Info
+
+![Profiler Ranked Chart](perfomance/without-optimisation/sorting/other-info.png)
+
+#### Flame Graph
+
+![Profiler Flame Graph](perfomance/without-optimisation/sorting/flame.png)
+
+#### Ranked Chart
+
+![Profiler Ranked Chart](perfomance/without-optimisation/sorting/rank.png)
+
+## After optimization
+
+### - Search bar:
+
+- **Interactions:** Click on search bar and enter letters to search specific country
+
+### - Screenshots:
+
+#### Info
+
+![Profiler Ranked Chart](perfomance/optimisation/search/other-info.png)
+
+#### Flame Graph
+
+![Profiler Flame Graph](perfomance/optimisation/search/flame.png)
+
+#### Ranked Chart
+
+![Profiler Ranked Chart](perfomance/optimisation/search/rank.png)
+
+### - Select column:
+
+- **Interactions:** Open modal and select column
+
+### - Screenshots:
+
+#### Info
+
+![Profiler Ranked Chart](perfomance/optimisation/select-column/other-info.png)
+
+#### Flame Graph
+
+![Profiler Flame Graph](perfomance/optimisation/select-column/flame.png)
+
+#### Ranked Chart
+
+![Profiler Ranked Chart](perfomance/optimisation/select-column/rank.png)
+
+### - Select year:
+
+- **Interactions:** open selector and choose year
+
+### - Screenshots:
+
+#### Info
+
+![Profiler Ranked Chart](perfomance/optimisation/select-year/other-info.png)
+
+#### Flame Graph
+
+![Profiler Flame Graph](perfomance/optimisation/select-year/flame.png)
+
+#### Ranked Chart
+
+![Profiler Ranked Chart](perfomance/optimisation/select-year/rank.png)
+
+### - Sort by name:
+
+- **Interactions:** open selector and choose asc option
+
+### - Screenshots:
+
+#### Info
+
+![Profiler Ranked Chart](perfomance/optimisation/sorting/other-info.png)
+
+#### Flame Graph
+
+![Profiler Flame Graph](perfomance/optimisation/sorting/flame.png)
+
+#### Ranked Chart
+
+![Profiler Ranked Chart](perfomance/optimisation/sorting/rank.png)

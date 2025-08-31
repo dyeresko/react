@@ -1,3 +1,4 @@
+import React, { useCallback } from 'react';
 import { type FC, type ReactNode, type RefObject } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -5,24 +6,25 @@ const Modal: FC<{
   children: ReactNode;
   modalDialogRef: RefObject<HTMLDialogElement | null>;
 }> = ({ children, modalDialogRef }) => {
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     modalDialogRef.current?.close();
-  };
+  }, [modalDialogRef]);
 
-  const closeOnOutsideClick = (
-    e: React.MouseEvent<HTMLDialogElement, MouseEvent>
-  ) => {
-    const dialogDimensions = modalDialogRef.current?.getBoundingClientRect();
-    if (
-      dialogDimensions &&
-      (e.clientX < dialogDimensions.left ||
-        e.clientX > dialogDimensions.right ||
-        e.clientY < dialogDimensions.top ||
-        e.clientY > dialogDimensions.bottom)
-    ) {
-      modalDialogRef.current?.close();
-    }
-  };
+  const closeOnOutsideClick = useCallback(
+    (e: React.MouseEvent<HTMLDialogElement, MouseEvent>) => {
+      const dialogDimensions = modalDialogRef.current?.getBoundingClientRect();
+      if (
+        dialogDimensions &&
+        (e.clientX < dialogDimensions.left ||
+          e.clientX > dialogDimensions.right ||
+          e.clientY < dialogDimensions.top ||
+          e.clientY > dialogDimensions.bottom)
+      ) {
+        modalDialogRef.current?.close();
+      }
+    },
+    [modalDialogRef]
+  );
 
   return createPortal(
     <dialog
@@ -42,4 +44,4 @@ const Modal: FC<{
   );
 };
 
-export default Modal;
+export default React.memo(Modal);

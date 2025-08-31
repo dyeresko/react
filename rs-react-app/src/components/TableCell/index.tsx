@@ -1,5 +1,6 @@
 import { useEffect, useRef, type FC } from 'react';
 import classes from '@/components/TableCell/TableCell.module.css';
+import React from 'react';
 
 const TableCell: FC<{ cellContent: number | string }> = ({ cellContent }) => {
   const cellRef = useRef<HTMLTableCellElement>(null);
@@ -16,4 +17,4 @@ const TableCell: FC<{ cellContent: number | string }> = ({ cellContent }) => {
   );
 };
 
-export default TableCell;
+export default React.memo(TableCell);

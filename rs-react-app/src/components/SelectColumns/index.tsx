@@ -1,5 +1,6 @@
 import { useStore } from '@/store/store';
 import type { FC } from 'react';
+import React from 'react';
 
 const SelectColumns: FC = () => {
   const setShowMethaneColumn = useStore((state) => state.setShowMethaneColumn);
@@ -97,4 +98,4 @@ const SelectColumns: FC = () => {
   );
 };
 
-export default SelectColumns;
+export default React.memo(SelectColumns);
