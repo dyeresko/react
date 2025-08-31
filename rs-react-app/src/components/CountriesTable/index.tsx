@@ -8,6 +8,7 @@ import SelectColumns from '@/components/SelectColumns';
 import SelectYears from '@/components/SelectYears';
 import TableCell from '@/components/TableCell';
 import SearchBar from '../SearchBar';
+import SortCountries from '../SortCountries';
 
 const CountriesTable: FC = () => {
   const { data } = useSuspenseQuery<CO2Dataset>({
@@ -24,18 +25,22 @@ const CountriesTable: FC = () => {
     (state) => state.showTemperatureChangeFromCo2Column
   );
   const year = useStore((store) => store.newYear);
+  const sortMethod = useStore((store) => store.sortCountries);
 
   const handleSelectColumnsClick = () => {
     modal.current?.showModal();
   };
 
   const years = Object.entries(data)[0][1].data.map((d) => d.year);
-  const filteredCountries = Object.entries(data).filter(([key]) =>
-    key.includes(countryToSearch)
-  );
+  const filteredCountries = Object.entries(data)
+    .filter(([key]) => key.includes(countryToSearch))
+    .sort((a, b) =>
+      sortMethod === 'asc' ? a[0].localeCompare(b[0]) : b[0].localeCompare(a[0])
+    );
 
   return (
     <>
+      <SortCountries />
       <SearchBar />
       <SelectYears years={years} />
       <button onClick={handleSelectColumnsClick}>Select columns</button>

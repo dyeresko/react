@@ -5,7 +5,9 @@ interface State {
   newYear: number;
   showMethaneColumn: boolean;
   showOilCo2Column: boolean;
+  sortCountries: string;
   showTemperatureChangeFromCo2Column: boolean;
+  setSortCountries: (sortMethod: string) => void;
   setNewYear: (newYear: number) => void;
   setCountryToSearch: (country: string) => void;
   setShowMethaneColumn: () => void;
@@ -18,7 +20,10 @@ export const useStore = create<State>()((set) => ({
   newYear: 2023,
   showMethaneColumn: false,
   showOilCo2Column: false,
+  sortCountries: 'asc',
   showTemperatureChangeFromCo2Column: false,
+  setSortCountries: (sortMethod: string) =>
+    set(() => ({ sortCountries: sortMethod })),
   setCountryToSearch: (country) =>
     set(() => ({
       countryToSearch: country,
