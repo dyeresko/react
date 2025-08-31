@@ -2,7 +2,11 @@ import { fetchData } from '@/api/api';
 import { useStore } from '@/store/store';
 import type { CO2Dataset } from '@/types/interfaces';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { type FC } from 'react';
+import { useRef, type FC } from 'react';
+import Modal from '@/components/Modal';
+import SelectColumns from '@/components/SelectColumns';
+import SelectYears from '@/components/SelectYears';
+import TableCell from '@/components/TableCell';
 
 const CountriesTable: FC = () => {
   const { data } = useSuspenseQuery<CO2Dataset>({
@@ -10,15 +14,25 @@ const CountriesTable: FC = () => {
     queryFn: fetchData,
   });
 
+  const modal = useRef<HTMLDialogElement>(null);
+
   const showMethaneColumn = useStore((state) => state.showMethaneColumn);
   const showOilCo2Column = useStore((state) => state.showOilCo2Column);
-  console.log(showOilCo2Column);
   const showTemperatureChangeFromCo2Column = useStore(
     (state) => state.showTemperatureChangeFromCo2Column
   );
+  const year = useStore((store) => store.newYear);
+
+  const handleSelectColumnsClick = () => {
+    modal.current?.showModal();
+  };
+
+  const years = Object.entries(data)[0][1].data.map((d) => d.year);
 
   return (
     <>
+      <SelectYears years={years} />
+      <button onClick={handleSelectColumnsClick}>Select columns</button>
       <table>
         <thead>
           <tr>
@@ -39,29 +53,54 @@ const CountriesTable: FC = () => {
           {Object.entries(data).map(([key, value]) => (
             <tr key={key}>
               <th scope="row">{key}</th>
-              <td>{value.data[value.data.length - 1].population ?? 'N/A'}</td>
-              <td>{value.iso_code ?? 'N/A'}</td>
-              <td>{value.data[value.data.length - 1].year}</td>
-              <td>{value.data[value.data.length - 1].co2 ?? 'N/A'}</td>
-              <td>
-                {value.data[value.data.length - 1].co2_per_capita ?? 'N/A'}
-              </td>
+              <TableCell
+                cellContent={
+                  value.data.find((d) => d.year === year)?.population ?? 'N/A'
+                }
+              />
+              <TableCell cellContent={value.iso_code ?? 'N/A'} />
+              <TableCell cellContent={year} />
+              <TableCell
+                cellContent={
+                  value.data.find((d) => d.year === year)?.co2 ?? 'N/A'
+                }
+              />
+
+              <TableCell
+                cellContent={
+                  value.data.find((d) => d.year === year)?.co2_per_capita ??
+                  'N/A'
+                }
+              />
               {showMethaneColumn ? (
-                <td>{value.data[value.data.length - 1].methane ?? 'N/A'}</td>
+                <TableCell
+                  cellContent={
+                    value.data.find((d) => d.year === year)?.methane ?? 'N/A'
+                  }
+                />
               ) : null}
               {showOilCo2Column ? (
-                <td>{value.data[value.data.length - 1].oil_co2 ?? 'N/A'}</td>
+                <TableCell
+                  cellContent={
+                    value.data.find((d) => d.year === year)?.oil_co2 ?? 'N/A'
+                  }
+                />
               ) : null}
               {showTemperatureChangeFromCo2Column ? (
-                <td>
-                  {value.data[value.data.length - 1]
-                    .temperature_change_from_co2 ?? 'N/A'}
-                </td>
+                <TableCell
+                  cellContent={
+                    value.data.find((d) => d.year === year)
+                      ?.temperature_change_from_co2 ?? 'N/A'
+                  }
+                />
               ) : null}
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal modalDialogRef={modal}>
+        <SelectColumns />
+      </Modal>
     </>
   );
 };
