@@ -1,0 +1,19 @@
+.result {
+  border: 1px solid black;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.resultImage {
+  border-radius: 50%;
+}
+
+.resultInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+}
