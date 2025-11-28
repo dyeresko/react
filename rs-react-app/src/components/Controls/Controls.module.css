@@ -1,10 +1,22 @@
 .controls {
-  border: black solid 1px;
+  border: var(--border-color) solid 1px;
   padding: 10px;
   border-radius: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.pagination {
+  margin-top: 10px;
 }
 
 h2 {
   margin: 0;
   padding-bottom: 10px;
+}
+
+.themeButton {
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }

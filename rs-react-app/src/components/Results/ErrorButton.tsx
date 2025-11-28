@@ -1,22 +1,18 @@
-import { Component } from 'react';
-import MyError from './MyError.tsx';
-class ErrorButton extends Component<object, { hasError: boolean }> {
-  constructor(props: object) {
-    super(props);
-    this.state = { hasError: false };
-  }
-  handleButtonClick = () => {
-    this.setState({ hasError: true });
-  };
+import { useState, type FC } from 'react';
+import MyError from '@components/Results/MyError/index';
 
-  render() {
-    return (
-      <div>
-        <button onClick={this.handleButtonClick}>Throw Error</button>
-        {this.state.hasError && <MyError error={true} />}
-      </div>
-    );
-  }
-}
+const ErrorButton: FC = () => {
+  const [hasError, setHasError] = useState(false);
+
+  const handleButtonClick = () => {
+    setHasError(true);
+  };
+  return (
+    <div>
+      <button onClick={handleButtonClick}>Throw Error</button>
+      {hasError && <MyError error={true} />}
+    </div>
+  );
+};
 
 export default ErrorButton;

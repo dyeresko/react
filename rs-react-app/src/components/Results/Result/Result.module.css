@@ -1,7 +1,14 @@
 .result {
-  border: 1px solid black;
+  border: var(--border-color) solid 1px;
   border-radius: 20px;
   padding: 10px;
+  position: relative;
+}
+
+.checkbox {
+  position: absolute;
+  top: 5px;
+  left: 5px;
 }
 
 .resultImage {

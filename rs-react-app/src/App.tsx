@@ -1,40 +1,27 @@
-import { Component } from 'react';
-import './App.css';
-import Controls from './components/Controls/Controls.tsx';
-import Results from './components/Results/Results/Results.tsx';
-import MyErrorBoundary from './components/MyErrorBoundary.tsx';
+import '@/App.css';
+import Results from '@components/Results/Results/index';
+import MyErrorBoundary from '@components/MyErrorBoundary/index';
+import useLocalStorage from '@/hooks/useLocalStorage.tsx';
+import { useState, type FC } from 'react';
+import { Outlet, useMatch } from 'react-router-dom';
+import { useAppSelector } from '@/hooks/reduxHooks.ts';
+import DownloadPanel from '@components/DownloadPanel/index';
 
-export interface IState {
-  searchResult: string;
-}
+const App: FC = () => {
+  const [storageSearchResult] = useLocalStorage('searchResult', '');
+  const cards = useAppSelector((state) => state.cards.items);
+  const [newPage] = useState('');
+  const isPanelOpen = useMatch('/details/:id');
 
-class App extends Component<object, IState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { searchResult: '' };
-  }
-
-  componentDidMount() {
-    const localSearchResult = localStorage.getItem('searchResult');
-    if (localSearchResult !== null) {
-      this.setState({ searchResult: JSON.parse(localSearchResult) });
-    }
-  }
-  onSearch = (value: string) => {
-    this.setState({ searchResult: value });
-    localStorage.setItem('searchResult', JSON.stringify(value));
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <Controls onSearch={this.onSearch} />
-        <MyErrorBoundary>
-          <Results searchResult={this.state.searchResult} />
-        </MyErrorBoundary>
-      </div>
-    );
-  }
-}
+  return (
+    <div className={isPanelOpen ? 'App' : ''}>
+      <MyErrorBoundary>
+        <Results newPage={newPage} searchResult={storageSearchResult} />
+        {cards.length > 0 && <DownloadPanel />}
+      </MyErrorBoundary>
+      <Outlet />
+    </div>
+  );
+};
 
 export default App;
