@@ -1,22 +1,30 @@
-import classes from './Result.module.css';
+import classes from '../Results/Result/Result.module.css';
 
-interface IProps {
+export interface DetailedCharacter {
+  id: number;
   name?: string;
   status?: string;
   species?: string;
+  type?: string;
   gender?: string;
-  imageUrl?: string;
+  image?: string;
+  origin?: {
+    name: string;
+  };
+  location?: {
+    name: string;
+  };
 }
 
-function Result(props: IProps) {
+const Panel = (props: DetailedCharacter) => {
   return (
     <div className={classes.result} data-testid="result">
       <img
         alt="Result image"
         className={classes.resultImage}
         src={
-          props.imageUrl
-            ? props.imageUrl
+          props.image
+            ? props.image
             : 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/No_image_3x4.svg/640px-No_image_3x4.svg.png'
         }
         data-testid="image"
@@ -46,9 +54,21 @@ function Result(props: IProps) {
             {props.gender ? props.gender : 'gender is missing'}
           </span>
         </div>
+        <div className={classes.infoItem}>
+          <span>Origin:</span>
+          <span data-testid="origin">
+            {props.origin?.name ? props.origin.name : 'origin is missing'}
+          </span>
+        </div>
+        <div className={classes.infoItem}>
+          <span>Location:</span>
+          <span data-testid="location">
+            {props.location?.name ? props.location.name : 'location is missing'}
+          </span>
+        </div>
       </div>
     </div>
   );
-}
+};
 
-export default Result;
+export default Panel;

@@ -1,5 +1,5 @@
 import { vi } from 'vitest';
-import { data } from './mockData.ts';
+import { data, characterData } from './mockData.ts';
 
 export function mockFetchFailure() {
   vi.stubGlobal(
@@ -18,6 +18,17 @@ export function mockFetchSuccess() {
     'fetch',
     vi.fn().mockResolvedValue(
       new Response(JSON.stringify(data), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    )
+  );
+}
+export function mockFetchCharacterSuccess() {
+  vi.stubGlobal(
+    'fetch',
+    vi.fn().mockResolvedValue(
+      new Response(JSON.stringify(characterData), {
         status: 200,
         headers: { 'Content-Type': 'application/json' },
       })

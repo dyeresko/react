@@ -1,6 +1,7 @@
-import { Component } from 'react';
 import Result from '../Result/Result.tsx';
 import classes from './ResultList.module.css';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
 export interface Character {
   id: number;
   name: string;
@@ -15,25 +16,42 @@ interface IProps {
   characters?: Character[];
 }
 
-class ResultList extends Component<IProps, object> {
-  render() {
-    return (
-      <div className={classes.results}>
-        {this.props.characters
-          ? this.props.characters.map((character: Character) => (
+function ResultList(props: IProps) {
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  return (
+    <div className={classes.results}>
+      {props.characters
+        ? props.characters.map((character: Character) => (
+            <div
+              key={character.id}
+              onClick={() => {
+                const page = searchParams.get('page');
+                const name = searchParams.get('name');
+                navigate(`details/${character.id}`, { replace: false });
+                setSearchParams((prev) => {
+                  if (page) {
+                    prev.set('page', page);
+                  }
+                  if (name) {
+                    prev.set('name', name);
+                  }
+                  return prev;
+                });
+              }}
+            >
               <Result
-                key={character.id}
                 name={character.name}
                 status={character.status}
                 species={character.species}
                 gender={character.gender}
                 imageUrl={character.image}
               />
-            ))
-          : 'No results found.'}
-      </div>
-    );
-  }
+            </div>
+          ))
+        : 'No results found.'}
+    </div>
+  );
 }
 
 export default ResultList;

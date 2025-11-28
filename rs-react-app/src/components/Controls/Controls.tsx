@@ -1,47 +1,103 @@
-import { Component, type ChangeEvent } from 'react';
-import type { IState } from '../../App.tsx';
+import { type ChangeEvent, useState, useContext } from 'react';
 import classes from './Controls.module.css';
+import useLocalStorage from '../../../hooks/useLocalStorage.tsx';
+import { PaginationDataContext } from '../../../hooks/PaginationDataContext.tsx';
+import type { IInfo } from '../Results/Results/Results.tsx';
+import { useNavigate } from 'react-router-dom';
+
 interface IProps {
   onSearch: (searchResult: string) => void;
+  onNewPage: (newPage: string) => void;
 }
-class Controls extends Component<IProps, IState> {
-  constructor(props: IProps) {
-    super(props);
-    this.state = { searchResult: '' };
-  }
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchResult: e.target.value });
+const getPage = (pageInfo: IInfo) => {
+  if (pageInfo.prev) {
+    const url = new URL(pageInfo.prev);
+    const prevPage = parseInt(url.searchParams.get('page') || '0');
+    return prevPage + 1;
+  }
+  if (pageInfo.next) {
+    const url = new URL(pageInfo.next);
+    const nextPage = parseInt(url.searchParams.get('page') || '2');
+    return nextPage - 1;
+  }
+  return 1;
+};
+
+function Controls(props: IProps) {
+  const [storageSearchResult] = useLocalStorage('searchResult', '');
+  const [searchResult, setSearchResult] = useState(storageSearchResult);
+  const paginationContext = useContext(PaginationDataContext);
+  const navigate = useNavigate();
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchResult(e.target.value);
   };
-
-  componentDidMount() {
-    const localSearchResult = localStorage.getItem('searchResult');
-    if (localSearchResult !== null) {
-      this.setState({ searchResult: localSearchResult });
-    }
-  }
-
-  render() {
-    return (
-      <div className={classes.controls}>
-        <h2>Controls</h2>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={this.state.searchResult}
-          onChange={this.handleInputChange}
-        />
+  return (
+    <div className={classes.controls}>
+      <h2>Controls</h2>
+      <button
+        onClick={() => {
+          navigate('/about');
+        }}
+      >
+        About
+      </button>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchResult}
+        onChange={handleInputChange}
+      />
+      <button
+        onClick={() => {
+          setSearchResult(searchResult.trim());
+          props.onSearch(searchResult.trim());
+        }}
+      >
+        Search
+      </button>
+      <button
+        onClick={() => {
+          localStorage.clear();
+          setSearchResult('');
+        }}
+      >
+        Clear Input
+      </button>
+      <div className={classes.pagination}>
         <button
           onClick={() => {
-            this.setState({ searchResult: this.state.searchResult.trim() });
-            this.props.onSearch(this.state.searchResult);
+            if (paginationContext?.paginationData.prev) {
+              props.onNewPage(paginationContext.paginationData.prev);
+            }
           }}
         >
-          Search
+          Prev
+        </button>
+        {getPage(
+          paginationContext?.paginationData ?? {
+            count: 0,
+            pages: 0,
+            prev: null,
+            next: null,
+          }
+        )}
+        /
+        {paginationContext?.paginationData.pages === 0
+          ? '∞'
+          : paginationContext?.paginationData.pages}
+        <button
+          onClick={() => {
+            if (paginationContext?.paginationData.next) {
+              props.onNewPage(paginationContext.paginationData.next);
+            }
+          }}
+        >
+          Next
         </button>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default Controls;

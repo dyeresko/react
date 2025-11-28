@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import '@testing-library/jest-dom/vitest';
+
 import MyError from './MyError.tsx';
 describe('My Error', () => {
   it('throws error if error property is true', () => {
