@@ -1,8 +1,8 @@
 import { Component } from 'react';
-import Result from '../Result/Result.tsx';
 import classes from './Results.module.css';
 import ErrorButton from '../ErrorButton.tsx';
 import logo from '../../../assets/react.svg';
+import ResultList from '../ResultList/ResultList.tsx';
 interface Character {
   id: number;
   name: string;
@@ -13,7 +13,7 @@ interface Character {
   image: string;
 }
 
-interface IResponse {
+export interface IResponse {
   info: {
     count: number;
     pages: number;
@@ -54,25 +54,32 @@ class Results extends Component<IProps, IState> {
     );
   };
 
+  setApiQuery = () => {
+    this.setState({ loading: true });
+    this.setState(
+      {
+        apiQuery: `${this.baseApiQuery}?name=${this.props.searchResult}`,
+      },
+      () => {
+        this.fetchResults();
+      }
+    );
+  };
+  setUrl = () => {
+    if (this.props.searchResult) {
+      this.setApiQuery();
+    } else {
+      this.setBaseApiQuery();
+    }
+  };
   componentDidMount() {
-    this.setBaseApiQuery();
+    this.setUrl();
   }
 
   componentDidUpdate(prevProps: IProps) {
     if (prevProps.searchResult !== this.props.searchResult) {
       this.setState({ loading: true });
-      if (this.props.searchResult) {
-        this.setState(
-          {
-            apiQuery: `${this.baseApiQuery}?name=${this.props.searchResult?.trim()}`,
-          },
-          () => {
-            this.fetchResults();
-          }
-        );
-      } else {
-        this.setBaseApiQuery();
-      }
+      this.setUrl();
     }
   }
   fetchResults() {
@@ -101,22 +108,20 @@ class Results extends Component<IProps, IState> {
       <div>
         <div>
           {this.state.loading && (
-            <img className="logo" src={logo} alt="Loading..." />
+            <img
+              data-testid="loader"
+              className="logo"
+              src={logo}
+              alt="Loading..."
+            />
           )}
-          {this.state.error && <h2>Request did not succeed</h2>}
+          {this.state.error && (
+            <h2 data-testid="error" className={classes.header}>
+              Request did not succeed
+            </h2>
+          )}
           {!this.state.error && !this.state.loading && (
-            <div className={classes.results}>
-              {this.state.characters.map((character: Character) => (
-                <Result
-                  key={character.id}
-                  name={character.name}
-                  status={character.status}
-                  species={character.species}
-                  gender={character.gender}
-                  imageUrl={character.image}
-                />
-              ))}
-            </div>
+            <ResultList characters={this.state.characters} />
           )}
           <ErrorButton />
         </div>

@@ -17,7 +17,7 @@ class Controls extends Component<IProps, IState> {
   componentDidMount() {
     const localSearchResult = localStorage.getItem('searchResult');
     if (localSearchResult !== null) {
-      this.setState({ searchResult: JSON.parse(localSearchResult) });
+      this.setState({ searchResult: localSearchResult });
     }
   }
 
@@ -31,7 +31,12 @@ class Controls extends Component<IProps, IState> {
           value={this.state.searchResult}
           onChange={this.handleInputChange}
         />
-        <button onClick={() => this.props.onSearch(this.state.searchResult)}>
+        <button
+          onClick={() => {
+            this.setState({ searchResult: this.state.searchResult.trim() });
+            this.props.onSearch(this.state.searchResult);
+          }}
+        >
           Search
         </button>
       </div>
